@@ -1,4 +1,89 @@
-body{
-    font-family: system-ui;
-    background-color: #ff2525
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{;
+    font-family: "DM Sans", sans-serif;
+    background-color: white;
+}
+
+@font-face {
+    font-family: 'Pinyon';
+    src: url('./font/PinyonScript-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1{
+    margin: 0;
+}
+
+p{
+    margin: 0;
+}
+
+h1, .cursive {
+    margin: 0 10px;
+    font-family: 'Pinyon', cursive;
+}
+h1, .sans{
+    font-weight: normal;
+    font-family: "DM Sans", sans-serif;
+}
+p, .cursive {
+
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
+}
+
+.hero-section {
+    background-color: inherit;
+    padding: 50px 0;
+    text-align: left;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+span{
+    font-family: 'Pinyon', cursive;
+}
+
+
+
+.f-svg {
+    flex-direction: row;
+    display: flex;
+    font-size: 18px;
+    background-size: contain;
+    background-image: url('/assets/Close.svg');
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+
+}
+
+.f-svg:hover {
+    background-size: contain;
+    background-image: url('/assets/Open.svg');
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+}
+
+
+
+
+.circle-container{
+    position: relative;
+    ;
+}
+.f-svg:nth-child(1) {
 }
