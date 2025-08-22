@@ -46,29 +46,55 @@ p, .cursive {
 
 .main{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
 }
 
 span{
     font-family: 'Pinyon', cursive;
+    font-size: 1.5rem;
 }
 
 
-
+.
 .f-svg {
+    background-image: url('/assets/Close.svg');
+    spacing: 5px;
+    position: absolute;
     flex-direction: row;
     display: flex;
-    font-size: 18px;
+    font-size: 14px;
     background-size: contain;
-    background-image: url('/assets/Close.svg');
     width: 100px;
     height: 100px;
     background-repeat: no-repeat;
 
 }
+
+
+.f-svg:nth-child(1)
+{
+    top: 40%;
+}
+.f-svg:nth-child(2)
+{
+    top: 20%;
+    left: 80%
+}
+
+.f-svg:nth-child(3){
+    top: 70%;
+    left: 70%
+}
+
+.f-svg:nth-child(4){
+    top: 60%;
+    left: 30%
+}
+
 
 .f-svg:hover {
     background-size: contain;
@@ -86,4 +112,74 @@ span{
     ;
 }
 .f-svg:nth-child(1) {
+}
+
+
+.work-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+}
+.image-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.work-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 300px;
+    min-height: 120px;
+}
+.image-with-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+.image-with-label.top {
+    margin-bottom: 10px;
+}
+.image-with-label.bottom {
+    margin-top: 10px;
+}
+.image-with-label.left,
+.image-with-label.right {
+    margin: 0 20px;
+}
+.icon {
+    width: 80px;
+    height: 80px;
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+.label {
+    font-size: 1.3rem;
+    color: #555;
+    margin-top: 6px;
+    text-align: center;
+}
+
+
+.icon:hover {
+    transition: filter 0.2s;
+    filter: brightness(1.2);
+    content: url('./assets/Open.svg');
+}
+
+
+a{
+    text-decoration: none;
+}
+
+@keyframes float {
+    0%{
+    top: 0px;
+    }
+    50%{
+    top: -20px;
+}
 }
