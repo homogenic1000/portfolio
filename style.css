@@ -1,9 +1,13 @@
+@import url('reset.css')
+@import url('utility.css')
+
+/*-------------------ROOT-----------------------*/
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
+/*------------------------------------------*/
 body{;
     font-family: "DM Sans", sans-serif;
     background-color: white;
