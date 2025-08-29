@@ -14,6 +14,42 @@
    <h1> Hello my name is <span class="cursive">Mathéo Delessert.</span> <br>
    and welcome to my portfolio.
    </h1>
+
+    <style>
+
+    </style>
+    </head>
+    <body>
+
+    <div class="ruler" id="ruler"></div>
+
+    <script>
+        const cmWidth = 37.8; // pixels approximatifs pour 1 cm
+
+        function generateRuler() {
+            const ruler = document.getElementById('ruler');
+            ruler.innerHTML = ""; // On vide la règle avant de la recréer
+
+            const screenWidth = window.innerWidth;
+            const numTicks = Math.floor(screenWidth / cmWidth);
+
+            for (let i = 0; i <= numTicks; i++) {
+                const tick = document.createElement('div');
+                tick.classList.add('tick');
+                tick.setAttribute('data-cm', i);
+                ruler.appendChild(tick);
+            }
+        }
+
+        // Générer la règle au chargement
+        generateRuler();
+
+        // Recalculer la règle au redimensionnement de la fenêtre
+        window.addEventListener('resize', generateRuler);
+    </script>
+
+
+
 </div>
 <div class="work-section">
         <div class="image-with-label top">

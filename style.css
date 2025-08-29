@@ -11,6 +11,7 @@
 body{;
     font-family: "DM Sans", sans-serif;
     background-color: white;
+    scroll
 }
 
 @font-face {
@@ -29,10 +30,12 @@ p{
 }
 
 h1, .cursive {
+    font-size: 2vw;
     margin: 0 10px;
     font-family: 'Pinyon', cursive;
 }
 h1, .sans{
+    font-size: 2vw;
     font-weight: normal;
     font-family: "DM Sans", sans-serif;
 }
@@ -182,10 +185,44 @@ a{
 }
 
 @keyframes float {
-    0%{
-    top: 0px;
+    0% {
+        top: 0px;
     }
-    50%{
-    top: -20px;
+    50% {
+        top: -20px;
+    }
 }
+
+/* RULER STYLE*/
+body {
+    margin: 0;
+    padding-top: 40px; /* Espace pour la règle */
+}
+
+.ruler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.tick {
+    position: relative;
+    flex: 0 0 37.8px;
+    height: 10vh;
+    border-left: 1px solid black;
+}
+
+.tick::after {
+    content: attr(data-cm) " cm";
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    font-size: 10px;
+    color: black;
 }
