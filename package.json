@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/homogenic1000/portfolio/issues"
   },
-  "homepage": "https://github.com/homogenic1000/portfolio#readme"
+  "homepage": "https://github.com/homogenic1000/portfolio#readme",
+  "dependencies": {
+    "three": "^0.179.1"
+  }
 }
