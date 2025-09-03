@@ -1,19 +1,8 @@
+/* ===================================================================
+   IMPORTS & FONTS
+   ================================================================= */
 @import url('reset.css');
 @import url('utility.css');
-
-/*-------------------ROOT-----------------------*/
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-/*------------------------------------------*/
-body {
-    font-family: "DM Sans", sans-serif;
-    background-color: white;
-    overflow: hidden;
-    height: 100vh;
-}
 
 @font-face {
     font-family: 'Pinyon';
@@ -22,30 +11,61 @@ body {
     font-style: normal;
 }
 
-h1{
-    margin-top: 5vw; !Important;
+/* ===================================================================
+   GLOBAL STYLES & RESET
+   ================================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background-color: white;
+    overflow: hidden;
+    height: 100vh;
+    margin: 0;
+    padding-top: 0;
+}
+
+/* ===================================================================
+   TYPOGRAPHY
+   ================================================================= */
+h1 {
+    font-size: 4vw;
+    font-family: 'Pinyon', cursive;
+    margin-top: 5vw;
     margin-left: 0.9vw;
 }
 
-p{
+p {
     margin: 0;
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
 }
 
-h1, .cursive {
-    font-size: 4vw;
+span {
     font-family: 'Pinyon', cursive;
+    font-size: 1.5rem;
 }
-h1, .sans{
+
+.cursive {
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
+}
+
+.sans {
     font-size: 4vw;
     font-weight: normal;
     font-family: "DM Sans", sans-serif;
 }
-p, .cursive {
 
-    font-family: 'Pinyon', cursive;
-    font-weight: normal;
-}
+/* ===================================================================
+   LAYOUT SECTIONS
+   ================================================================= */
 
+/* Hero Section */
 .hero-section {
     background-color: inherit;
     text-align: left;
@@ -53,80 +73,9 @@ p, .cursive {
     display: flex;
     align-items: center;
     justify-content: left;
-    tex
 }
 
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 80vh;
-}
-
-span{
-    font-family: 'Pinyon', cursive;
-    font-size: 1.5rem;
-}
-
-
-.
-.f-svg {
-    background-image: url('../assets/Close.svg');
-    spacing: 5px;
-    position: absolute;
-    flex-direction: row;
-    display: flex;
-    font-size: 14px;
-    background-size: contain;
-    width: 100px;
-    height: 100px;
-    background-repeat: no-repeat;
-
-}
-
-
-.f-svg:nth-child(1)
-{
-    top: 40%;
-}
-.f-svg:nth-child(2)
-{
-    top: 20%;
-    left: 80%
-}
-
-.f-svg:nth-child(3){
-    top: 70%;
-    left: 70%
-}
-
-.f-svg:nth-child(4){
-    top: 60%;
-    left: 30%
-}
-
-
-.f-svg:hover {
-    background-size: contain;
-    background-image: url('../assets/Open.svg');
-    width: 100px;
-    height: 100px;
-    background-repeat: no-repeat;
-}
-
-
-
-
-.circle-container{
-    position: relative;
-    ;
-}
-.f-svg:nth-child(1) {
-}
-
-
+/* Work Section */
 .work-section {
     height: 70vh;
     position: relative;
@@ -146,6 +95,11 @@ span{
     z-index: 10;
 }
 
+/* ===================================================================
+   IMAGE WITH LABEL COMPONENTS
+   ================================================================= */
+
+/* Base Styles */
 .image-with-label {
     position: absolute;
     display: flex;
@@ -159,7 +113,32 @@ span{
     transform: translateY(-5px);
 }
 
-/* Organic positioning around the center - with large spacing to prevent touching */
+/* Icon Styles */
+.icon {
+    width: 80px;
+    height: 80px;
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+
+.icon:hover {
+    filter: brightness(1.2);
+    content: url('../assets/Open.svg');
+}
+
+/* Label Styles */
+.label {
+    font-size: 1.3rem;
+    color: #555;
+    margin-top: 6px;
+    text-align: center;
+}
+
+/* ===================================================================
+   ORGANIC POSITIONING - SCATTERED LAYOUT
+   ================================================================= */
+
+/* Top Row */
 .image-with-label.top-left {
     top: 15%;
     left: 28%;
@@ -170,6 +149,7 @@ span{
     right: 35%;
 }
 
+/* Side Positions */
 .image-with-label.left-top {
     top: 21%;
     left: 12%;
@@ -190,6 +170,7 @@ span{
     right: 12%;
 }
 
+/* Bottom Row */
 .image-with-label.bottom-left {
     bottom: 15%;
     left: 28%;
@@ -200,89 +181,9 @@ span{
     right: 28%;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .work-section {
-        flex-direction: column;
-        position: static;
-        padding: 40px 20px;
-    }
-    
-    .work-content-center {
-        position: static;
-        transform: none;
-        margin-bottom: 40px;
-    }
-    
-    .image-with-label {
-        position: static;
-        margin: 15px;
-        display: inline-flex;
-    }
-    
-    .work-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .image-with-label {
-        margin: 10px;
-        width: 45%;
-    }
-}
-.icon {
-    width: 80px;
-    height: 80px;
-    transition: filter 0.2s;
-    cursor: pointer;
-}
-.label {
-    font-size: 1.3rem;
-    color: #555;
-    margin-top: 6px;
-    text-align: center;
-}
-.label::after{
-    content: '';
-    position: absolute;
-    height: 5px;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    background: lightgreen;
-    transition: width .2s;
-}
-
-
-.icon:hover {
-    transition: filter 0.2s;
-    filter: brightness(1.2);
-    content: url('../assets/Open.svg');
-}
-
-
-a{
-    text-decoration: none;
-}
-
-@keyframes float {
-    0% {
-        top: 0px;
-    }
-    50% {
-        top: -20px;
-    }
-}
-
-/* RULER STYLE*/
-body {
-    margin: 0;
-    padding-top: 0;
-}
-
+/* ===================================================================
+   RULER COMPONENT
+   ================================================================= */
 .ruler {
     position: fixed;
     top: 0;
@@ -309,4 +210,59 @@ body {
     left: 2px;
     font-size: 10px;
     color: black;
+}
+
+/* ===================================================================
+   UTILITY CLASSES
+   ================================================================= */
+a {
+    text-decoration: none;
+}
+
+/* ===================================================================
+   ANIMATIONS
+   ================================================================= */
+@keyframes float {
+    0% {
+        top: 0px;
+    }
+    50% {
+        top: -20px;
+    }
+}
+
+/* ===================================================================
+   RESPONSIVE DESIGN
+   ================================================================= */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .work-section {
+        flex-direction: column;
+        position: static;
+        padding: 40px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .work-content-center {
+        position: static;
+        transform: none;
+        margin-bottom: 40px;
+    }
+    
+    .image-with-label {
+        position: static;
+        margin: 15px;
+        display: inline-flex;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .image-with-label {
+        margin: 10px;
+        width: 45%;
+    }
 }
