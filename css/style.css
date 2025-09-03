@@ -23,7 +23,8 @@ body {
 }
 
 h1{
-    margin: 0;
+    margin-top: 5vw; !Important;
+    margin-left: 0.9vw;
 }
 
 p{
@@ -31,12 +32,11 @@ p{
 }
 
 h1, .cursive {
-    font-size: 2vw;
-    margin: 0 10px;
+    font-size: 4vw;
     font-family: 'Pinyon', cursive;
 }
 h1, .sans{
-    font-size: 2vw;
+    font-size: 4vw;
     font-weight: normal;
     font-family: "DM Sans", sans-serif;
 }
@@ -49,10 +49,11 @@ p, .cursive {
 .hero-section {
     background-color: inherit;
     text-align: left;
-    height: 30vh;
+    height: 15vh;
     display: flex;
     align-items: center;
     justify-content: left;
+    tex
 }
 
 .main{
@@ -166,16 +167,16 @@ span{
 
 .image-with-label.top-right {
     top: 15%;
-    right: 28%;
+    right: 35%;
 }
 
 .image-with-label.left-top {
-    top: 30%;
+    top: 21%;
     left: 12%;
 }
 
 .image-with-label.left-bottom {
-    bottom: 30%;
+    bottom: 10%;
     left: 12%;
 }
 
@@ -243,6 +244,16 @@ span{
     color: #555;
     margin-top: 6px;
     text-align: center;
+}
+.label::after{
+    content: '';
+    position: absolute;
+    height: 5px;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: lightgreen;
+    transition: width .2s;
 }
 
 
