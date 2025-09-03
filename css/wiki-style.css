@@ -1,0 +1,154 @@
+*{
+    scroll-behavior: smooth;§
+}
+
+.wiki-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    line-height: 1.6;
+    background-color: white;
+}
+
+.wiki-header {
+    border-bottom: 1px solid #a2a9b1;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.wiki-title {
+    font-size: 28px;
+    font-weight: normal;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.wiki-subtitle {
+    font-size: 14px;
+    color: #54595d;
+}
+
+.wiki-content {
+    background-color: #ffffff;
+    border: 1px solid #a2a9b1;
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.wiki-toc {
+    background-color: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    padding: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.wiki-toc-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.wiki-toc ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.wiki-section {
+    margin-bottom: 20px;
+}
+
+.wiki-section-title {
+    border-bottom: 1px solid #a2a9b1;
+    font-size: 22px;
+    font-weight: normal;
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+}
+
+.wiki-ref {
+    font-size: 12px;
+    color: #0645ad;
+    vertical-align: super;
+    line-height: 0;
+}
+
+.wiki-reference-list {
+    border-top: 1px solid #a2a9b1;
+    margin-top: 30px;
+    padding-top: 20px;
+}
+
+.wiki-reference-list ol {
+    font-size: 14px;
+    color: #54595d;
+}
+
+.wiki-infobox {
+    float: right;
+    margin: 0.5em 0 1em 1em;
+    padding: 0.2em;
+    border: 1px solid #a2a9b1;
+    background-color: #f8f9fa;
+    width: 300px;
+    font-size: 14px;
+}
+
+.wiki-infobox-title {
+    text-align: center;
+    font-weight: bold;
+    background-color: #85aeff;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.wiki-infobox img {
+    width: 100%;
+    height: auto;
+    max-width: 280px;
+    display: block;
+    margin: 8px auto;
+    border: 1px solid #c8ccd1;
+    padding: 3px;
+    background-color: #fff;
+}
+
+.wiki-infobox-pic {
+    text-align: center;
+    padding: 5px;
+}
+
+img {
+    width: 23vw;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+
+.wiki-infobox-content {
+    padding: 10px;
+}
+
+.wiki-infobox-row {
+    margin: 5px 0;
+    flex-direction: row; !important;
+
+}
+
+.wiki-infobox-label {
+    font-weight: bold;
+}
+
+[role="note"] {
+    font-size: 13px;
+    color: #54595d;
+    font-style: italic;
+}
+
+.wiki-infobox figcaption {
+    font-size: 12px;
+    color: #54595d;
+    text-align: center;
+    margin-top: 4px;
+}

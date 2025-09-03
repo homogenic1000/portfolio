@@ -1,0 +1,301 @@
+@import url('reset.css');
+@import url('utility.css');
+
+/*-------------------ROOT-----------------------*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/*------------------------------------------*/
+body {
+    font-family: "DM Sans", sans-serif;
+    background-color: white;
+    overflow: hidden;
+    height: 100vh;
+}
+
+@font-face {
+    font-family: 'Pinyon';
+    src: url('../font/PinyonScript-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1{
+    margin: 0;
+}
+
+p{
+    margin: 0;
+}
+
+h1, .cursive {
+    font-size: 2vw;
+    margin: 0 10px;
+    font-family: 'Pinyon', cursive;
+}
+h1, .sans{
+    font-size: 2vw;
+    font-weight: normal;
+    font-family: "DM Sans", sans-serif;
+}
+p, .cursive {
+
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
+}
+
+.hero-section {
+    background-color: inherit;
+    text-align: left;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 80vh;
+}
+
+span{
+    font-family: 'Pinyon', cursive;
+    font-size: 1.5rem;
+}
+
+
+.
+.f-svg {
+    background-image: url('../assets/Close.svg');
+    spacing: 5px;
+    position: absolute;
+    flex-direction: row;
+    display: flex;
+    font-size: 14px;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+
+}
+
+
+.f-svg:nth-child(1)
+{
+    top: 40%;
+}
+.f-svg:nth-child(2)
+{
+    top: 20%;
+    left: 80%
+}
+
+.f-svg:nth-child(3){
+    top: 70%;
+    left: 70%
+}
+
+.f-svg:nth-child(4){
+    top: 60%;
+    left: 30%
+}
+
+
+.f-svg:hover {
+    background-size: contain;
+    background-image: url('../assets/Open.svg');
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+}
+
+
+
+
+.circle-container{
+    position: relative;
+    ;
+}
+.f-svg:nth-child(1) {
+}
+
+
+.work-section {
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    padding: 0 20px;
+}
+
+.work-content-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.image-with-label {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+    padding: 10px;
+}
+
+.image-with-label:hover {
+    transform: translateY(-5px);
+}
+
+/* Organic positioning around the center - with large spacing to prevent touching */
+.image-with-label.top-left {
+    top: 15%;
+    left: 28%;
+}
+
+.image-with-label.top-right {
+    top: 15%;
+    right: 28%;
+}
+
+.image-with-label.left-top {
+    top: 30%;
+    left: 12%;
+}
+
+.image-with-label.left-bottom {
+    bottom: 30%;
+    left: 12%;
+}
+
+.image-with-label.right-top {
+    top: 30%;
+    right: 12%;
+}
+
+.image-with-label.right-bottom {
+    bottom: 30%;
+    right: 12%;
+}
+
+.image-with-label.bottom-left {
+    bottom: 15%;
+    left: 28%;
+}
+
+.image-with-label.bottom-right {
+    bottom: 15%;
+    right: 28%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .work-section {
+        flex-direction: column;
+        position: static;
+        padding: 40px 20px;
+    }
+    
+    .work-content-center {
+        position: static;
+        transform: none;
+        margin-bottom: 40px;
+    }
+    
+    .image-with-label {
+        position: static;
+        margin: 15px;
+        display: inline-flex;
+    }
+    
+    .work-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-with-label {
+        margin: 10px;
+        width: 45%;
+    }
+}
+.icon {
+    width: 80px;
+    height: 80px;
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+.label {
+    font-size: 1.3rem;
+    color: #555;
+    margin-top: 6px;
+    text-align: center;
+}
+
+
+.icon:hover {
+    transition: filter 0.2s;
+    filter: brightness(1.2);
+    content: url('../assets/Open.svg');
+}
+
+
+a{
+    text-decoration: none;
+}
+
+@keyframes float {
+    0% {
+        top: 0px;
+    }
+    50% {
+        top: -20px;
+    }
+}
+
+/* RULER STYLE*/
+body {
+    margin: 0;
+    padding-top: 0;
+}
+
+.ruler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.tick {
+    position: relative;
+    flex: 0 0 37.8px;
+    height: 20px;
+    border-left: 1px solid black;
+}
+
+.tick::after {
+    content: attr(data-cm) " cm";
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    font-size: 10px;
+    color: black;
+}
