@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mathéo Delessert portfolio</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/offest.js"></script>
+
+</head>
+<body>
+<div class="hero-section">
+    <h1> Hello my name is <span class="cursive">Mathéo Delessert.</span> <br>
+        and welcome to my portfolio.
+    </h1>
+
+
+    </head>
+
+
+    <div class="ruler" id="ruler"></div>
+    <script>
+        const cmWidth = 37.8; // pixels approximatifs pour 1 cm
+
+        function generateRuler() {
+            const ruler = document.getElementById('ruler');
+            ruler.innerHTML = ""; // On vide la règle avant de la recréer
+
+            const screenWidth = window.innerWidth;
+            const numTicks = Math.floor(screenWidth / cmWidth);
+
+            for (let i = 0; i <= numTicks; i++) {
+                const tick = document.createElement('div');
+                tick.classList.add('tick');
+                tick.setAttribute('data-cm', i);
+                ruler.appendChild(tick);
+            }
+        }
+
+        // Générer la règle au chargement
+        generateRuler();
+
+        // Recalculer la règle au redimensionnement de la fenêtre
+        window.addEventListener('resize', generateRuler);
+    </script>
+
+
+
+</div>
+<div class="work-section">
+    <div class="work-content-center">
+        <h1>go check my work</h1>
+    </div>
+
+    <!-- Top scattered items -->
+    <div class="image-with-label top-left">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">Graphic <span>design</span></div>
+    </div>
+
+    <div class="image-with-label top-right">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">Photography</div>
+    </div>
+
+    <!-- Left scattered items -->
+    <div class="image-with-label left-top">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">Web <span>development</span></div>
+    </div>
+
+    <div class="image-with-label left-bottom">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">Branding</div>
+    </div>
+
+    <!-- Right scattered items -->
+    <a href="/pages/motion.html">
+        <div class="image-with-label right-top">
+            <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+            <div class="label">Motion <span>design</span></div>
+        </div>
+    </a>
+
+    <div class="image-with-label right-bottom">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">UI/UX <span>design</span></div>
+    </div>
+
+    <!-- Bottom scattered items -->
+    <div class="image-with-label bottom-left">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">Video</div>
+    </div>
+
+    <div class="image-with-label bottom-right">
+        <img src="/assets/Close.svg" alt="Fermer" class="icon" data-alt="Open.svg">
+        <div class="label">3D <span>design</span></div>
+    </div>
+</div>
+</body>
+</html>

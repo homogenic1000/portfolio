@@ -32,9 +32,13 @@ h1 {
 }
 
 .display-work h2 {
+    font-weight: 350;
     margin: 0;
 }
 
+.justify{
+    max-width: 500px;
+}
 /* Paragraphs */
 p {
     margin: 0;
@@ -56,11 +60,12 @@ span {
 
 .sans {
     font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .sans-title-work {
-    margin-bottom: 0.5em;
+    font-size: 3vw;
+    margin: 0 0 0.5em 0;
 }
 
 .type-work {
@@ -68,6 +73,11 @@ span {
     font-size: 4rem;
     font-weight: lighter;
     margin-bottom: 0.5em;
+}
+
+.description {
+    font-weight: 400;
+
 }
 
 /* Label Typography */
@@ -86,4 +96,9 @@ span {
     left: 2px;
     font-size: 10px;
     color: black;
+}
+.copyright{
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 200;
 }

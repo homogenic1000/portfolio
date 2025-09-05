@@ -19,7 +19,7 @@ body {
     background-color: white;
     overflow: hidden;
     height: 100vh;
-    margin: 0;
+    margin: 1.5em;
     padding-top: 0;
 }
 
@@ -236,7 +236,9 @@ a {
     flex-direction: row;
 }
 .text-work {
-    padding: 0.5em;
+    margin: 0;
+    padding: 0 0 0 2.5em;
+    width: max-content;
 }
 
 /* ===================================================================
@@ -245,4 +247,8 @@ a {
 
 #frip{
     height: 80vh
+}
+
+.dark{
+    background-color: #ffffff;
 }
