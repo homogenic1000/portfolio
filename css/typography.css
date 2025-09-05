@@ -1,0 +1,89 @@
+/* ===================================================================
+   TYPOGRAPHY & FONTS
+   ================================================================= */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+/* Custom Fonts */
+@font-face {
+    font-family: 'Pinyon';
+    src: url('../font/PinyonScript-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Base Typography */
+body {
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Headings */
+h1 {
+    font-size: 4vw;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    margin-top: 0;
+    margin-left: 0.9vw;
+}
+
+.display-work h1 {
+    margin: 0;
+}
+
+.display-work h2 {
+    margin: 0;
+}
+
+/* Paragraphs */
+p {
+    margin: 0;
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
+}
+
+/* Spans */
+span {
+    font-family: 'Pinyon', cursive;
+    font-size: 1.5rem;
+}
+
+/* Typography Classes */
+.cursive {
+    font-family: 'Pinyon', cursive;
+    font-weight: normal;
+}
+
+.sans {
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+}
+
+.sans-title-work {
+    margin-bottom: 0.5em;
+}
+
+.type-work {
+    font-family: 'Pinyon', cursive;
+    font-size: 4rem;
+    font-weight: lighter;
+    margin-bottom: 0.5em;
+}
+
+/* Label Typography */
+.label {
+    font-size: 1.3rem;
+    color: #555;
+    margin-top: 6px;
+    text-align: center;
+}
+
+/* Tick Labels */
+.tick::after {
+    content: attr(data-cm) " cm";
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    font-size: 10px;
+    color: black;
+}

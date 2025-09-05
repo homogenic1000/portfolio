@@ -3,13 +3,8 @@
    ================================================================= */
 @import url('reset.css');
 @import url('utility.css');
+@import url('typography.css');
 
-@font-face {
-    font-family: 'Pinyon';
-    src: url('../font/PinyonScript-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 
 /* ===================================================================
    GLOBAL STYLES & RESET
@@ -21,7 +16,6 @@
 }
 
 body {
-    font-family: "DM Sans", sans-serif;
     background-color: white;
     overflow: hidden;
     height: 100vh;
@@ -29,37 +23,6 @@ body {
     padding-top: 0;
 }
 
-/* ===================================================================
-   TYPOGRAPHY
-   ================================================================= */
-h1 {
-    font-size: 4vw;
-    font-family: 'Pinyon', cursive;
-    margin-top: 5vw;
-    margin-left: 0.9vw;
-}
-
-p {
-    margin: 0;
-    font-family: 'Pinyon', cursive;
-    font-weight: normal;
-}
-
-span {
-    font-family: 'Pinyon', cursive;
-    font-size: 1.5rem;
-}
-
-.cursive {
-    font-family: 'Pinyon', cursive;
-    font-weight: normal;
-}
-
-.sans {
-    font-size: 4vw;
-    font-weight: normal;
-    font-family: "DM Sans", sans-serif;
-}
 
 /* ===================================================================
    LAYOUT SECTIONS
@@ -128,7 +91,6 @@ span {
 
 /* Label Styles */
 .label {
-    font-size: 1.3rem;
     color: #555;
     margin-top: 6px;
     text-align: center;
@@ -208,7 +170,6 @@ span {
     position: absolute;
     bottom: 0;
     left: 2px;
-    font-size: 10px;
     color: black;
 }
 
@@ -265,4 +226,23 @@ a {
         margin: 10px;
         width: 45%;
     }
+}
+
+/* ===================================================================
+   DISPLAY OF MY WORK
+   ================================================================= */
+.display-work {
+    display: flex;
+    flex-direction: row;
+}
+.text-work {
+    padding: 0.5em;
+}
+
+/* ===================================================================
+   MOTION
+   ================================================================= */
+
+#frip{
+    height: 80vh
 }
