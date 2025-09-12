@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&display=swap');
+
+
+#animation-bag{
+    transition: transform 0.3s ease-in-out;
+}
+
+#animation-bag:hover{
+    transform: scale(1.05);
+
+}
