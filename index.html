@@ -1,14 +1,28 @@
 <!doctype html>
-<html lang=fr>
+<html lang="fr">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <img id="animation-bag" src="assets/animation/frame1.png" alt="">
-    <script src="animation.js"></script>
+
+<!-- SVG Filter (invisible) -->
+<svg width="0" height="0">
+    <filter id="displacementFilter">
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="1" numOctaves="1" result="turbulence"/>
+        <feDisplacementMap id="displace" in2="turbulence" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+</svg>
+
+<!-- Contenu HTML -->
+<div id="hero-section">
+    <img id="animation-bag" src="assets/animation/frame1.png" alt="An animation of a person standing with a redbang in hand, then they flip the bag">
+    <h1 id="title-d">Hello my name is Mathéo Delessert <br>and welcome to my portfolio, All my work is in my bag!</h1>
+</div>
+
+<!-- Scripts placés en bas, après le contenu -->
+<script src="animation.js"></script>
 </body>
 </html>

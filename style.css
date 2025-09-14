@@ -1,11 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arapey', serif;
+}
+
+body{
+
+    margin:0 2rem 0 0;
+
+
+    padding: 0;
+}
+
+
+#hero-section{
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    align-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#hero-section h1 {
+    text-align: right;
+    flex: 1;
+    margin-left: 2rem;
+}
 
 #animation-bag{
     transition: transform 0.3s ease-in-out;
+    flex-shrink: 0;
 }
 
 #animation-bag:hover{
     transform: scale(1.05);
-
 }
+
+#title-d{
+    transition: ease-in-out 0.3s;
+    filter: url(#displacementFilter);
+}
+
+
