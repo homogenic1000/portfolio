@@ -5,24 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Charger Matter.js depuis CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
 </head>
 <body>
 
-<!-- SVG Filter (invisible) -->
+<!-- SVG Filter -->
 <svg width="0" height="0">
     <filter id="displacementFilter">
-        <feTurbulence id="turbulence" type="turbulence" baseFrequency='0.5' numOctaves="1" result="turbulence"/>
-        <feDisplacementMap id="displace" in2="turbulence" in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.5" numOctaves="1" result="turbulence"/>
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
 </svg>
 
-<!-- Contenu HTML -->
+<!-- Contenu -->
 <div id="hero-section">
-    <img id="animation-bag" src="assets/animation/frame1.png" alt="An animation of a person standing with a redbang in hand, then they flip the bag">
-    <h1 id="title-d">Hello my name is Mathéo Delessert <br>and welcome to my portfolio, All my work is in my bag!</h1>
+    <div id="physic">
+        <img id="animation-bag" src="assets/animation/frame1.png" alt="Animation">
+    </div>
+    <h1 id="title-d">Hello, my name is Mathéo Delessert <br>Welcome to my portfolio, all my work is in my bag!</h1>
 </div>
 
-<!-- Scripts placés en bas, après le contenu -->
-<script src="animation.js"></script>
+<!-- Script Matter.js -->
+<script>
+    // module aliases
+    var Engine = Matter.Engine,
+        Render = Matter.Render,
+        Runner = Matter.Runner,
+        Bodies = Matter.Bodies,
+        Composite = Matter.Composite;
+
+    // create an engine
+    var engine = Engine.create();
+
+    // create a renderer
+    var render = Render.create({
+        element: document.getElementById("physic"),
+        engine: engine,
+        options: {
+            width: 800,
+            height: 600,
+            wireframes: false,
+            background: false,
+        }
+    });
+
+    // create two boxes and a ground
+    var boxA = Bodies.rectangle(400, 200, 80, 80);
+    var boxB = Bodies.rectangle(450, 50, 80, 80);
+    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, color: false,});
+
+    // add all of the bodies to the world
+    Composite.add(engine.world, [boxA, boxB, ground]);
+
+    // run the renderer and engine
+    Render.run(render);
+    var runner = Runner.create();
+    Runner.run(runner, engine);
+</script>
+
 </body>
 </html>
