@@ -31,30 +31,40 @@
 <!-- Script Matter.js -->
 <script>
     function startPhysics() {
-    // module aliases
-    var Engine = Matter.Engine,
-        Render = Matter.Render,
-        Runner = Matter.Runner,
-        Bodies = Matter.Bodies,
-        Composite = Matter.Composite;
+        // module aliases
+        var Engine = Matter.Engine,
+            Render = Matter.Render,
+            Runner = Matter.Runner,
+            Bodies = Matter.Bodies,
+            Composite = Matter.Composite;
 
-    // create an engine
-    var engine = Engine.create();
+        // create an engine
+        var engine = Engine.create();
+        
+        // Configurer la gravité pour qu'elle soit moins forte
+        engine.world.gravity.y = 0.5; // Valeur par défaut: 1
+        engine.world.gravity.x = 0;
 
-    // create a renderer
-    var render = Render.create({
-        element: document.getElementById("physic"),
-        engine: engine,
-        options: {
-            width: 800,
-            height: 600,
-            wireframes: false,
-            background: false,
-        }
-    });
+        // create a renderer
+        var render = Render.create({
+            element: document.getElementById("physic"),
+            engine: engine,
+            options: {
+                width: 800,
+                height: 600,
+                wireframes: false,
+                background: 'transparent',
+                showAngleIndicator: false,
+                showVelocity: false
+            }
+        });
 
-    // create two boxes and a ground
-        var boxA = Bodies.rectangle(90, 90, 160, 93, {
+        // create two boxes and a ground - positionnés verticalement
+        var tabac = Bodies.rectangle(400, 50, 160, 93, {
+            isStatic: true,
+            restitution: 0.3,
+            friction: 0.7,
+            frictionAir: 0.01,
             render: {
                 sprite: {
                     texture: 'assets/2d/tabac.png',
@@ -64,30 +74,46 @@
             }
         });
 
-
-    var boxB = Bodies.rectangle(320, 186, {
-        render: {
-            sprite: {
-                texture: 'assets/2d/filtre.png',
-                xScale: 0.03,
-                yScale: 0.03
+        var filtre = Bodies.rectangle(400, 200, 80, 53, {
+            isStatic: true,
+            restitution: 0.3,
+            friction: 0.7,
+            frictionAir: 0.01,
+            render: {
+                sprite: {
+                    texture: 'assets/2d/filtre.png',
+                    xScale: 0.5,
+                    yScale: 0.5,
+                }
             }
-        }
-    });
-    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, visible: false,});
+        });
+            }
 
-    // add all of the bodies to the world
-    Composite.add(engine.world, [boxA, boxB, ground]);
 
-    // run the renderer and engine
-    Render.run(render);
-    render.canvas.style.position = 'absolute';
-    render.canvas.style.top = '0';
-    render.canvas.style.left = '0';
-    render.canvas.style.pointerEvents = 'none'; // Ne bloque pas les clics !
-    render.canvas.style.zIndex = '2';
-    var runner = Runner.create();
-    Runner.run(runner, engine);
+        // Sol invisible en bas
+        var ground = Bodies.rectangle(400, 580, 800, 60, {
+            isStatic: true,
+            restitution: 0.2,
+            friction: 0.8,
+            render: { visible: false }
+        });
+
+        // add all of the bodies to the world
+        Composite.add(engine.world, [filtre, tabac, ground, pampelemousse]);
+
+        // run the renderer and engine
+        Render.run(render);
+        
+        // Configuration du canvas
+        render.canvas.style.position = 'absolute';
+        render.canvas.style.top = '0';
+        render.canvas.style.left = '0';
+        render.canvas.style.pointerEvents = 'none';
+        render.canvas.style.zIndex = '2';
+        
+        // Démarrer la simulation
+        var runner = Runner.create();
+        Runner.run(runner, engine);
     }
 </script>
 
