@@ -8,6 +8,11 @@
 
     <!-- Charger Matter.js depuis CDN -->
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    
+    <!-- Scripts pour la physique -->
+    <script src="boundaries.js"></script>
+    <script src="objects.js"></script>
+    <script src="physics.js"></script>
     <script src="animation.js"></script>
 </head>
 <body>
@@ -25,99 +30,9 @@
     <div id="physic">
         <img id="animation-bag" src="assets/animation/frame1.png" alt="Animation">
     </div>
-    <h1 id="title-d">Hello, my name is Mathéo Delessert <br>Welcome to my portfolio, all my work is in my bag!</h1>
+    <h1 id="title-d">Hello, my name is Maxime Margot <br>Welcome to my portfolio, all my work is in my bag!</h1>
 </div>
 
-<!-- Script Matter.js -->
-<script>
-    function startPhysics() {
-        // module aliases
-        var Engine = Matter.Engine,
-            Render = Matter.Render,
-            Runner = Matter.Runner,
-            Bodies = Matter.Bodies,
-            Composite = Matter.Composite;
-
-        // create an engine
-        var engine = Engine.create();
-        
-        // Configurer la gravité pour qu'elle soit moins forte
-        engine.world.gravity.y = 0.5; // Valeur par défaut: 1
-        engine.world.gravity.x = 0;
-
-        // create a renderer
-        var render = Render.create({
-            element: document.getElementById("physic"),
-            engine: engine,
-            options: {
-                width: 800,
-                height: 600,
-                wireframes: false,
-                background: 'transparent',
-                showAngleIndicator: false,
-                showVelocity: false
-            }
-        });
-
-        // create two boxes and a ground - positionnés verticalement
-        // (400, 50, 160, 93) = ( gauche-droite, hauteur, largeur, longeur)
-        var tabac = Bodies.rectangle(400, 50, 160, 93, {
-            isStatic: true,
-            restitution: 0.3,
-            friction: 0.7,
-            frictionAir: 0.01,
-            render: {
-                sprite: {
-                    texture: 'assets/2d/tabac.png',
-                    xScale: 0.5,
-                    yScale: 0.5
-                }
-            }
-        });
-
-        var filtre = Bodies.rectangle(400, 200, 80, 53, {
-            isStatic: true,
-            restitution: 0.3,
-            friction: 0.7,
-            frictionAir: 0.01,
-            render: {
-                sprite: {
-                    texture: 'assets/2d/filtre.png',
-                    xScale: 0.5,
-                    yScale: 0.5,
-                }
-            }
-        });
-
-
-
-        // Sol invisible en bas
-        var ground = Bodies.rectangle(400, 580, 800, 60, {
-            isStatic: true,
-            restitution: 0.2,
-            friction: 0.8,
-            render: { visible: false }
-        });
-
-        // add all of the bodies to the world
-        Composite.add(engine.world, [filtre, tabac, ground]);
-
-        // run the renderer and engine
-        Render.run(render);
-        
-        // Configuration du canvas
-        render.canvas.style.position = 'absolute';
-        render.canvas.style.top = '0';
-        render.canvas.style.left = '0';
-        render.canvas.style.pointerEvents = 'none';
-        render.canvas.style.zIndex = '2';
-        
-        // Démarrer la simulation
-        var runner = Runner.create();
-        Runner.run(runner, engine);
-
-    }
-</script>
 
 </body>
 </html>
