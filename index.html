@@ -8,14 +8,15 @@
 
     <!-- Charger Matter.js depuis CDN -->
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    <script src="animation.js"></script>
 </head>
 <body>
 
 <!-- SVG Filter -->
 <svg width="0" height="0">
     <filter id="displacementFilter">
-        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.5" numOctaves="1" result="turbulence"/>
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.6" numOctaves="1" result="turbulence"/>
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
 </svg>
 
@@ -29,6 +30,7 @@
 
 <!-- Script Matter.js -->
 <script>
+    function startPhysics() {
     // module aliases
     var Engine = Matter.Engine,
         Render = Matter.Render,
@@ -52,17 +54,41 @@
     });
 
     // create two boxes and a ground
-    var boxA = Bodies.rectangle(400, 200, 80, 80);
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, color: false,});
+        var boxA = Bodies.rectangle(90, 90, 160, 93, {
+            render: {
+                sprite: {
+                    texture: 'assets/2d/tabac.png',
+                    xScale: 0.5,
+                    yScale: 0.5
+                }
+            }
+        });
+
+
+    var boxB = Bodies.rectangle(320, 186, {
+        render: {
+            sprite: {
+                texture: 'assets/2d/filtre.png',
+                xScale: 0.03,
+                yScale: 0.03
+            }
+        }
+    });
+    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, visible: false,});
 
     // add all of the bodies to the world
     Composite.add(engine.world, [boxA, boxB, ground]);
 
     // run the renderer and engine
     Render.run(render);
+    render.canvas.style.position = 'absolute';
+    render.canvas.style.top = '0';
+    render.canvas.style.left = '0';
+    render.canvas.style.pointerEvents = 'none'; // Ne bloque pas les clics !
+    render.canvas.style.zIndex = '2';
     var runner = Runner.create();
     Runner.run(runner, engine);
+    }
 </script>
 
 </body>

@@ -32,6 +32,8 @@ body{
 }
 
 #animation-bag{
+    z-index: 3; /* plus haut que le canvas */
+    cursor: pointer;
     transition: transform 0.3s ease-in-out;
     flex-shrink: 0;
 }

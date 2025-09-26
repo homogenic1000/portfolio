@@ -29,6 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 frame++;
             }
         }, 140); // ~16 FPS
+        setTimeout(startPhysics, 1900);
     }
 
     img.addEventListener("click", animate);
