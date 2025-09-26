@@ -87,7 +87,7 @@
                 }
             }
         });
-            }
+
 
 
         // Sol invisible en bas
@@ -99,7 +99,7 @@
         });
 
         // add all of the bodies to the world
-        Composite.add(engine.world, [filtre, tabac, ground, pampelemousse]);
+        Composite.add(engine.world, [filtre, tabac, ground]);
 
         // run the renderer and engine
         Render.run(render);
@@ -114,6 +114,7 @@
         // Démarrer la simulation
         var runner = Runner.create();
         Runner.run(runner, engine);
+
     }
 </script>
 
