@@ -1,10 +1,11 @@
 // boundaries.js - Gestion des murs et du sol
 
 const BOUNDARY_CONFIG = {
-    groundHeight: 60,
-    wallWidth: 60,
-    restitution: 0.2,
-    friction: 0.8
+    groundHeight: 30,
+    wallWidth: 30,
+    restitution: 10,
+    friction: 0,
+
 };
 
 // Variables globales pour les boundaries

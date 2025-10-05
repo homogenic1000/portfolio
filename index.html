@@ -5,20 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media.css">
 
     <!-- Charger Matter.js depuis CDN -->
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
     
     <!-- Scripts pour la physique -->
-    <script src="boundaries.js"></script>
-    <script src="objects.js"></script>
-    <script src="physics.js"></script>
-    <script src="animation.js"></script>
+    <script src="script/spawn.js"></script>
+    <script src="script/boundaries.js"></script>
+    <script src="script/objects.js"></script>
+    <script src="script/physics.js"></script>
+    <script src="script/animation.js"></script>
 </head>
 <body>
+<div id="no-mobile">
+    <h3> You can't not watch my art on a mobile device. Watching my art on a mobile device is a disgrace itslef. <br>
+        GO ON A DESKTOP !</h3>
+</div>
+<div id="media-query">
+
+
+
+
 
 <!-- SVG Filter -->
 <svg width="0" height="0">
+    <filter id="displacementFilterLow">
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.6" numOctaves="1" result="turbulence"/>
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
     <filter id="displacementFilter">
         <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.6" numOctaves="1" result="turbulence"/>
         <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G"/>
@@ -29,8 +44,10 @@
 <div id="hero-section">
     <div id="physic">
         <img id="animation-bag" src="assets/animation/frame1.png" alt="Animation">
+        <img id="sandwich" src="assets/animation/frame-sandwich.png" alt="">
     </div>
-    <h1 id="title-d">Hello, my name is Maxime Margot <br>Welcome to my portfolio, all my work is in my bag!</h1>
+    <h1 id="title-d">Hello, my name is Mathéo Delessert <br>Welcome to my portfolio, all my work is in my bag!</h1>
+</div>
 </div>
 
 

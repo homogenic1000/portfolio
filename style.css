@@ -8,10 +8,7 @@
 }
 
 body{
-
     margin:0 2rem 0 0;
-
-
     padding: 0;
 }
 
@@ -32,7 +29,7 @@ body{
 }
 
 #animation-bag{
-    z-index: 3; /* plus haut que le canvas */
+    z-index: 1; /* plus haut que le canvas */
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
     flex-shrink: 0;
@@ -46,5 +43,22 @@ body{
     transition: ease-in-out 0.3s;
     filter: url(#displacementFilter);
 }
+#physic{
+    position: relative;
+}
+#physic img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#sandwich{
+    z-index:3;
+    display: none;
+}
+
+
+
+
 
 

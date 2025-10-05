@@ -4,12 +4,12 @@ const OBJECT_CONFIG = {
     tabac: {
         width: 160,
         height: 93,
-        x: 400,
-        y: 50,
-        restitution: 0.3,
-        friction: 0.7,
+        x: 200,
+        y: 100,
+        restitution: 2,
+        friction: 5,
         frictionAir: 0.01,
-        isStatic: true, // Change à false pour activer la physique
+        isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/tabac.png',
             xScale: 0.5,
@@ -20,8 +20,8 @@ const OBJECT_CONFIG = {
         width: 80,
         height: 53,
         x: 400,
-        y: 200,
-        restitution: 0.3,
+        y: 100,
+        restitution: 2,
         friction: 0.7,
         frictionAir: 0.01,
         isStatic: false, // Change à false pour activer la physique
@@ -30,11 +30,28 @@ const OBJECT_CONFIG = {
             xScale: 0.5,
             yScale: 0.5
         }
+    },
+    pamplemousse: {
+        radius: 15,
+        x: 600,
+        y: 100,
+        restitution: 1.2
+        ,
+        friction: 0.7,
+        frictionAir: 0.01,
+        isStatic: false, // Change à false pour activer la physique
+        sprite: {
+            texture: 'assets/2d/pamplemousse.png',
+            xScale: 0.2,
+            yScale: 0.2,
+        }
+
     }
 };
 
+
 // Variables globales pour les objets
-let tabac, filtre;
+let tabac, filtre, pamplemousse;
 
 /**
  * Créer l'objet tabac
@@ -94,44 +111,50 @@ function createFiltre() {
     return filtre;
 }
 
-/**
- * Créer tous les objets
- */
-function createObjects() {
-    return [
-        createTabac(),
-        createFiltre()
-    ];
+function createPamplemousse() {
+    const config = OBJECT_CONFIG.pamplemousse;
+
+    pamplemousse = Matter.Bodies.circle(
+        config.x,
+        config.y,
+        config.radius,
+        {
+            isStatic: config.isStatic,
+            restitution: config.restitution,
+            friction: config.friction,
+            frictionAir: config.frictionAir,
+            render: {
+                sprite: {
+                    texture: config.sprite.texture,
+                    xScale: config.sprite.xScale,
+                    yScale: config.sprite.yScale
+                }
+            }
+        }
+    );
+
+    return pamplemousse;
 }
 
-/**
- * Obtenir tous les objets
- */
-function getObjects() {
-    return [tabac, filtre];
-}
 
-/**
- * Activer/désactiver la physique pour un objet
- */
-function toggleObjectPhysics(object, isStatic) {
-    Matter.Body.setStatic(object, isStatic);
-}
 
-/**
- * Activer/désactiver la physique pour le tabac
- */
-function toggleTabacPhysics(isStatic = false) {
-    if (tabac) {
-        toggleObjectPhysics(tabac, isStatic);
+    /**
+     * Créer tous les objets
+     */
+    function createObjects() {
+        return [
+            createTabac(),
+            createFiltre(),
+            createPamplemousse(),
+
+        ];
     }
-}
 
-/**
- * Activer/désactiver la physique pour le filtre
- */
-function toggleFiltrePhysics(isStatic = false) {
-    if (filtre) {
-        toggleObjectPhysics(filtre, isStatic);
+    /**
+     * Obtenir tous les objets
+     */
+    function getObjects() {
+        return [tabac, filtre, pamplemousse];
     }
-}
+
+

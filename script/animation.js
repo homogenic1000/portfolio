@@ -6,6 +6,7 @@ let intervalId = null;
 
 window.addEventListener("DOMContentLoaded", () => {
     const img = document.getElementById("animation-bag");
+    const sandwich = document.getElementById("sandwich");
 
     function animate() {
         if (intervalId) return;
@@ -25,6 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
             if (frame === totalFrames) {
                 clearInterval(intervalId); // arrêt à la dernière frame
+                if (sandwich) sandwich.style.display = "block";
             } else {
                 frame++;
             }
