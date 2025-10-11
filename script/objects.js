@@ -202,6 +202,3 @@ function createRondpoint() {
     }
 
 
-tabac.addEventListener("click", (event) => {
-    console.log(tabac);
-});
