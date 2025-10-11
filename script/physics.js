@@ -64,6 +64,7 @@ function configureCanvas() {
     render.canvas.style.zIndex = '2';
 }
 
+
 /**
  * Démarrer le rendu et la simulation
  */

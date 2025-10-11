@@ -46,12 +46,31 @@ const OBJECT_CONFIG = {
             yScale: 0.2,
         }
 
-    }
+    },
+    rondpoint: {
+        radius: 50,
+        x: 800,
+        y: 100,
+        restitution: 1.2,
+        friction: 0.7,
+        frictionAir: 0.01,
+        isStatic: false, // Change à false pour activer la physique
+        sprite: {
+            texture: 'assets/2d/rondpoint.png',
+            xScale: 0.1,
+            yScale: 0.1
+        }
+
+    },
 };
 
 
 // Variables globales pour les objets
-let tabac, filtre, pamplemousse;
+let tabac, filtre, pamplemousse, rondpoint;
+
+
+
+
 
 /**
  * Créer l'objet tabac
@@ -136,6 +155,30 @@ function createPamplemousse() {
     return pamplemousse;
 }
 
+function createRondpoint() {
+    const config = OBJECT_CONFIG.rondpoint;
+    rondpoint = Matter.Bodies.circle(
+        config.x,
+        config.y,
+        config.radius,
+        {
+            isStatic: config.isStatic,
+            restitution: config.restitution,
+            friction: config.friction,
+            frictionAir: config.frictionAir,
+            render: {
+                sprite: {
+                    texture: config.sprite.texture,
+                    xScale: config.sprite.xScale,
+                    yScale: config.sprite.yScale
+                }
+            }
+        }
+    );
+
+    return rondpoint;
+
+}
 
 
     /**
@@ -146,6 +189,7 @@ function createPamplemousse() {
             createTabac(),
             createFiltre(),
             createPamplemousse(),
+            createRondpoint(),
 
         ];
     }
@@ -154,7 +198,10 @@ function createPamplemousse() {
      * Obtenir tous les objets
      */
     function getObjects() {
-        return [tabac, filtre, pamplemousse];
+        return [tabac, filtre, pamplemousse, rondpoint];
     }
 
 
+tabac.addEventListener("click", (event) => {
+    console.log(tabac);
+});

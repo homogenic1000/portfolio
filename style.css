@@ -23,6 +23,8 @@ body{
 }
 
 #hero-section h1 {
+    position: relative;
+    top: 12em;
     text-align: right;
     flex: 1;
     margin-left: 2rem;
