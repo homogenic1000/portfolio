@@ -181,6 +181,8 @@ function createRondpoint() {
 }
 
 
+const objects = [];
+
     /**
      * Créer tous les objets
      */

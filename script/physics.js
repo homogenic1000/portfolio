@@ -114,12 +114,26 @@ function startPhysics() {
     // Créer les boundaries (murs et sol)
     const boundaries = createBoundaries();
     
-    // Créer les objets
-    const objects = createObjects();
+    // Ajouter les boundaries au monde
+    addToWorld(boundaries);
     
-    // Ajouter tous les corps au monde
-    addToWorld([...boundaries, ...objects]);
+    // Ajouter les objets avec délai
+    const objectFunctions = [createTabac, createFiltre, createPamplemousse, createRondpoint];
+    objectFunctions.forEach((createFn, index) => {
+        setTimeout(() => {
+            const obj = createFn();
+            addToWorld([obj]);
+        }, index * 1000); // 1 seconde entre chaque objet
+    });
     
+    // Démarrer la simulation
+    startSimulation();
+    
+    // Gérer le redimensionnement
+    window.addEventListener('resize', handleResize);
+
+
+
     // Démarrer la simulation
     startSimulation();
     
