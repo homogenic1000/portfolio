@@ -1,11 +1,14 @@
 // objects.js - Gestion des objets qui tombent
 
+spawnX = 50
+spawnY = 100
+
 const OBJECT_CONFIG = {
     tabac: {
         width: 160,
         height: 93,
-        x: 200,
-        y: 100,
+        x: spawnX,
+        y: spawnY,
         restitution: 2,
         friction: 5,
         frictionAir: 0.01,
@@ -19,8 +22,8 @@ const OBJECT_CONFIG = {
     filtre: {
         width: 80,
         height: 53,
-        x: 400,
-        y: 100,
+        x: spawnX,
+        y: spawnY,
         restitution: 2,
         friction: 0.7,
         frictionAir: 0.01,
@@ -33,8 +36,8 @@ const OBJECT_CONFIG = {
     },
     pamplemousse: {
         radius: 15,
-        x: 600,
-        y: 100,
+        x: spawnX,
+        y: spawnY,
         restitution: 1.2
         ,
         friction: 0.7,
@@ -49,8 +52,8 @@ const OBJECT_CONFIG = {
     },
     rondpoint: {
         radius: 50,
-        x: 800,
-        y: 100,
+        x: spawnX,
+        y: spawnY,
         restitution: 1.2,
         friction: 0.7,
         frictionAir: 0.01,

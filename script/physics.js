@@ -61,7 +61,7 @@ function configureCanvas() {
     render.canvas.style.top = '0';
     render.canvas.style.left = '0';
     render.canvas.style.pointerEvents = 'none';
-    render.canvas.style.zIndex = '2';
+    render.canvas.style.zIndex = '3';
 }
 
 
