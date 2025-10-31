@@ -131,7 +131,7 @@ function startPhysics() {
     setTimeout(() => {
       const obj = createFn();
       addToWorld([obj]);
-    }, index * 1200); // 1 seconde entre chaque objet
+    }, index * 1000); 
   });
 
   // Démarrer la simulation

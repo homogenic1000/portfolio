@@ -2,9 +2,9 @@
 
 spawnX = 150;
 spawnY = 240;
-resitutionValue = 0.9;
-frictionValueAir = 0;
-frictionValue = 0;
+const resitutionValue = 0.7;
+const frictionValueAir = 0.01;
+const frictionValue = 0.01;
 
 const OBJECT_CONFIG = {
   tabac: {
