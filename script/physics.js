@@ -16,7 +16,7 @@ const RENDER_CONFIG = {
     wireframes: false,
     background: 'transparent',
     showAngleIndicator: false,
-    showVelocity: false
+    showVelocity: true
 };
 
 /**
@@ -123,7 +123,7 @@ function startPhysics() {
         setTimeout(() => {
             const obj = createFn();
             addToWorld([obj]);
-        }, index * 1000); // 1 seconde entre chaque objet
+        }, index * 1200); // 1 seconde entre chaque objet
     });
     
     // Démarrer la simulation
@@ -133,10 +133,6 @@ function startPhysics() {
     window.addEventListener('resize', handleResize);
 
 
-
-    // Démarrer la simulation
-    startSimulation();
-    
     // Gérer le redimensionnement
     window.addEventListener('resize', handleResize);
 }

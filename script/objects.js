@@ -2,6 +2,11 @@
 
 spawnX = 50
 spawnY = 100
+resitutionValue = 0.9
+frictionValueAir = 0.01
+frictionValue = 0.01
+
+
 
 const OBJECT_CONFIG = {
     tabac: {
@@ -9,9 +14,9 @@ const OBJECT_CONFIG = {
         height: 93,
         x: spawnX,
         y: spawnY,
-        restitution: 2,
-        friction: 5,
-        frictionAir: 0.01,
+        restitution: resitutionValue ,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/tabac.png',
@@ -20,13 +25,13 @@ const OBJECT_CONFIG = {
         }
     },
     filtre: {
-        width: 80,
-        height: 53,
+        width: 160,
+        height: 93,
         x: spawnX,
         y: spawnY,
-        restitution: 2,
-        friction: 0.7,
-        frictionAir: 0.01,
+        restitution: resitutionValue,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/filtre.png',
@@ -35,13 +40,13 @@ const OBJECT_CONFIG = {
         }
     },
     pamplemousse: {
-        radius: 15,
+        radius: 40,
         x: spawnX,
         y: spawnY,
-        restitution: 1.2
+        restitution: resitutionValue
         ,
-        friction: 0.7,
-        frictionAir: 0.01,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/pamplemousse.png',
@@ -51,12 +56,12 @@ const OBJECT_CONFIG = {
 
     },
     rondpoint: {
-        radius: 50,
+        radius: 80,
         x: spawnX,
         y: spawnY,
-        restitution: 1.2,
-        friction: 0.7,
-        frictionAir: 0.01,
+        restitution: resitutionValue,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/rondpoint.png',
@@ -207,3 +212,4 @@ const objects = [];
     }
 
 
+console.log(tabac.restitution)
