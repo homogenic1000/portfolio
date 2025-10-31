@@ -57,9 +57,13 @@ function initRender() {
  * Configurer le style du canvas
  */
 function configureCanvas() {
-    render.canvas.style.position = 'absolute';
+    // Fix the canvas so it doesn't change document size and create scrollbars
+    render.canvas.style.position = 'fixed';
     render.canvas.style.top = '0';
     render.canvas.style.left = '0';
+    render.canvas.style.width = '100vw';
+    render.canvas.style.height = '100vh';
+    render.canvas.style.display = 'block';
     render.canvas.style.pointerEvents = 'none';
     render.canvas.style.zIndex = '3';
 }
@@ -129,11 +133,10 @@ function startPhysics() {
     // Démarrer la simulation
     startSimulation();
     
-    // Gérer le redimensionnement
-    window.addEventListener('resize', handleResize);
+    // Appliquer une première fois le redimensionnement pour que canvas et boundaries soient corrects
+    handleResize();
 
-
-    // Gérer le redimensionnement
+    // Gérer le redimensionnement (une seule fois)
     window.addEventListener('resize', handleResize);
 }
 
