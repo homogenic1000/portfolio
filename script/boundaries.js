@@ -3,13 +3,14 @@
 const BOUNDARY_CONFIG = {
     groundHeight: 30,
     wallWidth: 30,
-    restitution: 10,
+    restitution: 1,
     friction: 0,
+    ceilingHeight: 200,
 
 };
 
 // Variables globales pour les boundaries
-let ground, leftWall, rightWall;
+let ground, leftWall, rightWall, ceiling;
 
 /**
  * Créer les boundaries (sol et murs)
@@ -26,7 +27,23 @@ function createBoundaries() {
             restitution: BOUNDARY_CONFIG.restitution,
             friction: BOUNDARY_CONFIG.friction,
             render: {
-                visible: false,
+                visible: true,
+                fillStyle: '#444'
+            }
+        }
+    );
+
+    ceiling = Matter.Bodies.rectangle(
+        window.innerWidth / 2,
+        BOUNDARY_CONFIG.groundHeight / 2,
+        window.innerWidth,
+        BOUNDARY_CONFIG.groundHeight,
+        {
+            isStatic: true,
+            restitution: BOUNDARY_CONFIG.restitution,
+            friction: BOUNDARY_CONFIG.friction,
+            render: {
+                visible: true,
                 fillStyle: '#444'
             }
         }
@@ -43,7 +60,7 @@ function createBoundaries() {
             restitution: BOUNDARY_CONFIG.restitution,
             friction: BOUNDARY_CONFIG.friction,
             render: {
-                visible: false,
+                visible: true,
                 fillStyle: '#444'
             }
         }
@@ -60,13 +77,13 @@ function createBoundaries() {
             restitution: BOUNDARY_CONFIG.restitution,
             friction: BOUNDARY_CONFIG.friction,
             render: {
-                visible: false,
+                visible: true,
                 fillStyle: '#444'
             }
         }
     );
     
-    return [ground, leftWall, rightWall];
+    return [ground, leftWall, rightWall, ceiling];
 }
 
 /**
@@ -90,11 +107,16 @@ function updateBoundariesOnResize() {
         x: BOUNDARY_CONFIG.wallWidth / 2,
         y: window.innerHeight / 2
     });
+    // Repositionner le plafond
+    Matter.Body.setPosition(ceiling, {
+        x: window.innerWidth / 2,
+        y: BOUNDARY_CONFIG.ceilingHeight / 2
+    });
 }
 
 /**
  * Obtenir toutes les boundaries
  */
 function getBoundaries() {
-    return [ground, leftWall, rightWall];
+    return [ground, leftWall, rightWall, ceiling];
 }

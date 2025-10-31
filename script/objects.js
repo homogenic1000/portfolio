@@ -1,14 +1,22 @@
 // objects.js - Gestion des objets qui tombent
 
+spawnX = 150
+spawnY = 240
+resitutionValue = 0.9
+frictionValueAir = 0.01
+frictionValue = 0.01
+
+
+
 const OBJECT_CONFIG = {
     tabac: {
         width: 160,
         height: 93,
-        x: 200,
-        y: 100,
-        restitution: 2,
-        friction: 5,
-        frictionAir: 0.01,
+        x: spawnX,
+        y: spawnY,
+        restitution: resitutionValue ,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/tabac.png',
@@ -17,13 +25,13 @@ const OBJECT_CONFIG = {
         }
     },
     filtre: {
-        width: 80,
-        height: 53,
-        x: 400,
-        y: 100,
-        restitution: 2,
-        friction: 0.7,
-        frictionAir: 0.01,
+        width: 160,
+        height: 93,
+        x: spawnX,
+        y: spawnY,
+        restitution: resitutionValue,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/filtre.png',
@@ -32,13 +40,13 @@ const OBJECT_CONFIG = {
         }
     },
     pamplemousse: {
-        radius: 15,
-        x: 600,
-        y: 100,
-        restitution: 1.2
+        radius: 40,
+        x: spawnX,
+        y: spawnY,
+        restitution: resitutionValue
         ,
-        friction: 0.7,
-        frictionAir: 0.01,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/pamplemousse.png',
@@ -48,12 +56,12 @@ const OBJECT_CONFIG = {
 
     },
     rondpoint: {
-        radius: 50,
-        x: 800,
-        y: 100,
-        restitution: 1.2,
-        friction: 0.7,
-        frictionAir: 0.01,
+        radius: 80,
+        x: spawnX,
+        y: spawnY,
+        restitution: resitutionValue,
+        friction: frictionValue,
+        frictionAir: frictionValueAir,
         isStatic: false, // Change à false pour activer la physique
         sprite: {
             texture: 'assets/2d/rondpoint.png',
@@ -204,3 +212,4 @@ const objects = [];
     }
 
 
+console.log(tabac.restitution)
