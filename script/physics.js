@@ -5,158 +5,162 @@ let engine, render, runner;
 
 // Configuration du moteur
 const ENGINE_CONFIG = {
-    gravity: {
-        x: 0,
-        y: 0.5 // Valeur par défaut: 1
-    }
+  gravity: {
+    x: 0,
+    y: 0.5, // Valeur par défaut: 1
+  },
 };
 
 // Configuration du rendu
 const RENDER_CONFIG = {
-    wireframes: false,
-    background: 'transparent',
-    showAngleIndicator: false,
-    showVelocity: true
+  wireframes: false,
+  background: "transparent",
+  showAngleIndicator: false,
+  showVelocity: true,
 };
 
 /**
  * Initialiser le moteur Matter.js
  */
 function initEngine() {
-    // Créer le moteur
-    engine = Matter.Engine.create();
-    
-    // Configurer la gravité
-    engine.world.gravity.x = ENGINE_CONFIG.gravity.x;
-    engine.world.gravity.y = ENGINE_CONFIG.gravity.y;
-    
-    return engine;
+  // Créer le moteur
+  engine = Matter.Engine.create();
+
+  // Configurer la gravité
+  engine.world.gravity.x = ENGINE_CONFIG.gravity.x;
+  engine.world.gravity.y = ENGINE_CONFIG.gravity.y;
+
+  return engine;
 }
 
 /**
  * Initialiser le rendu
  */
 function initRender() {
-    render = Matter.Render.create({
-        element: document.getElementById("physic"),
-        engine: engine,
-        options: {
-            width: window.innerWidth,
-            height: window.innerHeight,
-            wireframes: RENDER_CONFIG.wireframes,
-            background: RENDER_CONFIG.background,
-            showAngleIndicator: RENDER_CONFIG.showAngleIndicator,
-            showVelocity: RENDER_CONFIG.showVelocity
-        }
-    });
-    
-    return render;
+  render = Matter.Render.create({
+    element: document.getElementById("physic"),
+    engine: engine,
+    options: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      wireframes: RENDER_CONFIG.wireframes,
+      background: RENDER_CONFIG.background,
+      showAngleIndicator: RENDER_CONFIG.showAngleIndicator,
+      showVelocity: RENDER_CONFIG.showVelocity,
+    },
+  });
+
+  return render;
 }
 
 /**
  * Configurer le style du canvas
  */
 function configureCanvas() {
-    // Fix the canvas so it doesn't change document size and create scrollbars
-    render.canvas.style.position = 'fixed';
-    render.canvas.style.top = '0';
-    render.canvas.style.left = '0';
-    render.canvas.style.width = '100vw';
-    render.canvas.style.height = '100vh';
-    render.canvas.style.display = 'block';
-    render.canvas.style.pointerEvents = 'none';
-    render.canvas.style.zIndex = '3';
+  // Fix the canvas so it doesn't change document size and create scrollbars
+  render.canvas.style.position = "fixed";
+  render.canvas.style.top = "0";
+  render.canvas.style.left = "0";
+  render.canvas.style.width = "100vw";
+  render.canvas.style.height = "100vh";
+  render.canvas.style.display = "block";
+  render.canvas.style.pointerEvents = "none";
+  render.canvas.style.zIndex = "3";
 }
-
 
 /**
  * Démarrer le rendu et la simulation
  */
 function startSimulation() {
-    // Lancer le rendu
-    Matter.Render.run(render);
-    
-    // Configurer le canvas
-    configureCanvas();
-    
-    // Créer et démarrer le runner
-    runner = Matter.Runner.create();
-    Matter.Runner.run(runner, engine);
+  // Lancer le rendu
+  Matter.Render.run(render);
+
+  // Configurer le canvas
+  configureCanvas();
+
+  // Créer et démarrer le runner
+  runner = Matter.Runner.create();
+  Matter.Runner.run(runner, engine);
 }
 
 /**
  * Ajouter des corps au monde
  */
 function addToWorld(bodies) {
-    Matter.Composite.add(engine.world, bodies);
+  Matter.Composite.add(engine.world, bodies);
 }
 
 /**
  * Gérer le redimensionnement de la fenêtre
  */
 function handleResize() {
-    // Mettre à jour la taille du canvas
-    render.canvas.width = window.innerWidth;
-    render.canvas.height = window.innerHeight;
-    render.options.width = window.innerWidth;
-    render.options.height = window.innerHeight;
-    
-    // Mettre à jour les boundaries
-    updateBoundariesOnResize();
+  // Mettre à jour la taille du canvas
+  render.canvas.width = window.innerWidth;
+  render.canvas.height = window.innerHeight;
+  render.options.width = window.innerWidth;
+  render.options.height = window.innerHeight;
+
+  // Mettre à jour les boundaries
+  updateBoundariesOnResize();
 }
 
 /**
  * Fonction principale pour démarrer la physique
  */
 function startPhysics() {
-    // Initialiser le moteur
-    initEngine();
-    
-    // Initialiser le rendu
-    initRender();
-    
-    // Créer les boundaries (murs et sol)
-    const boundaries = createBoundaries();
-    
-    // Ajouter les boundaries au monde
-    addToWorld(boundaries);
-    
-    // Ajouter les objets avec délai
-    const objectFunctions = [createTabac, createFiltre, createPamplemousse, createRondpoint];
-    objectFunctions.forEach((createFn, index) => {
-        setTimeout(() => {
-            const obj = createFn();
-            addToWorld([obj]);
-        }, index * 1200); // 1 seconde entre chaque objet
-    });
-    
-    // Démarrer la simulation
-    startSimulation();
-    
-    // Appliquer une première fois le redimensionnement pour que canvas et boundaries soient corrects
-    handleResize();
+  // Initialiser le moteur
+  initEngine();
 
-    // Gérer le redimensionnement (une seule fois)
-    window.addEventListener('resize', handleResize);
+  // Initialiser le rendu
+  initRender();
+
+  // Créer les boundaries (murs et sol)
+  const boundaries = createBoundaries();
+
+  // Ajouter les boundaries au monde
+  addToWorld(boundaries);
+
+  // Ajouter les objets avec délai
+  const objectFunctions = [
+    createTabac,
+    createFiltre,
+    createPamplemousse,
+    createRondpoint,
+  ];
+  objectFunctions.forEach((createFn, index) => {
+    setTimeout(() => {
+      const obj = createFn();
+      addToWorld([obj]);
+    }, index * 1200); // 1 seconde entre chaque objet
+  });
+
+  // Démarrer la simulation
+  startSimulation();
+
+  // Appliquer une première fois le redimensionnement pour que canvas et boundaries soient corrects
+  handleResize();
+
+  // Gérer le redimensionnement (une seule fois)
+  window.addEventListener("resize", handleResize);
 }
 
 /**
  * Obtenir le moteur
  */
 function getEngine() {
-    return engine;
+  return engine;
 }
 
 /**
  * Obtenir le rendu
  */
 function getRender() {
-    return render;
+  return render;
 }
 
 /**
  * Obtenir le runner
  */
 function getRunner() {
-    return runner;
+  return runner;
 }
