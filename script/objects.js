@@ -1,7 +1,7 @@
 // objects.js - Gestion des objets qui tombent
 
-spawnX = 50
-spawnY = 100
+spawnX = 150
+spawnY = 240
 resitutionValue = 0.9
 frictionValueAir = 0.01
 frictionValue = 0.01
