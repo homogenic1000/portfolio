@@ -17,14 +17,14 @@ function initMouseConstraint(engine, render) {
     mouse: mouse,
     constraint: {
       stiffness: 0.2,
-      render: {
+      render: { 
         visible: true,
         lineWidth: 1,
         strokeStyle: "#ffffff",
       },
     },
     collisionFilter: {
-      mask: 0x0001, // Permettre l'interaction avec tous les objets
+      mask: 0xFFFFFFFF, // Permettre l'interaction avec tous les objets
     },
   });
 
