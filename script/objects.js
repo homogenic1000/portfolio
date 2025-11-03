@@ -2,9 +2,9 @@
 
 spawnX = 150;
 spawnY = 240;
-const resitutionValue = 0.7;
+const resitutionValue = 0.9;
 const frictionValueAir = 0.01;
-const frictionValue = 0.01;
+const frictionValue = 0.1;
 
 const OBJECT_CONFIG = {
   tabac: {
@@ -188,4 +188,3 @@ function getObjects() {
   return [tabac, filtre, pamplemousse, rondpoint];
 }
 
-console.log(tabac.restitution);
