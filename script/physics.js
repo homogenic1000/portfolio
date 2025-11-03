@@ -78,6 +78,9 @@ function startSimulation() {
   // Configurer le canvas
   configureCanvas();
 
+  // Initialiser la contrainte de souris
+  initMouseConstraint(engine, render);
+
   // Créer et démarrer le runner
   runner = Matter.Runner.create();
   Matter.Runner.run(runner, engine);
