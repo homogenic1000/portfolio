@@ -64,7 +64,7 @@ function configureCanvas() {
   render.canvas.style.width = "100vw";
   render.canvas.style.height = "100vh";
   render.canvas.style.display = "block";
-  render.canvas.style.pointerEvents = "none";
+  render.canvas.style.pointerEvents = "auto"; // Changé de "none" à "auto" pour permettre les interactions
   render.canvas.style.zIndex = "3";
 }
 
@@ -77,6 +77,9 @@ function startSimulation() {
 
   // Configurer le canvas
   configureCanvas();
+
+  // Initialiser la contrainte de souris
+  initMouseConstraint(engine, render);
 
   // Créer et démarrer le runner
   runner = Matter.Runner.create();
@@ -131,7 +134,7 @@ function startPhysics() {
     setTimeout(() => {
       const obj = createFn();
       addToWorld([obj]);
-    }, index * 1000); 
+    }, index * 1000);
   });
 
   // Démarrer la simulation
