@@ -82,6 +82,7 @@ function createTabac() {
     config.width,
     config.height,
     {
+      label: "tabac",
       isStatic: config.isStatic,
       restitution: config.restitution,
       friction: config.friction,
@@ -111,6 +112,7 @@ function createFiltre() {
     config.width,
     config.height,
     {
+      label: "filtre",
       isStatic: config.isStatic,
       restitution: config.restitution,
       friction: config.friction,
@@ -132,6 +134,7 @@ function createPamplemousse() {
   const config = OBJECT_CONFIG.pamplemousse;
 
   pamplemousse = Matter.Bodies.circle(config.x, config.y, config.radius, {
+    label: "pamplemousse",
     isStatic: config.isStatic,
     restitution: config.restitution,
     friction: config.friction,
@@ -151,6 +154,7 @@ function createPamplemousse() {
 function createRondpoint() {
   const config = OBJECT_CONFIG.rondpoint;
   rondpoint = Matter.Bodies.circle(config.x, config.y, config.radius, {
+    label: "rondpoint",
     isStatic: config.isStatic,
     restitution: config.restitution,
     friction: config.friction,
@@ -187,4 +191,3 @@ function createObjects() {
 function getObjects() {
   return [tabac, filtre, pamplemousse, rondpoint];
 }
-
