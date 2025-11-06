@@ -3,7 +3,6 @@
 const BOUNDARY_CONFIG = {
   groundHeight: 30,
   wallWidth: 30,
-  restitution: 1.4,
   friction: 0.002,
   ceilingHeight: 200,
 };
@@ -23,7 +22,6 @@ function createBoundaries() {
     BOUNDARY_CONFIG.groundHeight,
     {
       isStatic: true,
-      restitution: BOUNDARY_CONFIG.restitution,
       friction: BOUNDARY_CONFIG.friction,
       render: {
         visible: false,
