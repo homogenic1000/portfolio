@@ -3,8 +3,8 @@
 const BOUNDARY_CONFIG = {
   groundHeight: 30,
   wallWidth: 30,
-  restitution: 0.9,
-  friction: 0.2,
+  restitution: 1.4,
+  friction: 0.002,
   ceilingHeight: 200,
 };
 

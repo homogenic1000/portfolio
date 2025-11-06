@@ -2,9 +2,9 @@
 
 spawnX = 150;
 spawnY = 240;
-const resitutionValue = 0.9;
-const frictionValueAir = 0.01;
-const frictionValue = 0.1;
+const resitutionValue = 1; // Augmenté pour plus de rebond
+const frictionValueAir = 0.02; // Réduit pour moins de résistance dans l'air
+const frictionValue = 0.05; // Réduit pour moins de friction au contact
 
 const OBJECT_CONFIG = {
   tabac: {
@@ -82,6 +82,7 @@ function createTabac() {
     config.width,
     config.height,
     {
+      label: "tabac",
       isStatic: config.isStatic,
       restitution: config.restitution,
       friction: config.friction,
@@ -111,6 +112,7 @@ function createFiltre() {
     config.width,
     config.height,
     {
+      label: "filtre",
       isStatic: config.isStatic,
       restitution: config.restitution,
       friction: config.friction,
@@ -132,6 +134,7 @@ function createPamplemousse() {
   const config = OBJECT_CONFIG.pamplemousse;
 
   pamplemousse = Matter.Bodies.circle(config.x, config.y, config.radius, {
+    label: "pamplemousse",
     isStatic: config.isStatic,
     restitution: config.restitution,
     friction: config.friction,
@@ -151,6 +154,7 @@ function createPamplemousse() {
 function createRondpoint() {
   const config = OBJECT_CONFIG.rondpoint;
   rondpoint = Matter.Bodies.circle(config.x, config.y, config.radius, {
+    label: "rondpoint",
     isStatic: config.isStatic,
     restitution: config.restitution,
     friction: config.friction,
@@ -187,4 +191,3 @@ function createObjects() {
 function getObjects() {
   return [tabac, filtre, pamplemousse, rondpoint];
 }
-
