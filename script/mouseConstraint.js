@@ -53,14 +53,14 @@ function initMouseConstraint(engine, render) {
     if (body.render && body.render.sprite) {
       const sx = body.render.sprite.xScale || 1;
       const sy = body.render.sprite.yScale || 1;
-      body.render.sprite.xScale = sx * 1.25;
-      body.render.sprite.yScale = sy * 1.25;
+      body.render.sprite.xScale = sx * 10;
+      body.render.sprite.yScale = sy * 10;
       setTimeout(() => {
         if (body.render && body.render.sprite) {
           body.render.sprite.xScale = sx;
           body.render.sprite.yScale = sy;
         }
-      }, 300);
+      }, 1000);
     }
   }
 
@@ -100,6 +100,7 @@ function initMouseConstraint(engine, render) {
         // Déclencher les actions spécifiques selon le label
         if (label === "pamplemousse") {
           onPamplemousseClick(body);
+          
           return;
         }
         if (label === "rondpoint") {

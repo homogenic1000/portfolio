@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
+
+.overlay h1 h2 h3 h4 h5 h6 {
+  font-family: "DotGothic16", monospace !important;
+}
+
+#paemplemouseOverlay {
+padding: 2rem;
+border-radius: 2rem;
+  z-index: 20;
+  display: relative;
+  width: 1200px;
+  height: 600px;
+  background-color: turquoise;
+}
+
+#paemplemouseOverlay img {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-top: 1rem;
+}

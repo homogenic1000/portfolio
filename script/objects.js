@@ -2,9 +2,9 @@
 
 spawnX = 150;
 spawnY = 240;
-const resitutionValue = 0.9;
-const frictionValueAir = 0.01;
-const frictionValue = 0.1;
+const resitutionValue = 1; // Augmenté pour plus de rebond
+const frictionValueAir = 0.02; // Réduit pour moins de résistance dans l'air
+const frictionValue = 0.05; // Réduit pour moins de friction au contact
 
 const OBJECT_CONFIG = {
   tabac: {

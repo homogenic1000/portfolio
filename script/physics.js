@@ -7,7 +7,7 @@ let engine, render, runner;
 const ENGINE_CONFIG = {
   gravity: {
     x: 0,
-    y: 0.5, // Valeur par défaut: 1
+    y: 0.8, // Augmenté pour une chute plus rapide
   },
 };
 
