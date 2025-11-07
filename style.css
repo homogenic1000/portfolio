@@ -4,7 +4,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arapey', serif;
 }
 
 body{
@@ -14,6 +13,7 @@ body{
 
 
 #hero-section{
+    font-family: 'Arapey', serif;
     flex-wrap: wrap;
     display: flex;
     flex-direction: row;
@@ -58,6 +58,8 @@ body{
     z-index: 10 !important; /* au-dessus du canvas */
     display: none;
 }
+
+
 
 
 
