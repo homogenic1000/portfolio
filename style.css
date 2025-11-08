@@ -4,16 +4,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arapey', serif;
 }
 
 body{
-    margin:0 2rem 0 0;
     padding: 0;
+    margin: 0;
 }
 
 
 #hero-section{
+    font-family: 'Arapey', serif;
     flex-wrap: wrap;
     display: flex;
     flex-direction: row;
@@ -27,7 +27,7 @@ body{
     top: 12em;
     text-align: right;
     flex: 1;
-    margin-left: 2rem;
+    margin-right: 1.4em;
 }
 
 #animation-bag{
@@ -58,6 +58,8 @@ body{
     z-index: 10 !important; /* au-dessus du canvas */
     display: none;
 }
+
+
 
 
 
