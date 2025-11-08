@@ -1,11 +1,10 @@
-const overlays = document.querySelectorAll('.overlay.active');
-
-
 addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape' || event.key === ' ') {
+    console.log('key pressed')
+    const overlays = document.querySelectorAll('.o-active');
     overlays.forEach(element => {
-      element.classList.remove('overlay.active');
-      element.classList.add('overlay')
+      element.classList.remove('o-active');
+      element.classList.add('o-inactive')
     });
   }
 });

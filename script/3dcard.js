@@ -39,10 +39,16 @@ function handleMove(e) {
   
   /* Generate string for CSS transform property */
   const string = 'perspective(500px) scale(1.1) rotateX(' + xRotation + 'deg) rotateY(' + yRotation + 'deg)'
+  const Zstring = 'z-index: 1000'
   
   /* Apply the calculated transformation */
   el.style.transform = string
+  el.style.zindex = Zstring
 }
+
+el.addEventListener('hover', function(){
+  el.style.zindex = 1000;
+})
 
 /* Add listener for mouseout event, remove the rotation */
 el.addEventListener('mouseout', function() {
