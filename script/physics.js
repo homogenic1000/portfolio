@@ -78,6 +78,8 @@ function startSimulation() {
   // Configurer le canvas
   configureCanvas();
 
+  // Ajouter la gestion des clics
+  setupClickHandlers();
 
   // Créer et démarrer le runner
   runner = Matter.Runner.create();
@@ -166,4 +168,55 @@ function getRender() {
  */
 function getRunner() {
   return runner;
+}
+
+/**
+ * Configurer les gestionnaires de clics pour les objets
+ */
+function setupClickHandlers() {
+  const canvas = render.canvas;
+  
+  canvas.addEventListener('click', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    
+    // Convertir les coordonnées canvas en coordonnées Matter.js
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clickX = mouseX * scaleX;
+    const clickY = mouseY * scaleY;
+    
+    // Vérifier quel objet a été cliqué
+    const bodies = Matter.Composite.allBodies(engine.world);
+    
+    for (let body of bodies) {
+      if (Matter.Bounds.contains(body.bounds, { x: clickX, y: clickY })) {
+        // Vérification plus précise pour les cercles et rectangles
+        if (Matter.Vertices.contains(body.vertices, { x: clickX, y: clickY })) {
+          handleObjectClick(body);
+          break;
+        }
+      }
+    }
+  });
+}
+
+/**
+ * Gérer le clic sur un objet en fonction de son label
+ */
+function handleObjectClick(body) {
+  switch(body.label) {
+    case 'aboutme':
+      onAboutMeClick(body);
+      break;
+    case 'pamplemousse':
+      onPamplemousseCick(body);
+      break;
+    case 'korg':
+      onKorgClick(body);
+      break;
+    default:
+      console.log('Objet cliqué:', body.label);
+  }
 }

@@ -3,8 +3,7 @@ addEventListener('keydown', function(event) {
     console.log('key pressed')
     const container = document.getElementById('o-container-active');
     if (container) {
-      container.classList.remove('o-container-active');
-      container.classList.add('o-container-inactive');
+      container.id = 'o-container-inactive';
     }
   }
 });

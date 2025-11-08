@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
 
-.o-container-active{
+#o-container-active {
   display: flex !important;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
-.o-container-inactive{
+#o-container-inactive {
   display: none;
 }
 
@@ -30,16 +30,14 @@
   box-sizing: border-box;
 }
 
-
-#nations{
+#nations {
   align-items: center;
 }
 
 /* Styles for the tilt block */
 
-
 /* Styles for the tilt block */
-.card{
+.card {
   margin-top: 2em;
   margin-left: 0 !important;
   width: 60%;
@@ -58,7 +56,7 @@
   cursor: pointer;
 }
 
-#img-container{
+#img-container {
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -67,28 +65,22 @@
   padding: 2em;
   min-width: 450px;
   min-height: 450px;
-  
 }
 
-#portugal{
+#portugal {
   grid-column: 1;
   grid-row: 1;
   width: 280px;
   height: 390px;
   rotate: -17deg;
   border-radius: 1.2em;
-  transform: translate(50px, -30px);
 }
 
-#swiss{
+#swiss {
   grid-column: 1;
   grid-row: 1;
   width: 400px;
   height: 240px;
   rotate: 300deg;
   border-radius: 1.2em;
-  transform: translate(-30px, 60px);
 }
-
-
-
