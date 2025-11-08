@@ -1,87 +1,91 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mathéo Delessert</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="media.css" />
-    <link rel="stylesheet" href="overlay.css" />
-    <link rel="icon" type="image/x-icon" href="favico.png" />
 
-    <!-- Charger Matter.js depuis CDN -->
-    <!-- Charger Matter.js depuis CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mathéo Delessert</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="media.css" />
+  <link rel="stylesheet" href="overlay.css" />
+  <link rel="icon" type="image/x-icon" href="favico.png" />
+  <!-- Charger Matter.js depuis CDN -->
+  <!-- Charger Matter.js depuis CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
 
-    <!-- Scripts pour la physique -->
-    <script src="/script/boundaries.js"></script>
-    <script src="/script/objects.js"></script>
-    <script src="/script/mouseConstraint.js"></script>
-    <script src="/script/physics.js"></script>
-    <script src="/script/animation.js"></script>
-  </head>
-  <body>
-    <div id="no-mobile">
-      <h3>
-        You can't not watch my art on a mobile device. Watching my art on a
-        mobile device is a disgrace itslef. <br />
-        GO ON A DESKTOP !
-      </h3>
-    </div>
-    <div id="media-query">
-      <!-- SVG Filter -->
-      <svg width="0" height="0">
-        <filter id="displacementFilterLow">
-          <feTurbulence
-            id="turbulence"
-            type="turbulence"
-            baseFrequency="0.6"
-            numOctaves="1"
-            result="turbulence"
-          />
-          <feDisplacementMap
-            in2="turbulence"
-            in="SourceGraphic"
-            scale="0.9"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-        <filter id="displacementFilter">
-          <feTurbulence
-            id="turbulence"
-            type="turbulence"
-            baseFrequency="0.9"
-            numOctaves="10"
-            result="turbulence"
-          />
-          <feDisplacementMap
-            in2="turbulence"
-            in="SourceGraphic"
-            scale="7"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-      </svg>
+  <!-- Scripts pour la physique -->
+  <script src="/script/age.js"></script>
+  <script src="/script/boundaries.js"></script>
+  <script src="/script/objects.js"></script>
+  <script src="/script/physics.js"></script>
+  <script src="/script/animation.js"></script>
+  <script src="/script/overlay.js"></script>
 
-      <!-- Contenu -->
-      <div id="hero-section">
-        <div id="physic">
-          <img
-            id="animation-bag"
-            src="assets/animation/frame1.png"
-            alt="Animation"
-          />
-          <img id="sandwich" src="assets/animation/frame-sandwich.png" alt="" />
-        </div>
-        <h1 id="title-d">
-          Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
-          my work is in my bag!
-        </h1>
+</head>
+
+<body>
+  <div id="no-mobile">
+    <h3>
+      You can't not watch my art on a mobile device. Watching my art on a
+      mobile device is a disgrace itslef. <br />
+      GO ON A DESKTOP !
+    </h3>
+  </div>
+  <div id="media-query">
+    <!-- SVG Filter -->
+    <svg width="0" height="0">
+      <filter id="displacementFilterLow">
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.6" numOctaves="1" result="turbulence" />
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="0.9" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="displacementFilter">
+        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.9" numOctaves="10" result="turbulence" />
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- Contenu -->
+    <div id="hero-section">
+      <div id="physic">
+        <img id="animation-bag" src="assets/animation/frame1.png" alt="Animation" />
+        <img id="sandwich" src="assets/animation/frame-sandwich.png" alt="" />
+      </div>
+      <h1 id="title-d">
+        Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
+        my work is in my bag!
+      </h1>
+  </div>
+  <main id="o-container-active">
+    <div class="overlay" id="aboutme">
+      <div id="nations">
+        <h1 style="font-size: 3.8em; text-wrap: nowrap;margin:0;">some facts about me!</h1>
+        <h2 style="font-size: 2em;margin:0;">facts #1</h2>
+        <h3>
+          So i my name is Mathéo Delessert as you know <span style="opacity: 0.5;"><i>it's written in the homepage
+              lol.</i></span> I'm actually <span id="age"></span>im swiss and portugese and i was born in Vevey adn
+          now i live in Lausannne, i'm currently learning interacrive media design at ERACOM.
+        </h3>
+
+        <h2 style="font-size: 2em; margin:0;"> fact #2</h2>
+        <h3 id="text">since i was child i was absorbed and fasinated by visual in commercials, emissions or cartoons,
+          so thats
+          jind of where this passion for moving pixel got me.
+          I really like motion design webdesign and webdev and programmtion
+        </h3>
+
+      </div>
+      <div id="img-container">
+        <img class="card" id="portugal" src="assets/2d/portugal.png" alt="">
+        <img class="card" id="swiss" src="assets/2d/id.png" alt="">
       </div>
     </div>
-   
-    </div>
-  </body>
+  </main>
+
+
+
+
+    <div>
+  </div>
+  <script src="/script/3dcard.js"></script>
+
 </html>

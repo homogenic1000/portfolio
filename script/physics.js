@@ -78,8 +78,6 @@ function startSimulation() {
   // Configurer le canvas
   configureCanvas();
 
-  // Initialiser la contrainte de souris
-  initMouseConstraint(engine, render);
 
   // Créer et démarrer le runner
   runner = Matter.Runner.create();
@@ -129,12 +127,14 @@ function startPhysics() {
     createFiltre,
     createPamplemousse,
     createRondpoint,
+    createAboutMe,
+    createKorg,
   ];
   objectFunctions.forEach((createFn, index) => {
     setTimeout(() => {
       const obj = createFn();
       addToWorld([obj]);
-    }, index * 1000);
+    }, index * 1200);
   });
 
   // Démarrer la simulation
