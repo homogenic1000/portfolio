@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
 
+.overlay{
+  z-index: 1000;
+}
+
 #o-container-active {
   display: flex !important;
   justify-content: center;
@@ -11,6 +15,7 @@
 }
 
 #aboutme {
+  color: white;
   margin: 3em;
   text-align: left;
   display: flex;
@@ -21,7 +26,7 @@
   padding: 3em;
   width: fit-content;
   height: fit-content;
-  background: rgba(255, 53, 198, 0.296);
+  background: rgba(205, 53, 162, 0.512);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15.2px);
@@ -30,7 +35,12 @@
   box-sizing: border-box;
 }
 
+#aboutme-inactive{
+  display: none;
+}
+
 #nations {
+
   align-items: center;
 }
 
@@ -83,4 +93,20 @@
   height: 240px;
   rotate: 300deg;
   border-radius: 1.2em;
+}
+
+#fruits{
+  color: white;
+  margin: 3em;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  font-family: "DotGothic16", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  padding: 3em;
+  width: fit-content;
+  height: fit-content;
+  background: rgba(205, 53, 162, 0.512);
+  
 }

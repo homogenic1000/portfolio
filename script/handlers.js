@@ -19,6 +19,7 @@ function onAboutMeClick(body) {
 function onPamplemousseCick(body) {
   console.log("Pamplemousse cliqué!", body);
   
+  
   // Insérez votre code ici pour l'action à déclencher
 }
 
