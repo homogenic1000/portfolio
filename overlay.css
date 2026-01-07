@@ -4,15 +4,13 @@
   z-index: 1000;
 }
 
-#o-container-active {
+#o-container {
   display: flex !important;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
-#o-container-inactive {
-  display: none;
-}
+
 
 #aboutme {
   color: white;
@@ -109,4 +107,7 @@
   height: fit-content;
   background: rgba(205, 53, 162, 0.512);
   
+}
+#fruits-inactive{
+  display: none;
 }

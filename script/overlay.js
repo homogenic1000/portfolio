@@ -1,9 +1,18 @@
-addEventListener('keydown', function(event) {
+const overlays = ['fruits', 'aboutme'];
+
+document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' || event.key === ' ') {
-    console.log('key pressed')
-    const container = document.getElementById('o-container-active');
-    if (container) {
-      container.id = 'o-container-inactive';
-    }
+    console.log('key pressed');
+
+    overlays.forEach(element => {
+      // on cherche soit l’actif soit l’inactif
+      const active = document.getElementById(element);
+      const inactive = document.getElementById(`${element}-inactive`);
+
+      if (active) {
+        // s’il est actif → on le désactive
+        active.id = `${element}-inactive`;
+      } 
+    });
   }
 });
