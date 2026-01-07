@@ -1,4 +1,4 @@
-const overlays = ['fruits', 'aboutme'];
+const overlays = ['fruits', 'aboutme', 'korg'];
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' || event.key === ' ') {
