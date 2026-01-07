@@ -14,7 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
 
   <!-- Scripts pour la physique -->
-   <script src="script/handlers.js"></script>
+  <script src="script/handlers.js"></script>
   <script src="/script/age.js"></script>
   <script src="/script/boundaries.js"></script>
   <script src="/script/objects.js"></script>
@@ -22,9 +22,11 @@
   <script src="/script/animation.js"></script>
   <script src="/script/overlay.js"></script>
 
+
 </head>
 
 <body>
+
   <div id="no-mobile">
     <h3>
       You can't not watch my art on a mobile device. Watching my art on a
@@ -32,6 +34,7 @@
       GO ON A DESKTOP !
     </h3>
   </div>
+
   <div id="media-query">
     <!-- SVG Filter -->
     <svg width="0" height="0">
@@ -51,42 +54,52 @@
         <img id="animation-bag" src="assets/animation/frame1.png" alt="Animation" />
         <img id="sandwich" src="assets/animation/frame-sandwich.png" alt="" />
       </div>
-      <h1 id="title-d">
-        Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
-        my work is in my bag!
-      </h1>
-  </div>
-  <main id="o-container">
-    <div class="overlay" id="aboutme-inactive">
-      <div id="nations">
+      <section>
+        <h1 id="title-d">
+          Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
+          my work is in my bag!
+        </h1>
+        </main>
+      </section>
+      <main id="korg-body">
+        <h1 id="korg-text">
+          This project is one of my favorite, i had so much fun designing it and manufacturing it. <br> I made a CD of a
+          track’s􀫀 friends that’s called “Korg e-LIVEsEx”,<br /> it’s an homage to this song because thanks to it i
+          have met Nelson the compositer of this song.
+        </h1>
+    </div>
+    <main id="o-container">
+      <div class="overlay" id="aboutme-inactive">
+        <div id="nations">
+          <h1 style="font-size: 3.8em; text-wrap: nowrap;margin:0;">some facts about me!</h1>
+          <h2 style="font-size: 2em;margin:0;">facts #1</h2>
+          <h3>
+            So i my name is Mathéo Delessert as you know <span style="opacity: 0.5;"><i>it's written in the homepage
+                lol.</i></span> I'm actually <span id="age"></span>im swiss and portugese and i was born in Vevey adn
+            now i live in Lausannne, i'm currently learning interacrive media design at ERACOM.
+          </h3>
+
+          <h2 style="font-size: 2em; margin:0;"> fact #2</h2>
+          <h3 id="text">since i was child i was absorbed and fasinated by visual in commercials, emissions or cartoons,
+            so thats
+            jind of where this passion for moving pixel got me.
+            I really like motion design webdesign and webdev and programmtion
+          </h3>
+
+        </div>
+        <div id="img-container">
+          <img class="card" id="portugal" src="assets/2d/portugal.png" alt="">
+          <img class="card" id="swiss" src="assets/2d/id.png" alt="">
+        </div>
+      </div>
+      <div class="overlay" id="fruits-inactive">
         <h1 style="font-size: 3.8em; text-wrap: nowrap;margin:0;">some facts about me!</h1>
-        <h2 style="font-size: 2em;margin:0;">facts #1</h2>
-        <h3>
-          So i my name is Mathéo Delessert as you know <span style="opacity: 0.5;"><i>it's written in the homepage
-              lol.</i></span> I'm actually <span id="age"></span>im swiss and portugese and i was born in Vevey adn
-          now i live in Lausannne, i'm currently learning interacrive media design at ERACOM.
-        </h3>
-
-        <h2 style="font-size: 2em; margin:0;"> fact #2</h2>
-        <h3 id="text">since i was child i was absorbed and fasinated by visual in commercials, emissions or cartoons,
-          so thats
-          jind of where this passion for moving pixel got me.
-          I really like motion design webdesign and webdev and programmtion
-        </h3>
 
       </div>
-      <div id="img-container">
-        <img class="card" id="portugal" src="assets/2d/portugal.png" alt="">
-        <img class="card" id="swiss" src="assets/2d/id.png" alt="">
-      </div>
-    </div>
-    <div class="overlay" id="fruits-inactive">
-      <h1 style="font-size: 3.8em; text-wrap: nowrap;margin:0;">some facts about me!</h1>
-        
-    </div>
-  </main>
+    </main>
     <div>
-  </div>
-  <script src="/script/3dcard.js"></script>
+    </div>
+    <script src="/script/3dcard.js"></script>
+    <script src="/script/korg.js"></script>
 
 </html>
