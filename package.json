@@ -9,6 +9,10 @@
   "private": true,
   "dependencies": {
     "lightbox2": "^2.11.5",
-    "matter-js": "^0.20.0"
+    "matter-js": "^0.20.0",
+    "three": "^0.182.0"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
   }
 }

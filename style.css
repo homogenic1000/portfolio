@@ -70,6 +70,7 @@ body{
     color: white;
     flex-direction: row;
     position: relative;
+    padding: 2em;
 }
 
 #korg-text{
