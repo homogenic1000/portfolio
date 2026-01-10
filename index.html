@@ -39,8 +39,8 @@
     <!-- SVG Filter -->
     <svg width="0" height="0">
       <filter id="displacementFilterLow">
-        <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.6" numOctaves="1" result="turbulence" />
-        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="0.9" xChannelSelector="R" yChannelSelector="G" />
+          <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.9" numOctaves="10" result="turbulence" />
+          <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
       </filter>
       <filter id="displacementFilter">
         <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.9" numOctaves="10" result="turbulence" />
@@ -62,6 +62,11 @@
       </main>
       </section>
       <main id="korg-body">
+        <header>
+          <button class="BackButton" id="KorgBack">
+            ☜ Back to home
+          </button>
+        </header>
       <h1 id="korg-text">
         This project is one of my favorite, i had so much fun designing it and manufacturing it. <br> I made a CD of a track’s􀫀 friends that’s called “Korg e-LIVEsEx”,<br /> it’s an homage to this song because thanks to it i have met Nelson the compositer of this song.
       </h1>
