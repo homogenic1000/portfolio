@@ -68,8 +68,9 @@ body{
     display: none;
     font-family: 'Arapey', serif;
     color: white;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
+    padding: 2em;
 }
 
 #korg-text{
@@ -80,8 +81,21 @@ body{
     position: relative;
 }
 
+.BackButton{
+    margin-bottom: 1em;
+    filter: url(#displacementFilterLow);
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    position: relative;
+}
 
 
+#KorgBack{
+    cursor: pointer;
+    z-index: 1000;
+}
 
 
 
