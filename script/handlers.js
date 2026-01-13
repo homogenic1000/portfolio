@@ -26,13 +26,3 @@ function onPamplemousseCick(body) {
   
   // Insérez votre code ici pour l'action à déclencher
 }
-
-// /**
-//  * Fonction appelée lors du clic sur l'objet korg
-//  * @param {Matter.Body} body - Le corps Matter.js de l'objet cliqué
-//  */
-// function onKorgClick(body) {
-//   console.log("Korg cliqué!", body);
-//   
-//   // Insérez votre code ici pour l'action à déclencher
-// }
