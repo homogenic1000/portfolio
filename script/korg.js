@@ -16,13 +16,15 @@ const backButton = document.getElementById("KorgBack");
 // maybe using three.js ? :)
 // put the korgText at the top of the page
 
-function onKorgClick() {
+const sandwich = document.getElementById("sandwich");
+
+window.onKorgClick = function(body) {
   document.body.style.backgroundColor = "black";
   document.body.style.color = "white";
   titleD.style.display = "none";
-  Matter.Composite.remove(engine.world, ground,);
+  Matter.Composite.remove(engine.world, ground);
     setTimeout(() => {
-    Matter.Composite.remove(engine.world, korg, filtre, tabac, pamplemousse, aboutme);
+    Matter.Composite.remove(engine.world, [korg, filtre, tabac, pamplemousse, aboutme]);
   }, 2000); // délai de 500ms avant d'exécuter la fonction
 
   sandwich.style.display = "none";
