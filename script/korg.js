@@ -69,24 +69,46 @@ function resetState() {
   hero.style.justifyContent = "space-between";
 }
 
-// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-// import * as THREE from 'three';
 
-// const scene = new THREE.Scene();
-// const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const container = document.getElementById('threejs');
 
-// const renderer = new THREE.WebGLRenderer();
-// renderer.setSize( korgbody.clientWidth, korgbody.clientHeight );
-// korgbody.appendChild(renderer.domElement);
+// Scene
+const scene = new THREE.Scene();
 
-// const loader = new GLTFLoader();
+// Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  container.clientWidth / container.clientHeight,
+  0.1,
+  1000
+);
+camera.position.z = 3;
 
-// loader.load( '/assets/cd.glb', function ( gltf ) {
+// Renderer
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(container.clientWidth, container.clientHeight);
 
-//   scene.add( gltf.scene );
+// On injecte le canvas DANS la div
+container.appendChild(renderer.domElement);
 
-// }, undefined, function ( error ) {
+// Exemple d’objet
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshNormalMaterial();
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 
-//   console.error( error );
+// Animation
+function animate() {
+  requestAnimationFrame(animate);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+animate();
 
-// } );
+// Gestion du resize de la div
+window.addEventListener('resize', () => {
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(container.clientWidth, container.clientHeight);
+});
