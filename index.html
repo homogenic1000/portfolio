@@ -79,9 +79,20 @@
 
       </div>
     </main>
-    <script src="script/3dcard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <script src="script/korg.js"></script>
-  
+      
+    </body>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+</script>
+<script type="module" src="script/3d-cd.js"></script>
+
+
+<script src="script/korg.js"></script>
+
 
 </html>

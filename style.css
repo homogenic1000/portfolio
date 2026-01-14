@@ -98,4 +98,8 @@ body{
 }
 
 
-
+#threejs {
+  width: 100%;
+  height: 60vh;
+  background: rgb(255, 255, 255);
+}
