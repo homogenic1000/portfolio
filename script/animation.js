@@ -49,3 +49,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function resetAnimation() {
+  const ResetFrame = "assets/animation/frame1.png";
+  const img = document.getElementById("animation-bag");
+  img.src = ResetFrame;
+  frame = 1;
+}

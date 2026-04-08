@@ -104,7 +104,7 @@ const OBJECT_CONFIG = {
 };
 
 // Variables globales pour les objets
-let tabac, filtre, pamplemousse, rondpoint, aboutme;
+let tabac, filtre, pamplemousse, rondpoint, aboutme, korg;
 
 /**
  * Créer l'objet tabac
