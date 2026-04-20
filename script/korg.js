@@ -42,10 +42,17 @@ function addToWorld(bodies) {
 
 function resetAll() {
   resetState();
-  startSimulation();
-  addToWorld(bodies);
+  
+  // Get the physics objects and add them back to the world
+  if (typeof getObjects === "function") {
+    const currentBodies = getObjects();
+    // Filter out undefined objects and add them back
+    addToWorld(currentBodies.filter(b => b));
+  }
+  
+  resetAnimation();
 }
-KorgBack.addEventListener("click", resetAll);
+backButton.addEventListener("click", resetAll);
 
 
 

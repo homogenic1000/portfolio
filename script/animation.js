@@ -1,7 +1,5 @@
-console.log("Hello World!");
-
 let frame = 1;
-const totalFrames = 29;
+const totalFrames = 15;
 let intervalId = null;
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -13,6 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     intervalId = setInterval(() => {
       const newSrc = `assets/animation/frame${frame}.png`;
+      
 
       const testImg = new Image();
       testImg.src = newSrc;
@@ -26,13 +25,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (frame === totalFrames) {
         clearInterval(intervalId); // arrêt à la dernière frame
+        startPhysics();
+        intervalId = null;
         if (sandwich) sandwich.style.display = "block";
       } else {
         frame++;
       }
-    }, 140); // ~16 FPS
-    setTimeout(startPhysics, 1900);
+    }, 100);
   }
+
 
   img.addEventListener("click", animate);
 
@@ -49,3 +50,16 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function resetAnimation() {
+  const ResetFrame = "assets/animation/frame1.png";
+  const img = document.getElementById("animation-bag");
+  img.src = ResetFrame;
+  frame = 1;
+  
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+}
+

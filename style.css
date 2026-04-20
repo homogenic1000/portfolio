@@ -50,7 +50,10 @@ body{
     margin-right: 1.4em;
 }
 #physic{
+    z-index: 1000 !important; /* en-dessous du canvas */
     position: relative;
+    width: auto;
+    height: auto;
 }
 #physic img {
     position: absolute;
@@ -59,8 +62,10 @@ body{
 }
 
 #sandwich{
-    z-index: 10 !important; /* au-dessus du canvas */
+    position: relative;;
+    z-index: 10; 
     display: none;
+    
 }
 
 
@@ -122,4 +127,9 @@ body{
     font-size: 1.2rem;
     color: black;
     text-align: center;
+}
+
+canvas{
+    position: relative;
+    z-index: 0;
 }
