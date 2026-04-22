@@ -53,7 +53,7 @@ body{
     z-index: 1000 !important; /* en-dessous du canvas */
     position: relative;
     width: auto;
-    height: auto;
+    height: 10px;
 }
 #physic img {
     position: absolute;
@@ -65,6 +65,7 @@ body{
     position: relative;;
     z-index: 10; 
     display: none;
+    height: 10px;
     
 }
 
