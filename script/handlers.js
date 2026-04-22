@@ -16,7 +16,7 @@ function onAboutMeClick(body) {
  * Fonction appelée lors du clic sur l'objet pamplemousse
  * @param {Matter.Body} body - Le corps Matter.js de l'objet cliqué
  */
-function onPamplemousseCick(body) {
+function onPamplemousseClick(body) {
   console.log("Pamplemousse cliqué!", body);
   const container = document.getElementById('fruits-inactive')
   if (container) {

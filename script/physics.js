@@ -211,7 +211,7 @@ function handleObjectClick(body) {
       onAboutMeClick(body);
       break;
     case 'pamplemousse':
-      onPamplemousseCick(body);
+      onPamplemousseClick(body);
       break;
     case 'korg':
       onKorgClick(body);

@@ -48,7 +48,7 @@ Ensures objects don't fall off the screen.
 
 ### 5. `handlers.js` & `korg.js` (The Interactivity)
 These handle what happens when an object is clicked.
-- **`onAboutMeClick()` / `onPamplemousseCick()`**: Toggle CSS IDs (e.g., changing `aboutme-inactive` to `aboutme`) to trigger overlay displays using pure CSS transitions.
+- **`onAboutMeClick()` / `onPamplemousseClick()`**: Toggle CSS IDs (e.g., changing `aboutme-inactive` to `aboutme`) to trigger overlay displays using pure CSS transitions.
 - **`onKorgClick()` (in `korg.js`)**: A complex interaction handler. It modifies the site's entire color theme, hides the hero section, displays the `korg-body`, and actually manipulates the physics world by removing the `ground` and specific objects (making them fall out of view). It provides a `resetAll()` function tied to a "Back" button to restore the initial state and respawn the physics objects.
 
 ### 6. `3d-cd.js` (The 3D Renderer)
