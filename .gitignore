@@ -5,8 +5,8 @@
 /.idea/workspace.xml
 /node_modules/
 .DS_Store
-<<<<<<< HEAD
 opencode.json
-=======
-opencode.json
->>>>>>> z-index-working
+.gitnexus
+/.claude
+AGENTS.md
+CLAUDE.md
