@@ -19,8 +19,6 @@ const backButton = document.getElementById("KorgBack");
 const sandwich = document.getElementById("sandwich");
 
 window.onKorgClick = function(body) {
-  document.body.style.backgroundColor = "black";
-  document.body.style.color = "white";
   titleD.style.display = "none";
   Matter.Composite.remove(engine.world, ground);
     setTimeout(() => {
@@ -34,6 +32,24 @@ window.onKorgClick = function(body) {
   hero.style.position = "static";
   hero.style.textAlign = "left";
   hero.style.justifyContent = "flex-start";
+ 
+
+
+  
+var korgtext = document.getElementById('korg-text');
+  
+var typewriter = new Typewriter(korgtext, {
+    loop: false,
+    delay: 10,
+    cursor: '▮',
+});
+  
+  typewriter
+    .pauseFor(2500)
+    .typeString('This project is one of my favorite, i had so much fun designing it and manufacturing it. I made a CD of a track’s􀫀 friends that’s called “Korg e-LIVEsEx”, it’s an homage to this song because thanks to it i have met Nelson the compositer of this song.')
+    .start();
+  
+
 }
 
 function addToWorld(bodies) {

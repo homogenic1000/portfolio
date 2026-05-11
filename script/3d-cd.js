@@ -20,7 +20,7 @@ function initThreeJS() {
 
 // a scene
 
-var scene = new THREE.Scene({ alpha: true });
+var scene = new THREE.Scene({ alpha: true, });
 
 
 
@@ -58,9 +58,12 @@ var controls = new OrbitControls( camera, renderer.domElement );
 var ambientLight = new THREE.AmbientLight( 'white', 1 );
     scene.add( ambientLight );
 
-var light = new THREE.DirectionalLight( 'white', 1 );
-    light.position.set( 1, 1, 4 );
-    scene.add( light );
+var light = new THREE.DirectionalLight( 'white', 4);
+    light.position.set( 1, 1, 3 );
+    scene.add(light);
+
+
+renderer.setClearColor( 0x000000, 0 ); // the default
 
 const loader = new GLTFLoader();
 
