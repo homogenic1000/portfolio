@@ -43,6 +43,8 @@ var typewriter = new Typewriter(korgtext, {
     delay: 10,
     cursor: '▮',
 });
+
+
   
   typewriter
     .pauseFor(2500)
@@ -51,6 +53,8 @@ var typewriter = new Typewriter(korgtext, {
   
 
 }
+
+
 
 function addToWorld(bodies) {
   Matter.Composite.add(engine.world, bodies);

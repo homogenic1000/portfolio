@@ -53,7 +53,9 @@ renderer.setAnimationLoop( animationLoop );
 // various stuff, not interesting
 
 var controls = new OrbitControls( camera, renderer.domElement );
-    controls.enableDamping = true;
+  controls.enableDamping = true;
+  controls.autoRotate = true;
+    
 
 var ambientLight = new THREE.AmbientLight( 'white', 1 );
     scene.add( ambientLight );
@@ -69,8 +71,9 @@ const loader = new GLTFLoader();
 
 loader.load( 'assets/model/cd.glb', function ( gltf ) {
 
-  scene.add( gltf.scene );
-  gltf.scene.rotation.set(0,90,0)
+  scene.add(gltf.scene);
+  
+      
 
 
 
@@ -78,9 +81,15 @@ loader.load( 'assets/model/cd.glb', function ( gltf ) {
 
   console.error( error );
 
-} );
+});
 
+
+var model = gltf.scene
 
 function animationLoop() {
-    renderer.render( scene, camera );
+  renderer.render(scene, camera);
+  renderer.autoRotate = true;
+   model.rotation.z += 0.01;
+
+  
 } renderer.setAnimationLoop( animationLoop );
