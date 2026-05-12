@@ -5,8 +5,5 @@
 /.idea/workspace.xml
 /node_modules/
 .DS_Store
-opencode.json
-.gitnexus
-/.claude
-AGENTS.md
-CLAUDE.md
+
+
