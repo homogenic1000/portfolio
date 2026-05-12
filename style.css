@@ -51,9 +51,8 @@ body{
 }
 #physic{
     z-index: 1000 !important; /* en-dessous du canvas */
-    position: relative;
-    width: auto;
-    height: 10px;
+    width: fit-content;
+    height: fit-content;
 }
 #physic img {
     position: absolute;
@@ -62,10 +61,10 @@ body{
 }
 
 #sandwich{
-    position: relative;;
+    position: absolute;
     z-index: 10; 
     display: none;
-    height: 10px;
+    height: 100%;
     
 }
 
