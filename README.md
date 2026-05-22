@@ -1,4 +1,4 @@
-![alt text](preview.png)
+![alt text](preview.webp)
 
 # Mathéo Delessert - Interactive Portfolio 
 <a fontsize="40px" src="mathedelessert.ch">matheodelessert.ch</a>
