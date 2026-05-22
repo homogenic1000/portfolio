@@ -18,7 +18,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/tabac.png",
+      texture: "assets/2d/tabac.webp",
       xScale: 0.5,
       yScale: 0.5,
     },
@@ -34,7 +34,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/filtre.png",
+      texture: "assets/2d/filtre.webp",
       xScale: 0.5,
       yScale: 0.5,
     },
@@ -49,7 +49,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/pamplemousse.png",
+      texture: "assets/2d/pamplemousse.webp",
       xScale: 0.2,
       yScale: 0.2,
     },
@@ -64,7 +64,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/rondpoint.png",
+      texture: "assets/2d/rondpoint.webp",
       xScale: 0.1,
       yScale: 0.1,
     },
@@ -80,7 +80,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false,
     sprite: {
-      texture: "assets/2d/aboutme.png",
+      texture: "assets/2d/aboutme.webp",
       xScale: 0.2,
       yScale: 0.2,
     },
@@ -96,7 +96,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false,
     sprite: {
-      texture: "assets/2d/korg.png",
+      texture: "assets/2d/korg.webp",
       xScale: 0.2,
       yScale: 0.2,
     },

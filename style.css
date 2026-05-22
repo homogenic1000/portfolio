@@ -34,6 +34,7 @@ body{
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
     flex-shrink: 0;
+    
 }
 
 #animation-bag:hover{
@@ -72,18 +73,19 @@ body{
 #korg-body{
     display: none;
     font-family: 'Arapey', serif;
-    color: white;
     flex-direction: column;
     position: relative;
     padding: 2em;
+    flex: 1;
+    justify-content: space-between;
 }
 
 #korg-text{
     align-items: flex-start;
     display: none;
     flex-direction: row;
-    color: white;
     position: relative;
+    height: 100%;
 }
 
 .BackButton{
@@ -91,7 +93,6 @@ body{
     filter: url(#displacementFilterLow);
     background-color: transparent;
     border: none;
-    color: white;
     font-size: 2rem;
     position: relative;
 }
@@ -104,14 +105,13 @@ body{
 
 
 #container-cd {
-  width: 100%;
-  height: 60vh;
+aspect-ratio: 1 / 1;
+  width: 50%;
   background: transparent;
 }
 
 #threejs {
-  width: 10%;
-  height: 60vh;
+    flex: 1;
   background: rgb(255, 255, 255);
 }
 #korg-main-container{
@@ -120,6 +120,7 @@ body{
     align-items: center;
     justify-content: center;
     padding: 2em;
+    justify-content: space-between;
 }
 #korg-manual{
     margin-top: 2em;
@@ -133,3 +134,7 @@ canvas{
     position: relative;
     z-index: 0;
 }
+
+
+/* TYPEWRITE EFFECT */
+

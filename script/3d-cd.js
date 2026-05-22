@@ -20,7 +20,7 @@ function initThreeJS() {
 
 // a scene
 
-var scene = new THREE.Scene({ alpha: true });
+var scene = new THREE.Scene({ alpha: true, });
 
 
 
@@ -53,21 +53,27 @@ renderer.setAnimationLoop( animationLoop );
 // various stuff, not interesting
 
 var controls = new OrbitControls( camera, renderer.domElement );
-    controls.enableDamping = true;
+  controls.enableDamping = true;
+  controls.autoRotate = true;
+    
 
 var ambientLight = new THREE.AmbientLight( 'white', 1 );
     scene.add( ambientLight );
 
-var light = new THREE.DirectionalLight( 'white', 1 );
-    light.position.set( 1, 1, 4 );
-    scene.add( light );
+var light = new THREE.DirectionalLight( 'white', 4);
+    light.position.set( 1, 1, 3 );
+    scene.add(light);
+
+
+renderer.setClearColor( 0x000000, 0 ); // the default
 
 const loader = new GLTFLoader();
 
 loader.load( 'assets/model/cd.glb', function ( gltf ) {
 
-  scene.add( gltf.scene );
-  gltf.scene.rotation.set(0,90,0)
+  scene.add(gltf.scene);
+  
+      
 
 
 
@@ -75,9 +81,15 @@ loader.load( 'assets/model/cd.glb', function ( gltf ) {
 
   console.error( error );
 
-} );
+});
 
+
+var model = gltf.scene
 
 function animationLoop() {
-    renderer.render( scene, camera );
+  renderer.render(scene, camera);
+  renderer.autoRotate = true;
+   model.rotation.z += 0.01;
+
+  
 } renderer.setAnimationLoop( animationLoop );
