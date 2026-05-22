@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (intervalId) return;
 
     intervalId = setInterval(() => {
-      const newSrc = `assets/animation/frame${frame}.png`;
+      const newSrc = `assets/animation/frame${frame}.webp`;
       
 
       const testImg = new Image();
