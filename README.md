@@ -29,7 +29,7 @@ The architecture is highly modular, splitting concerns like physics configuratio
 
 ### 1. `animation.js` (The Entry Point)
 This file handles the initial user interaction.
-- **`animate()`**: Listens for a click on the `animation-bag` element and cycles through 15 frame images (`frame1.png` to `frame15.png`).
+- **`animate()`**: Listens for a click on the `animation-bag` element and cycles through 15 frame images (`frame1.webp` to `frame15.webp`).
 - **Interaction with Ecosystem**: When it reaches the last frame, it calls `startPhysics()`, effectively transitioning the app from a simple DOM animation to a physics simulation.
 
 ### 2. `physics.js` (The Physics Core)
