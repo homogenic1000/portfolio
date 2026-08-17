@@ -13,7 +13,7 @@
 
 
 #aboutme {
-  color: white;
+   color: white;
   margin: 3em;
   text-align: left;
   display: flex;
@@ -106,7 +106,7 @@
   width: fit-content;
   height: fit-content;
   background: rgba(205, 53, 162, 0.512);
-  
+
 }
 #fruits-inactive{
   display: none;
