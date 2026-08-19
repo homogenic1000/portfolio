@@ -214,7 +214,7 @@ function handleObjectClick(body) {
       onPamplemousseClick(body);
       break;
     case 'korg':
-      onKorgClick(body);
+      onKorgClick();
       break;
     default:
       console.log('Objet cliqué:', body.label);

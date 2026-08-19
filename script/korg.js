@@ -1,11 +1,10 @@
-
-
 const titleD = document.getElementById("title-d");
 const korgText = document.getElementById("korg-text");
 const animation = document.getElementById("animation-bag");
 const korgbody = document.getElementById("korg-body");
 const hero = document.getElementById("hero-section");
 const backButton = document.getElementById("KorgBack");
+const body = document.body;
 
 
 
@@ -18,7 +17,7 @@ const backButton = document.getElementById("KorgBack");
 
 const sandwich = document.getElementById("sandwich");
 
-window.onKorgClick = function(body) {
+window.onKorgClick = function() {
   titleD.style.display = "none";
   Matter.Composite.remove(engine.world, ground);
     setTimeout(() => {
@@ -28,16 +27,20 @@ window.onKorgClick = function(body) {
   sandwich.style.display = "none";
   animation.style.display = "none";
   korgbody.style.display = "flex";
-  korgText.style.display = "flex";
+  korgbody.style.backgroundColor = "black";
+  body.style.backgroundColor = "black";
   hero.style.position = "static";
   hero.style.textAlign = "left";
   hero.style.justifyContent = "flex-start";
- 
-
 
   
+
+
+
+
+
 var korgtext = document.getElementById('korg-text');
-  
+
 var typewriter = new Typewriter(korgtext, {
     loop: false,
     delay: 10,
@@ -45,12 +48,12 @@ var typewriter = new Typewriter(korgtext, {
 });
 
 
-  
+
   typewriter
     .pauseFor(2500)
     .typeString('This project is one of my favorite, i had so much fun designing it and manufacturing it. I made a CD of a track’s􀫀 friends that’s called “Korg e-LIVEsEx”, it’s an homage to this song because thanks to it i have met Nelson the compositer of this song.')
     .start();
-  
+
 
 }
 
@@ -62,14 +65,14 @@ function addToWorld(bodies) {
 
 function resetAll() {
   resetState();
-  
+
   // Get the physics objects and add them back to the world
   if (typeof getObjects === "function") {
     const currentBodies = getObjects();
     // Filter out undefined objects and add them back
     addToWorld(currentBodies.filter(b => b));
   }
-  
+
   resetAnimation();
 }
 backButton.addEventListener("click", resetAll);
@@ -95,5 +98,3 @@ function resetState() {
   hero.style.textAlign = "";
   hero.style.justifyContent = "space-between";
 }
-
-
