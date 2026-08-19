@@ -6,10 +6,11 @@
  */
 function onAboutMeClick(body) {
   console.log("AboutMe cliqué!", body);
-  
+
   const container = document.getElementById('aboutme-inactive');
   if (container) {
-    container.id = 'aboutme';
+    container.classList.add('about-card');
+    container.id = '';
   }
 }
 /**
@@ -20,9 +21,7 @@ function onPamplemousseClick(body) {
   console.log("Pamplemousse cliqué!", body);
   const container = document.getElementById('fruits-inactive')
   if (container) {
-    container.id = 'fruits'
+    container.classList.add('about-card');
+    container.id = '';
   }
-  
-  
-  // Insérez votre code ici pour l'action à déclencher
 }

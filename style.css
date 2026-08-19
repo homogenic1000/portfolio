@@ -7,7 +7,7 @@
 
 body{
     padding: 1em;
-    margin: 0;
+    overflow-x: hidden;
    background-color: white; /* Fond initial */
   transition: background-color 0.6s ease, color 0.4s ease; /* Transition sur la couleur de fond */
   color: black;
@@ -44,7 +44,7 @@ body{
 }
 
 #title-d{
-    transition: ease-in-out 0.3s;
+    transition: filter 0.3s ease-in-out;
     filter: url(#displacementFilter);
         position: relative;
     top: 12em;
@@ -53,7 +53,7 @@ body{
     margin-right: 1.4em;
 }
 #physic{
-    z-index: 1000 !important; /* en-dessous du canvas */
+    z-index: 1000 !important; /* au-dessus du canvas */
     width: fit-content;
     height: fit-content;
 }
@@ -72,66 +72,7 @@ body{
 }
 
 
-#korg-body{
-    display: none;
-    flex-direction: column;
-    position: relative;
-    padding: 0em;
-    flex: 1;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-}
 
-#korg-text{
-    align-items: flex-start;
-    display: none;
-    flex-direction: row;
-    position: relative;
-    height: 100%;
-}
-
-.BackButton{
-    margin-bottom: 1em;
-    filter: url(#displacementFilterLow);
-    background-color: transparent;
-    border: none;
-    font-size: 2rem;
-    position: relative;
-}
-
-
-#KorgBack{
-    cursor: pointer;
-    z-index: 1000;
-}
-
-
-
-#container-cd {
-aspect-ratio: 1 / 1;
-  width: 50%;
-  background: transparent;
-}
-
-#threejs {
-    flex: 1;
-  background: rgb(255, 255, 255);
-}
-#korg-main-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 2em;
-    justify-content: space-between;
-}
-#korg-manual{
-    margin-top: 2em;
-    font-size: 1.2rem;
-    color: black;
-    text-align: center;
-}
 
 canvas{
     position: relative;

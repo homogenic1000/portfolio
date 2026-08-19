@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
 
-.overlay{
-  z-index: 1000;
-}
-
 #o-container {
   display: flex !important;
   justify-content: center;
@@ -11,9 +7,8 @@
   z-index: 1000;
 }
 
-
-#aboutme {
-   color: white;
+.about-card {
+  color: white;
   margin: 3em;
   text-align: left;
   display: flex;
@@ -33,16 +28,9 @@
   box-sizing: border-box;
 }
 
-#aboutme-inactive{
+#aboutme-inactive {
   display: none;
 }
-
-#nations {
-
-  align-items: center;
-}
-
-/* Styles for the tilt block */
 
 /* Styles for the tilt block */
 .card {
@@ -52,11 +40,6 @@
   display: block;
   margin: 0 auto;
   transition: box-shadow 0.1s, transform 0.1s;
-
-  /*
-    * Adding image to the background
-    * No relation to the hover effect.
-    */
 }
 
 .card:hover {
@@ -93,21 +76,6 @@
   border-radius: 1.2em;
 }
 
-#fruits{
-  color: white;
-  margin: 3em;
-  text-align: left;
-  display: flex;
-  flex-direction: row;
-  font-family: "DotGothic16", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  padding: 3em;
-  width: fit-content;
-  height: fit-content;
-  background: rgba(205, 53, 162, 0.512);
-
-}
-#fruits-inactive{
+#fruits-inactive {
   display: none;
 }

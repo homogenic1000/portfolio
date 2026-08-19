@@ -1,0 +1,77 @@
+#korg-body h2, #korg-body h3, #korg-body h4{
+   text-align: center;
+   filter: url(#liquidFilterLow);
+}
+
+#korg-body h1{
+    text-align: center;
+    width: 100vw;
+    font-size: clamp(4em, 10vw, 12em);
+    mix-blend-mode: exclusion;
+    filter: url(#liquidFilter);
+}
+#korg-body h2{
+    width: 80%;
+}
+
+#korg-body{
+    display: none;
+    flex-direction: column;
+    position: relative;
+    padding: 0em;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    gap: 4em;
+    align-content: center;
+    margin-bottom: 4em;
+}
+
+
+.BackButton{
+    margin-bottom: 1em;
+    filter: url(#displacementFilterLow);
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    position: relative;
+}
+
+
+#KorgBack{
+    cursor: pointer;
+    z-index: 1000;
+}
+
+
+#korg-main-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2em;
+}
+#korg-manual{
+    margin-top: 2em;
+    font-size: 1.2rem;
+    color: black;
+    text-align: center;
+}
+
+.korg-image-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(assets/2d/korg-big.png);
+    background-repeat: no-repeat;
+    background-size: contain 90%;
+    background-position: center;
+}
+
+#thanks{
+    width: 50%;
+}

@@ -1,5 +1,4 @@
 const titleD = document.getElementById("title-d");
-const korgText = document.getElementById("korg-text");
 const animation = document.getElementById("animation-bag");
 const korgbody = document.getElementById("korg-body");
 const hero = document.getElementById("hero-section");
@@ -10,10 +9,6 @@ const body = document.body;
 
 
 
-
-// add a variable of image of the cd
-// maybe using three.js ? :)
-// put the korgText at the top of the page
 
 const sandwich = document.getElementById("sandwich");
 
@@ -39,9 +34,7 @@ window.onKorgClick = function() {
 
 
 
-var korgtext = document.getElementById('korg-text');
-
-var typewriter = new Typewriter(korgtext, {
+var typewriter = new Typewriter(titleD, {
     loop: false,
     delay: 10,
     cursor: '▮',
@@ -58,10 +51,6 @@ var typewriter = new Typewriter(korgtext, {
 }
 
 
-
-function addToWorld(bodies) {
-  Matter.Composite.add(engine.world, bodies);
-}
 
 function resetAll() {
   resetState();
@@ -92,7 +81,6 @@ function resetState() {
   sandwich.style.display = "none";
   animation.style.display = "block";
   korgbody.style.display = "none";
-  korgText.style.display = "none";
 
   hero.style.position = "";
   hero.style.textAlign = "";
