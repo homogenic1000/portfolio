@@ -62,10 +62,10 @@
 .korg-image-section{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100vw;
     height: 100vh;
-    align-items: center;
-    align-content: center;
     background-image: url(assets/2d/korg-big.png);
     background-repeat: no-repeat;
     background-size: contain 90%;
