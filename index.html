@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -14,18 +14,15 @@
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="media.css"/>
   <link rel="stylesheet" href="overlay.css"/>
+  <link rel="stylesheet" href="korg.css"/>
   <link rel="icon" type="image/x-icon" href="/favico.png"/>
-  <!-- Scripts pour la physique -->
   <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
   <script src="script/handlers.js"></script>
-  <script src="/script/age.js"></script>
-  <script src="/script/boundaries.js"></script>
-  <script src="/script/objects.js"></script>
-  <script src="/script/physics.js"></script>
-  <script src="/script/animation.js"></script>
-  <script src="/script/overlay.js"></script>
-  <script src="/script/cdnLOAD.js"></script>
-  <title> Hiii my name is Mathéo Delessert and this is my portfolio (still in devloppement)</title>
+  <script src="script/boundaries.js"></script>
+  <script src="script/objects.js"></script>
+  <script src="script/physics.js"></script>
+  <script src="script/animation.js"></script>
+  <script src="script/cdnLOAD.js"></script>
 
 </head>
 
@@ -50,6 +47,16 @@
         <feTurbulence id="turbulence" type="turbulence" baseFrequency="0.9" numOctaves="10" result="turbulence" />
         <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G" />
       </filter>
+      <filter id="liquidFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="8" result="blurredNoise" />
+        <feDisplacementMap in2="blurredNoise" in="SourceGraphic" scale="25" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="liquidFilterLow">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="8" result="blurredNoise" />
+        <feDisplacementMap in2="blurredNoise" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
     </svg>
 
     <!-- Contenu -->
@@ -63,23 +70,34 @@
           Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
           my work is in my bag!
         </h1>
-        </main>
       </section>
-      <main id="korg-body">
-        <header>
-          <button class="BackButton" id="KorgBack">
-            ☜ Back to home
-          </button>
-        </header>
-        
-    
-      <h1> Korg e-LIVEsEx <br> JEWEL CASE</h1>
-      <h2>This is projet is an hommage for Nelson Weber, a great friend of mine and also a great compositor. It’s a cd book and jewel casve i’ve designed, the track name is Korg e-LIVEsEx it’s mechanical, metallic mysterious, hypnotisyng</h2>
-      <h1>INSIDE THE KORG</h1>
-      </main>
+    </div>
+
+    <main id="korg-body">
+      <header>
+        <button class="BackButton" id="KorgBack">
+          ☜ Back to home
+        </button>
+      </header>
+
+      <div id="korg-cd" class="korg-image-section">
+          <h1>Korg e-LIVEsEx<br>JEWEL CASE</h1>
+      </div>
+
+      <h2>This is projet is an hommage for Nelson Weber, a great friend of mine and also a great compositor. It's a cd book and jewel casve i've designed, the track name is Korg e-LIVEsEx it's mechanical, metallic mysterious, hypnotisyng</h2>
+      <div id="korg-inside" class="korg-image-section">
+          <h1>INSIDE THE KORG</h1>
+      </div>
+      <h2>The inside of the cd book i've used the JetBrains Mono fontface, it represent exactly the genre of the track ; nerdy, electronic, complex. It's also a great open-source type that i personnly love. The clusterd line is a photo of the EMX-1 that i vectorized it'sa reference to how this track was made</h2>
+      <div id="korg-back" class="korg-image-section">
+          <h1>BACK OF THE KORG</h1>
+      </div>
+      <h2>The visual at the back come from the manual of the Korg EMX-1, it's the routing of the sequencer/synth used to make this song. The logo at the bottom left "DBOZO RECORDS" doesn't really exist it's a reference of the old name of a soundsystem nelson is part of.</h2>
+      <h2 id="thanks">It's a really personnal project i've made specially for Nelson, it's an homage to our friendship, the track is responsible for our encouter and made me discover kinda of introduce me to more deep and niche electronic music.</h2>
+      <h2>Thank you Nelson</h2>
+    </main>
 
   </div>
         <script src="script/korg.js"></script>
-        <script type="module" src="script/3d-cd.js"></script>
     </body>
 </html>
