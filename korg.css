@@ -28,14 +28,19 @@
     margin-bottom: 4em;
 }
 
+#korgbody header{
+    display: flex;
+    flex-direction: row;
+}
 
 .BackButton{
     margin-bottom: 1em;
     filter: url(#displacementFilterLow);
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 1.4rem;
     position: relative;
+    color: white;
 }
 
 
@@ -75,3 +80,17 @@
 #thanks{
     width: 50%;
 }
+
+#korg-inside{
+    background-image: url(assets/2d/inside.png);
+    background-repeat: no-repeat;
+    background-size: contain 90%;
+    background-position: center;
+}
+
+#korg-back{
+    background-image: url(assets/2d/back.png);
+    background-repeat: no-repeat;
+    background-size: contain 90%;
+    background-position: center;
+}n

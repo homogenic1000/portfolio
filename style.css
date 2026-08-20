@@ -51,6 +51,9 @@ body{
     text-align: right;
     flex: 1;
     margin-right: 1.4em;
+    font-family: "IBM Plex Serif";
+    font-weight: 300;
+    font-style: italic;
 }
 #physic{
     z-index: 1000 !important; /* au-dessus du canvas */
