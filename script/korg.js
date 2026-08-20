@@ -4,13 +4,8 @@ const korgbody = document.getElementById("korg-body");
 const hero = document.getElementById("hero-section");
 const backButton = document.getElementById("KorgBack");
 const body = document.body;
-
-
-
-
-
-
 const sandwich = document.getElementById("sandwich");
+const canvas = document.canvas
 
 window.onKorgClick = function () {
   titleD.style.display = "none";
@@ -27,6 +22,7 @@ window.onKorgClick = function () {
   hero.style.position = "static";
   hero.style.textAlign = "left";
   hero.style.justifyContent = "flex-start";
+  canvas.style.display = "none"
 
 
   function resetAll() {
