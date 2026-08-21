@@ -22,7 +22,8 @@ window.onKorgClick = function () {
   hero.style.position = "static";
   hero.style.textAlign = "left";
   hero.style.justifyContent = "flex-start";
-  canvas.style.display = "none"
+  canvas.style.display = "none";
+  hero.style.display = "none";
 
 
   function resetAll() {
