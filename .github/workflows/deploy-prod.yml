@@ -1,0 +1,66 @@
+name: Minify & deploy to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync prod branch with main
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin prod; then
+            git checkout prod
+            git merge origin/main -X theirs --no-edit
+          else
+            git checkout -b prod
+          fi
+
+      - name: Minify CSS and JS
+        run: |
+          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. script/*.js
+          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. *.css
+
+      - name: Commit minified files to prod
+        run: |
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: minify assets [skip ci]"
+          git push origin prod
+
+      - name: Remove non-site files
+        run: |
+          rm -rf node_modules .git .github .DS_Store \
+                 package.json package-lock.json jsconfig.json opencode.json README.md .gitignore
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
