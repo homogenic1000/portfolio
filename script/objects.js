@@ -96,7 +96,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false,
     sprite: {
-      texture: "assets/2d/korg.webp",
+      texture: "assets/2d/korg-cd.webp",
       xScale: 0.2,
       yScale: 0.2,
     },
