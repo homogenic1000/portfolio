@@ -25,7 +25,7 @@ jobs:
 
       - name: Minify CSS and JS
         run: |
-          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. script/*.js
+          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=script script/*.js
           npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. *.css
 
       - name: Remove non-site files
