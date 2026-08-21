@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
   pages: write
   id-token: write
 
@@ -23,30 +22,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Sync prod branch with main
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git ls-remote --exit-code --heads origin prod; then
-            git checkout prod
-            git merge origin/main -X theirs --no-edit
-          else
-            git checkout -b prod
-          fi
 
       - name: Minify CSS and JS
         run: |
           npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. script/*.js
           npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=. *.css
-
-      - name: Commit minified files to prod
-        run: |
-          git add -A
-          git diff --cached --quiet || git commit -m "chore: minify assets [skip ci]"
-          git push origin prod
 
       - name: Remove non-site files
         run: |
