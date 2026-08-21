@@ -1,7 +1,7 @@
 // objects.js - Gestion des objets qui tombent
 
-spawnX = 150;
-spawnY = 240;
+let spawnX = 150;
+let spawnY = 240;
 const resitutionValue = 0.9;
 const frictionValueAir = 0.02;
 const frictionValue = 0.05;
@@ -238,7 +238,7 @@ function createAboutMe() {
   return aboutme;
 }
 
-createKorg = () => {
+function createKorg() {
   const config = OBJECT_CONFIG.korg;
 
   korg = Matter.Bodies.rectangle(
