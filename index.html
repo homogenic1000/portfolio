@@ -23,6 +23,14 @@
   <script src="script/animation.js"></script>
   <script src="script/cdnLOAD.js"></script>
 
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/node_modules/three/build/three.module.js",
+        "three/addons/": "/node_modules/three/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -71,11 +79,11 @@
         </h1>
       </section>
     </div>
-
+    
     <main id="layout">
       <section class="column">
           <section class="box" id="content">
-          <h1><u><span id="index">index/</span></u>Korg e-LIVEsEx jewel case</h1>
+          <h1><u><a href="matheodelessert.ch"><span id="index"><u>index</u></a>/</span></u>Korg e-LIVEsEx jewel case</h1>
               <p>This is projet is an hommage for Nelson Weber, a great friend of mine and also a great compositor. It’s a cd book and jewel case i’ve designed, the track name is Korg e-LIVEsEx it’s mechanical, metallic, mysterious. <br> <br>The inside of the cd book i’ve used the JetBrains Mono font face, it represent exactly the genre of the track ; nerdy, electronic, complex. It’s also a great open-source type that i personally love. The clustered line is a photo of the EMX-1 that i vectorized it’s a reference to how this track was made</p>
           </section>
           <section class="box" id="show-min">
@@ -83,11 +91,12 @@
             </section>
       </section>
       <section class="box" id="show">
-          <img src="assets/2d/korg-cd.webp" alt="">
+        <div id="container-cd"></div>
       </section>
     </main>
 
   </div>
-        <script src="script/korg.js"></script>
+        <script src="script/korg-script/korg.js"></script>
+        <script type="module" src="script/korg-script/main.js"></script>
     </body>
 </html>

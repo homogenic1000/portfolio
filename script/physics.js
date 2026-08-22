@@ -50,6 +50,9 @@ function initRender() {
     },
   });
 
+  // Expose the Matter canvas so other scripts can target it explicitly
+  window.matterCanvas = render.canvas;
+
   return render;
 }
 

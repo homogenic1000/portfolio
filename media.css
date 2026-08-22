@@ -1,6 +1,7 @@
 @media only screen and (max-width: 600px) {
   #media-query {
     display: none;
+    height: min-content;
   }
 
   #no-mobile {
