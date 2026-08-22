@@ -6,7 +6,7 @@ const container = document.getElementById('container-cd');
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
 camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -14,6 +14,10 @@ renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+const color = 0xFFFFFF;
+const intensity = 2;
+const light = new THREE.AmbientLight(color, intensity);
+scene.add(light)
 
 function resize() {
   const width = container.clientWidth;
