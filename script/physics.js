@@ -153,6 +153,28 @@ function startPhysics() {
 }
 
 /**
+ * Mettre la physique en pause quand on entre dans un projet
+ * (stoppe le rendu ET le moteur, cache le canvas plein écran)
+ */
+function pausePhysics() {
+  if (!render) return;
+  Matter.Render.stop(render);
+  if (runner) Matter.Runner.stop(runner);
+  render.canvas.style.display = "none";
+}
+
+/**
+ * Reprendre la physique quand on quitte un projet
+ */
+function resumePhysics() {
+  if (!render) return;
+  render.canvas.style.display = "block";
+  Matter.Render.run(render);
+  if (!runner) runner = Matter.Runner.create();
+  Matter.Runner.run(runner, engine);
+}
+
+/**
  * Obtenir le moteur
  */
 function getEngine() {
@@ -209,15 +231,18 @@ function setupClickHandlers() {
  * Gérer le clic sur un objet en fonction de son label
  */
 function handleObjectClick(body) {
+  // Générique : si le label correspond à un projet configuré → entrer dedans
+  if (typeof PROJECTS !== "undefined" && PROJECTS[body.label] && typeof enterProject === "function") {
+    enterProject(body.label);
+    return;
+  }
+
   switch(body.label) {
     case 'aboutme':
       onAboutMeClick(body);
       break;
     case 'pamplemousse':
       onPamplemousseClick(body);
-      break;
-    case 'korg':
-      onKorgClick();
       break;
     default:
       console.log('Objet cliqué:', body.label);
