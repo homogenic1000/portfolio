@@ -5,7 +5,6 @@ const hero = document.getElementById("hero-section");
 const backButton = document.getElementById("index");
 const body = document.body;
 const sandwich = document.getElementById("sandwich");
-const canvas = document.canvas
 
 window.onKorgClick = function () {
   titleD.style.display = "none";
@@ -22,40 +21,7 @@ window.onKorgClick = function () {
   hero.style.position = "static";
   hero.style.textAlign = "left";
   hero.style.justifyContent = "flex-start";
-  canvas.style.display = "none";
+  const canvas = window.matterCanvas || document.querySelector("canvas");
+  if (canvas) canvas.style.display = "none";
   hero.style.display = "none";
-
-
-  function resetAll() {
-    resetState();
-
-    // Get the physics objects and add them back to the world
-    if (typeof getObjects === "function") {
-      const currentBodies = getObjects();
-      // Filter out undefined objects and add them back
-      addToWorld(currentBodies.filter(b => b));
-    }
-
-    resetAnimation();
-  }
-  backButton.addEventListener("click", resetAll);
-
-  
-  function resetState() {
-    document.body.style.backgroundColor = "white";
-    document.body.style.color = "black";
-    titleD.style.display = "block";
-
-    if (typeof engine !== "undefined" && typeof ground !== "undefined") {
-      Matter.Composite.add(engine.world, ground);
-    }
-
-    sandwich.style.display = "none";
-    animation.style.display = "block";
-    korgbody.style.display = "none";
-
-    hero.style.position = "";
-    hero.style.textAlign = "";
-    hero.style.justifyContent = "space-between";
-  }
 }

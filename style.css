@@ -20,6 +20,14 @@ body{
 }
 
 
+a{
+    text-decoration: none;
+}
+
+u{
+    text-decoration-thickness: 2.5px;
+}
+
 
 #hero-section{
     flex-wrap: wrap;
