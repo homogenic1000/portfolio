@@ -7,15 +7,17 @@ const animationBag = document.getElementById("animation-bag");
 const sandwich = document.getElementById("sandwich");
 const layoutEl = document.getElementById("layout");
 const bodyEl = document.body;
-const backButton = document.getElementById("index");
 const projectTitleEl = document.getElementById("project-title");
 const projectTextEl = document.getElementById("project-text");
 const videoEl = document.getElementById("project-video");
 
 let currentProjectId = null;
+let hideCanvasTimer = null;
 
 /**
- * Entrer dans un projet : UI + pause physique + contenu + média
+ * Entrer dans un projet : UI + transition + pause physique + contenu + média
+ * Pas de code de sortie : le bouton "index" recharge la page, le navigateur
+ * remet tout l'état à zéro tout seul.
  */
 function enterProject(id) {
   const cfg = PROJECTS[id];
@@ -26,11 +28,18 @@ function enterProject(id) {
   titleD.style.display = "none";
   sandwich.style.display = "none";
   animationBag.style.display = "none";
-  heroSection.style.display = "none";
   layoutEl.style.display = "flex";
 
-  // ② Mise en sommeil de la physique (canvas caché → texte sélectionnable)
-  if (typeof pausePhysics === "function") pausePhysics();
+  // ② Transition : retrait des boundaries (les objets tombent dans le vide),
+  // puis après 600ms on endort la physique et on cache le canvas
+  // → le texte redevient sélectionnable
+  if (typeof getBoundaries === "function") {
+    Matter.Composite.remove(engine.world, getBoundaries().filter(Boolean));
+  }
+  hideCanvasTimer = setTimeout(() => {
+    heroSection.style.display = "none";
+    if (typeof pausePhysics === "function") pausePhysics();
+  }, 600);
 
   // ③ Injection du contenu depuis la config
   projectTitleEl.textContent = cfg.title;
@@ -42,28 +51,6 @@ function enterProject(id) {
   applyMedia(cfg.media);
   buildCarousel(cfg.images);
 }
-
-/**
- * Quitter le projet courant : tout remettre en état d'origine
- */
-function exitProject() {
-  if (!currentProjectId) return;
-  currentProjectId = null;
-
-  destroyCarousel();
-  hideMedia();
-
-  layoutEl.style.display = "none";
-  heroSection.style.display = "";
-  titleD.style.display = "";
-  animationBag.style.display = "";
-  sandwich.style.display = "";
-  bodyEl.style.backgroundColor = "#ffffff";
-  layoutEl.style.backgroundColor = "";
-
-  if (typeof resumePhysics === "function") resumePhysics();
-}
-window.resetAll = exitProject; // compatibilité avec le README
 
 /**
  * Afficher le bon média dans #show selon cfg.media.type
@@ -160,16 +147,4 @@ function destroyCarousel() {
     carouselRoot.remove();
     carouselRoot = null;
   }
-}
-
-/* ---------------- Bouton retour ("index") ---------------- */
-
-if (backButton) {
-  const anchor = backButton.closest("a");
-  if (anchor) {
-    anchor.addEventListener("click", (e) => {
-      if (currentProjectId) e.preventDefault(); // pas de navigation pendant un projet
-    });
-  }
-  backButton.addEventListener("click", exitProject);
 }
