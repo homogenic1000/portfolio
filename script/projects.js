@@ -9,7 +9,17 @@ const PROJECTS = {
     bg: "#ffffff",
     media: { type: "3d", modelPath: "assets/model/cd.glb" },
     images: ["assets/2d/korg.webp"],
+
+    frip: {
+      title: "Frip'O'Point motion design",
+      text: "",
+      bg: "#ffffff",
+      media: { type: "video", src: "" },
+      images: [""],
+  }
   },
+
+
 
   // Exemple pour un futur projet vidéo — décommenter et adapter :
   // pamplemousse: {
