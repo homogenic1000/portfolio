@@ -8,7 +8,7 @@ const PROJECTS = {
     text: "This is projet is an hommage for Nelson Weber, a great friend of mine and also a great compositor. It's a cd book and jewel case i've designed, the track name is Korg e-LIVEsEx it's mechanical, metallic, mysterious.\n\nThe inside of the cd book i've used the JetBrains Mono font face, it represent exactly the genre of the track ; nerdy, electronic, complex. It's also a great open-source type that i personally love. The clustered line is a photo of the EMX-1 that i vectorized it's a reference to how this track was made",
     bg: "#ffffff",
     media: { type: "3d", modelPath: "assets/model/cd.glb" },
-    images: ["assets/2d/korg.webp"],
+    images: ["assets/2d/korg1.webp", "assets/2d/korg2.webp", "assets/2d/korg3.webp", "assets/2d/korg4.webp"],
 
     frip: {
       title: "Frip'O'Point motion design",
