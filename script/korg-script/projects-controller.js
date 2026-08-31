@@ -214,16 +214,18 @@ function buildMinWorld(config) {
 
   // Objets
   const bodies = (config.objects || []).map((o, i) => {
+    const renderOpts = {};
+    if (o.sprite) {
+      renderOpts.sprite = { texture: o.sprite, xScale: o.scale || 1, yScale: o.scale || 1 };
+    } else {
+      renderOpts.fillStyle = o.color || "rgba(0,0,0,0.4)";
+    }
     const basis = {
       label: o.label || "minObj" + i,
       restitution: MIN_STYLE.restitution,
       friction: MIN_STYLE.friction,
       frictionAir: MIN_STYLE.frictionAir,
-      render: {
-        sprite: o.sprite
-          ? { texture: o.sprite, xScale: o.scale || 1, yScale: o.scale || 1 }
-          : null,
-      },
+      render: renderOpts,
     };
     const x = width / 2 + (i * 30 - 60);
     const y = 40;
