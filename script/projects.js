@@ -9,14 +9,25 @@ const PROJECTS = {
     bg: "#ffffff",
     media: { type: "3d", modelPath: "assets/model/cd.glb" },
     images: ["assets/2d/korg1.webp", "assets/2d/korg2.webp", "assets/2d/korg3.webp", "assets/2d/korg4.webp"],
+  },
 
-    frip: {
+    rondpoint: {
       title: "Frip'O'Point motion design",
-      text: "",
+      text: "yayayay",
       bg: "#ffffff",
-      media: { type: "video", src: "" },
-      images: [""],
-  }
+      media: { type: "video", src: "assets/video/rondpoint.webm" },
+      images: [],
+      minWorld: {
+        gravity: 0.8,
+        objects: [
+          { type: "rectangle", w: 160, h: 93, sprite: "", scale: 0.5 },
+          { type: "rectangle", w: 160, h: 93, sprite: "", scale: 0.5 },
+          { type: "circle", r: 40, sprite: "", scale: 0.3 },
+          { type: "rectangle", w: 120, h: 80, sprite: "", scale: 0.5 },
+          { type: "circle", r: 60, sprite: "", scale: 0.25 },
+        ],
+      },
+  
   },
 
 
