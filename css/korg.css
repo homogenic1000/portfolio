@@ -38,8 +38,8 @@ u{
 
 /* Vidéo projet (#show) */
 #show video{
-    max-width: 75%;
-    max-height: 65%;
+    max-width: 85%;
+    max-height: 75%;
 }
 
 /* Carrousel (#show-min) */
@@ -153,6 +153,12 @@ u{
     border-style: solid;
 }
 
+#show-min canvas{
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
 
 #show{
     display: flex;
@@ -165,6 +171,7 @@ u{
 }
 
 #container-cd{
+    display: none;
     width: 100%;
     height: 100%;
 }

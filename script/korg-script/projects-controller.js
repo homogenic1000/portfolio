@@ -14,6 +14,9 @@ const videoEl = document.getElementById("project-video");
 let currentProjectId = null;
 let hideCanvasTimer = null;
 
+// Mini-monde Matter.js (#show-min)
+let minEngine = null, minRender = null, minRunner = null;
+
 /**
  * Entrer dans un projet : UI + transition + pause physique + contenu + média
  * Pas de code de sortie : le bouton "index" recharge la page, le navigateur
@@ -43,13 +46,20 @@ function enterProject(id) {
 
   // ③ Injection du contenu depuis la config
   projectTitleEl.textContent = cfg.title;
+  projectTitleEl.style.color = cfg.color || "blue";
   projectTextEl.textContent = cfg.text;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
 
   // ④ Routage des médias
   applyMedia(cfg.media);
-  buildCarousel(cfg.images);
+
+  // ⑤ Zone secondaire (#show-min) : mini-monde Matter.js OU carrousel
+  if (cfg.minWorld) {
+    buildMinWorld(cfg.minWorld);
+  } else {
+    buildCarousel(cfg.images);
+  }
 }
 
 /**
@@ -74,6 +84,8 @@ function applyMedia(media) {
  */
 function hideMedia() {
   if (window.CDViewer) window.CDViewer.hide();
+  destroyMinWorld();
+  destroyCarousel();
   videoEl.pause();
   videoEl.removeAttribute("src");
   videoEl.load();
@@ -147,4 +159,105 @@ function destroyCarousel() {
     carouselRoot.remove();
     carouselRoot = null;
   }
+}
+
+/* ---------------- Mini-monde Matter.js (#show-min) ---------------- */
+
+const MIN_STYLE = {
+  gravity: 0.8,
+  restitution: 0.9,
+  friction: 0.05,
+  frictionAir: 0.02,
+};
+
+/**
+ * Créer un mini monde Matter.js dans #show-min avec des objets dragguables
+ * (pas de click handler, uniquement du drag via MouseConstraint)
+ */
+function buildMinWorld(config) {
+  destroyMinWorld();
+
+  const host = document.getElementById("show-min");
+  if (!host || typeof Matter === "undefined") return;
+
+  const width = host.clientWidth || 400;
+  const height = host.clientHeight || 300;
+
+  minEngine = Matter.Engine.create();
+  minEngine.world.gravity.y = config.gravity !== undefined ? config.gravity : MIN_STYLE.gravity;
+
+  minRender = Matter.Render.create({
+    element: host,
+    engine: minEngine,
+    options: {
+      width,
+      height,
+      wireframes: false,
+      background: "transparent",
+    },
+  });
+  Matter.Render.run(minRender);
+
+  minRunner = Matter.Runner.create();
+  Matter.Runner.run(minRunner, minEngine);
+
+  // Boundaries internes pour garder les objets dans le canvas
+  // collisionFilter.group -1 = ne collide jamais avec les corps normaux,
+  // et le MouseConstraint les ignorera (pas de drag des murs)
+  const thickness = 60;
+  const wallOpts = { isStatic: true, render: { visible: false }, collisionFilter: { group: -1 } };
+  const walls = [
+    Matter.Bodies.rectangle(width / 2, height + thickness / 2, width + thickness * 2, thickness, wallOpts),
+    Matter.Bodies.rectangle(width / 2, -thickness / 2, width + thickness * 2, thickness, wallOpts),
+    Matter.Bodies.rectangle(-thickness / 2, height / 2, thickness, height + thickness * 2, wallOpts),
+    Matter.Bodies.rectangle(width + thickness / 2, height / 2, thickness, height + thickness * 2, wallOpts),
+  ];
+  Matter.Composite.add(minEngine.world, walls);
+
+  // Objets
+  const bodies = (config.objects || []).map((o, i) => {
+    const renderOpts = {};
+    if (o.sprite) {
+      renderOpts.sprite = { texture: o.sprite, xScale: o.scale || 1, yScale: o.scale || 1 };
+    } else {
+      renderOpts.fillStyle = o.color || "rgba(0,0,0,0.4)";
+    }
+    const basis = {
+      label: o.label || "minObj" + i,
+      restitution: MIN_STYLE.restitution,
+      friction: MIN_STYLE.friction,
+      frictionAir: MIN_STYLE.frictionAir,
+      render: renderOpts,
+    };
+    const x = width / 2 + (i * 30 - 60);
+    const y = 40;
+    if (o.type === "circle") {
+      return Matter.Bodies.circle(x, y, o.r, basis);
+    }
+    return Matter.Bodies.rectangle(x, y, o.w, o.h, basis);
+  });
+  Matter.Composite.add(minEngine.world, bodies);
+
+  // Drag (MouseConstraint sur le canvas mini) — pas de click handler
+  const mouse = Matter.Mouse.create(minRender.canvas);
+  const mouseConstraint = Matter.MouseConstraint.create(minEngine, {
+    mouse,
+    constraint: { stiffness: 0.08, render: { visible: false } },
+  });
+  Matter.Composite.add(minEngine.world, mouseConstraint);
+  minRender.mouse = mouse;
+}
+
+/**
+ * Détruire le mini-monde Matter.js (#show-min)
+ */
+function destroyMinWorld() {
+  if (minRender) Matter.Render.stop(minRender);
+  if (minRunner) Matter.Runner.stop(minRunner);
+  if (minRender && minRender.canvas && minRender.canvas.parentNode) {
+    minRender.canvas.parentNode.removeChild(minRender.canvas);
+  }
+  minEngine = null;
+  minRender = null;
+  minRunner = null;
 }
