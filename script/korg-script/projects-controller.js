@@ -166,8 +166,8 @@ function destroyCarousel() {
 const MIN_STYLE = {
   gravity: 0.09,
   restitution: 0.2,
-  friction: 0.05,
-  frictionAir: 0.02,
+  friction: 0,
+  frictionAir: 0,
 };
 
 let letterOverlays = [];
