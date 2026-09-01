@@ -164,11 +164,40 @@ function destroyCarousel() {
 /* ---------------- Mini-monde Matter.js (#show-min) ---------------- */
 
 const MIN_STYLE = {
-  gravity: 0.8,
-  restitution: 0.9,
+  gravity: 0.09,
+  restitution: 0.2,
   friction: 0.05,
   frictionAir: 0.02,
 };
+
+let letterOverlays = [];
+
+function minSpawn(i, width, height, total) {
+  const pad = 24;
+  const span = Math.max(1, total - 1);
+  const ratio = total <= 1 ? 0.5 : i / span;
+  return {
+    x: pad + ratio * (width - pad * 2) + (Math.random() * 12 - 6),
+    y: 30 + Math.random() * 30,
+    angle: (Math.random() - 0.5) * 0.4,
+  };
+}
+
+function drawLetterOverlays() {
+  if (!minRender) return;
+  const c = minRender.context;
+  for (const it of letterOverlays) {
+    const b = it.body;
+    if (!b) continue;
+    c.save();
+    c.translate(b.position.x, b.position.y);
+    c.rotate(b.angle);
+    const w = it.img.naturalWidth * it.scale;
+    const h = it.img.naturalHeight * it.scale;
+    c.drawImage(it.img, -w / 2, -h / 2, w, h);
+    c.restore();
+  }
+}
 
 /**
  * Créer un mini monde Matter.js dans #show-min avec des objets dragguables
@@ -214,8 +243,11 @@ function buildMinWorld(config) {
   ];
   Matter.Composite.add(minEngine.world, walls);
 
-  // Objets
-  const bodies = (config.objects || []).map((o, i) => {
+  // Objets : placeholders rectangulaires immédiats, remplacés par des
+  // hitboxes polygonales (véritables silhouettes) dès que le trace finit.
+  const allObjects = config.objects || [];
+  const spawns = allObjects.map((o, i) => minSpawn(i, width, height, allObjects.length));
+  const placeholders = allObjects.map((o, i) => {
     const renderOpts = {};
     if (o.sprite) {
       renderOpts.sprite = { texture: o.sprite, xScale: o.scale || 1, yScale: o.scale || 1 };
@@ -229,14 +261,55 @@ function buildMinWorld(config) {
       frictionAir: MIN_STYLE.frictionAir,
       render: renderOpts,
     };
-    const x = width / 2 + (i * 30 - 60);
-    const y = 40;
+    const x = spawns[i].x;
+    const y = spawns[i].y;
+    let body;
     if (o.type === "circle") {
-      return Matter.Bodies.circle(x, y, o.r, basis);
+      body = Matter.Bodies.circle(x, y, o.r, basis);
+    } else {
+      body = Matter.Bodies.rectangle(x, y, o.w, o.h, basis);
     }
-    return Matter.Bodies.rectangle(x, y, o.w, o.h, basis);
+    Matter.Body.setAngle(body, spawns[i].angle);
+    return body;
   });
-  Matter.Composite.add(minEngine.world, bodies);
+  Matter.Composite.add(minEngine.world, placeholders);
+
+  allObjects.forEach((o, i) => {
+    if (!o.sprite || typeof traceSpriteVertices !== "function") return;
+    const engineRef = minEngine;
+    traceSpriteVertices(o.sprite).then((res) => {
+      if (!res) return;
+      if (engineRef !== minEngine || !minWorldAlive()) return;
+      const placeholder = placeholders[i];
+      if (placeholder) Matter.Composite.remove(minEngine.world, placeholder);
+      const k = o.scale || 0.05;
+      const scaledSets = res.islands.map((verts) => verts.map((v) => ({ x: v.x * k, y: v.y * k })));
+      const body = Matter.Bodies.fromVertices(
+        spawns[i].x,
+        spawns[i].y,
+        scaledSets,
+        {
+          label: o.label || "minObj" + i,
+          restitution: MIN_STYLE.restitution,
+          friction: MIN_STYLE.friction,
+          frictionAir: MIN_STYLE.frictionAir,
+          render: { visible: false },
+        },
+        false,
+        0.01,
+        0.01
+      );
+      Matter.Body.setAngle(body, spawns[i].angle);
+      Matter.Composite.add(minEngine.world, body);
+      letterOverlays.push({ body, img: res.img, scale: k });
+    });
+  });
+
+  function minWorldAlive() {
+    return minEngine && minEngine.world;
+  }
+
+  Matter.Events.on(minRender, "afterRender", drawLetterOverlays);
 
   // Drag (MouseConstraint sur le canvas mini) — pas de click handler
   const mouse = Matter.Mouse.create(minRender.canvas);
@@ -252,7 +325,11 @@ function buildMinWorld(config) {
  * Détruire le mini-monde Matter.js (#show-min)
  */
 function destroyMinWorld() {
-  if (minRender) Matter.Render.stop(minRender);
+  if (minRender) {
+    Matter.Events.off(minRender, "afterRender", drawLetterOverlays);
+    Matter.Render.stop(minRender);
+  }
+  letterOverlays = [];
   if (minRunner) Matter.Runner.stop(minRunner);
   if (minRender && minRender.canvas && minRender.canvas.parentNode) {
     minRender.canvas.parentNode.removeChild(minRender.canvas);
