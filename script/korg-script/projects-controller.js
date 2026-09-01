@@ -46,6 +46,7 @@ function enterProject(id) {
 
   // ③ Injection du contenu depuis la config
   projectTitleEl.textContent = cfg.title;
+  projectTitleEl.style.color = cfg.color || "blue";
   projectTextEl.textContent = cfg.text;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
@@ -207,6 +208,7 @@ function buildMinWorld(config) {
   const wallOpts = { isStatic: true, render: { visible: false }, collisionFilter: { group: -1 } };
   const walls = [
     Matter.Bodies.rectangle(width / 2, height + thickness / 2, width + thickness * 2, thickness, wallOpts),
+    Matter.Bodies.rectangle(width / 2, -thickness / 2, width + thickness * 2, thickness, wallOpts),
     Matter.Bodies.rectangle(-thickness / 2, height / 2, thickness, height + thickness * 2, wallOpts),
     Matter.Bodies.rectangle(width + thickness / 2, height / 2, thickness, height + thickness * 2, wallOpts),
   ];
