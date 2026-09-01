@@ -34,6 +34,7 @@ The core experience: user clicks a bag → frame-by-frame animation plays → Ma
 
 ### Libraries Loaded via CDN (not npm)
 - Matter.js `0.19.0` (script tag) — npm has `0.20.0` but it's not used at runtime
+- poly-decomp `0.3.0` (script tag, jsdelivr) — enables concave decomposition in `Bodies.fromVertices`; exposes the `decomp` global that Matter's `Common.getDecomp` reads
 - Three.js `0.182.0` (import map → jsdelivr CDN)
 - Typewriter Effect (unpkg CDN)
 
@@ -74,6 +75,7 @@ portfolio/
 │   ├── objects.js                # Matter.js body definitions (6 objects)
 │   ├── physics.js                # Matter.js engine init & orchestrator
 │   ├── projects.js               # PROJECTS data config dictionary
+│   ├── silhouette.js             # Sprite → silhouette polygon tracing (mini-world hitboxes)
 │   ├── turbulance.js             # SVG turbulence filter animation
 │   └── korg-script/
 │       ├── main.js               # Three.js lazy-init 3D viewer (ES module)
@@ -103,12 +105,13 @@ Scripts are loaded as **classic `<script>` tags** (global scope, no bundling). O
 3. `objects.js` — depends on Matter.js global
 4. `projects.js` — no dependencies, defines `PROJECTS` data object
 5. `physics.js` — depends on: boundaries, objects, handlers, projects
-6. `animation.js` — depends on physics (calls `startPhysics()`)
-7. `turbulance.js` — independent SVG filter animation
+6. `silhouette.js` — no dependencies; defines `traceSpriteVertices()` (sprite → silhouette polygons for mini-world hitboxes)
+7. `animation.js` — depends on physics (calls `startPhysics()`)
+8. `turbulance.js` — independent SVG filter animation
 
 Then as `type="module"`:
-8. `korg-script/main.js` — ES module, imports Three.js via import map
-9. `korg-script/projects-controller.js` — depends on physics, projects, handlers, and `window.CDViewer` from main.js
+9. `korg-script/main.js` — ES module, imports Three.js via import map
+10. `korg-script/projects-controller.js` — depends on physics, projects, handlers, silhouette, and `window.CDViewer` from main.js
 
 ### State Machine Pattern
 The app has **two states** managed by DOM manipulation:
@@ -154,8 +157,15 @@ Defines `OBJECT_CONFIG` for 6 interactive objects (tabac, filtre, pamplemousse, 
 ### `script/physics.js` — Physics Engine Orchestrator
 Initializes Matter.js engine, creates the renderer in `#physic`, manages boundaries, spawns objects with staggered delays, handles click detection on physics bodies, and provides `pausePhysics()`/`resumePhysics()`.
 
+### `script/silhouette.js` — Sprite → Polygon Hitbox Tracing
+Traces the exact silhouette of any sprite alpha channel. `traceSpriteVertices(src)` loads the image, samples its alpha onto a small grid (`TRACE.SAMPLE`), labels 8-connected islands, traces each island's outer contour with a Moore-neighbor boundary walk (holes are automatically filled), and simplifies with Douglas–Peucker. Resolves `{ img, islands }` — the loaded image plus one vertex set **per island** — or `null` on failure. Tuning constants live in the `TRACE` object: `SAMPLE`, `ALPHA_THRESHOLD`, `EPSILON`, `MAX_POINTS`.
+
 ### `script/korg-script/projects-controller.js` — Central Controller
 The main routing/transition system. `enterProject(id)` reads from `PROJECTS`, hides hero, pauses physics, injects content, dispatches media (3D or video), and builds secondary panels (carousel or mini physics world).
+
+**Mini-world hitboxes (auto-shaped):** in `buildMinWorld`, every config object with a `sprite` gets an immediate rectangular placeholder, then its traced polygons arrive asynchronously and **replace** the placeholder. Traced vertices are in source-image pixels (2048), so they're scaled by the object's `o.scale` before `Bodies.fromVertices` so the physics hugging the rendered sprite stays exact. Concave decomposition is provided by the `poly-decomp` CDN global. If the trace fails, the rectangle placeholder remains as a fallback. Each trace is bound to its engine instance to avoid stale re-injection after `destroyMinWorld`/re-entry.
+
+**Single-sprite rendering:** Matter cannot draw a sprite once on a compound (multi-part) body — `Bodies.fromVertices` copies any `render.sprite` onto every convex part, drawing the full texture N times (overlapping copies). So letter bodies are created with `render: { visible: false }` (physics only) and each letter's texture is drawn exactly once via an `afterRender` overlay (`drawLetterOverlays`), anchored to the body's position/angle. Spawn points are scattered across the mini-world width with slight y/angle jitter (`minSpawn`).
 
 ### `script/korg-script/main.js` — 3D Viewer
 Lazy-initializes Three.js scene when a 3D project is opened. Loads `.glb` models via GLTFLoader, sets up OrbitControls and lighting. Exposes `window.CDViewer` with `show(modelPath)` and `hide()`.

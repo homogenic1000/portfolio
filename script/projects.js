@@ -2,6 +2,13 @@
 // Ajouter un projet = ajouter une entrée ici + un sprite dans OBJECT_CONFIG (objects.js)
 // dont le label Matter correspond à la clé. Le reste est automatique.
 
+function miniRect(sprite) {
+  const r = 0.75 + Math.random() * 0.6;
+  const scale = 0.07 * r;
+  const size = Math.round(2048 * scale);
+  return { type: "rectangle", w: size, h: size, sprite, scale };
+}
+
 const PROJECTS = {
   korg: {
     title: "Korg e-LIVEsEx jewel case",
@@ -20,9 +27,18 @@ const PROJECTS = {
       media: { type: "video", src: "assets/video/rondpoint.webm" },
       images: [],
       minWorld: {
-        gravity: 0.8,
+        gravity: 0,
         objects: [
-          { type: "rectangle", w: 210, h: 210, sprite: "assets/2d/rondpoint.webp", scale: 0.1 },
+          miniRect("assets/2d/rondpoint-projects/rondpoint.webp"),
+          miniRect("assets/2d/rondpoint-projects/i.webp"),
+          miniRect("assets/2d/rondpoint-projects/f2.webp"),
+          miniRect("assets/2d/rondpoint-projects/p.webp"),
+          miniRect("assets/2d/rondpoint-projects/i2.webp"),
+          miniRect("assets/2d/rondpoint-projects/n.webp"),
+          miniRect("assets/2d/rondpoint-projects/o.webp"),
+          miniRect("assets/2d/rondpoint-projects/p2.webp"),
+          miniRect("assets/2d/rondpoint-projects/r.webp"),
+          miniRect("assets/2d/rondpoint-projects/t.webp")
         ],
       },
   

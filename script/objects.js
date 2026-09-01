@@ -64,7 +64,7 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/rondpoint.webp",
+      texture: "assets/2d/rondpoint-projects/rondpoint.webp",
       xScale: 0.1,
       yScale: 0.1,
     },
