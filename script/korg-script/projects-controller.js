@@ -46,7 +46,8 @@ function enterProject(id) {
 
   // ③ Injection du contenu depuis la config
   projectTitleEl.textContent = cfg.title;
-  projectTitleEl.style.color = cfg.color || "blue";
+  const titleWrap = projectTitleEl.parentElement;
+  if (titleWrap) titleWrap.style.color = cfg.color || "blue";
   projectTextEl.textContent = cfg.text;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
