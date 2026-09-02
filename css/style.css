@@ -29,6 +29,13 @@ u{
 }
 
 
+#media-query > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
 #hero-section{
     flex-wrap: wrap;
     display: flex;
