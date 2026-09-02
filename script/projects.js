@@ -3,7 +3,7 @@
 // dont le label Matter correspond à la clé. Le reste est automatique.
 
 function miniRect(sprite) {
-  const r = 0.75 + Math.random() * 0.6;
+  const r = 0.55 + Math.random() * 0.5;
   const scale = 0.07 * r;
   const size = Math.round(2048 * scale);
   return { type: "rectangle", w: size, h: size, sprite, scale };

@@ -233,7 +233,7 @@ function buildMinWorld(config) {
   // Boundaries internes pour garder les objets dans le canvas
   // collisionFilter.group -1 = ne collide jamais avec les corps normaux,
   // et le MouseConstraint les ignorera (pas de drag des murs)
-  const thickness = 60;
+  const thickness = 120;
   const wallOpts = { isStatic: true, render: { visible: false }, collisionFilter: { group: -1 } };
   const walls = [
     Matter.Bodies.rectangle(width / 2, height + thickness / 2, width + thickness * 2, thickness, wallOpts),
