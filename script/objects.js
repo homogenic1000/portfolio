@@ -1,17 +1,27 @@
 // objects.js - Gestion des objets qui tombent
 
-let spawnX = 150;
-let spawnY = 240;
 const resitutionValue = 0.9;
 const frictionValueAir = 0.02;
 const frictionValue = 0.05;
+
+/**
+ * Compute spawn coordinates (bag center / opening) from the bag's actual
+ * rendered position. Pure function: returns { x, y } in viewport pixels.
+ */
+function computeSpawnPoint() {
+  const bag = document.getElementById("animation-bag");
+  if (!bag) return { x: 0, y: 0 };
+  const rect = bag.getBoundingClientRect();
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height * 0.5,
+  };
+}
 
 const OBJECT_CONFIG = {
   tabac: {
     width: 160,
     height: 93,
-    x: spawnX,
-    y: spawnY,
     angle: (3 * Math.PI) / 180,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -26,8 +36,6 @@ const OBJECT_CONFIG = {
   filtre: {
     width: 160,
     height: 93,
-    x: spawnX,
-    y: spawnY,
     angle: (3 * Math.PI) / 180,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -41,8 +49,6 @@ const OBJECT_CONFIG = {
   },
   pamplemousse: {
     radius: 40,
-    x: spawnX,
-    y: spawnY,
     angle: (3 * Math.PI) / 180,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -56,8 +62,6 @@ const OBJECT_CONFIG = {
   },
   rondpoint: {
     radius: 80,
-    x: spawnX,
-    y: spawnY,
     angle: (3 * Math.PI) / 180,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -72,8 +76,6 @@ const OBJECT_CONFIG = {
   aboutme: {
     width: 140,
     height:100,
-    x: spawnX,
-    y: spawnY,
     angle: 2,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -88,8 +90,6 @@ const OBJECT_CONFIG = {
   korg:{
     width: 100,
     height:100,
-    x: spawnX,
-    y: spawnY,
     angle: 2,
     restitution: resitutionValue,
     friction: frictionValue,
@@ -100,21 +100,35 @@ const OBJECT_CONFIG = {
       xScale: 0.2,
       yScale: 0.2,
     },
+  },
+  vroomvroom: {
+    width: 100,
+    height: 100,
+    angle: 2,
+    restitution: resitutionValue,
+    friction: frictionValue,
+    frictionAir: frictionValueAir,
+    isStatic: false,
+    sprite: {
+      texture: "assets/2d/tabac.webp",
+      xScale: 0.2,
+      yScale: 0.2,
+    },
   }
 };
 
 // Variables globales pour les objets
-let tabac, filtre, pamplemousse, rondpoint, aboutme, korg;
+let tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom;
 
 /**
  * Créer l'objet tabac
  */
-function createTabac() {
+function createTabac(x, y) {
   const config = OBJECT_CONFIG.tabac;
 
   tabac = Matter.Bodies.rectangle(
-    config.x,
-    config.y,
+    x,
+    y,
     config.width,
     config.height,
     {
@@ -140,12 +154,12 @@ function createTabac() {
 /**
  * Créer l'objet filtre
  */
-function createFiltre() {
+function createFiltre(x, y) {
   const config = OBJECT_CONFIG.filtre;
 
   filtre = Matter.Bodies.rectangle(
-    config.x,
-    config.y,
+    x,
+    y,
     config.width,
     config.height,
     {
@@ -168,10 +182,10 @@ function createFiltre() {
   return filtre;
 }
 
-function createPamplemousse() {
+function createPamplemousse(x, y) {
   const config = OBJECT_CONFIG.pamplemousse;
 
-  pamplemousse = Matter.Bodies.circle(config.x, config.y, config.radius, {
+  pamplemousse = Matter.Bodies.circle(x, y, config.radius, {
     angle: config.angle,
     label: "pamplemousse",
     isStatic: config.isStatic,
@@ -190,9 +204,9 @@ function createPamplemousse() {
   return pamplemousse;
 }
 
-function createRondpoint() {
+function createRondpoint(x, y) {
   const config = OBJECT_CONFIG.rondpoint;
-  rondpoint = Matter.Bodies.circle(config.x, config.y, config.radius, {
+  rondpoint = Matter.Bodies.circle(x, y, config.radius, {
     angle: config.angle,
     label: "rondpoint",
     isStatic: config.isStatic,
@@ -211,12 +225,12 @@ function createRondpoint() {
   return rondpoint;
 }
 
-function createAboutMe() {
+function createAboutMe(x, y) {
   const config = OBJECT_CONFIG.aboutme;
 
   aboutme = Matter.Bodies.rectangle(
-    config.x,
-    config.y,
+    x,
+    y,
     config.width,
     config.height,
     {
@@ -238,12 +252,12 @@ function createAboutMe() {
   return aboutme;
 }
 
-function createKorg() {
+function createKorg(x, y) {
   const config = OBJECT_CONFIG.korg;
 
   korg = Matter.Bodies.rectangle(
-    config.x,
-    config.y,
+    x,
+    y,
     config.width,
     config.height,
     {
@@ -265,19 +279,48 @@ function createKorg() {
   return korg;
 }
 
+function createVroomvroom(x, y) {
+  const config = OBJECT_CONFIG.vroomvroom;
+
+  vroomvroom = Matter.Bodies.rectangle(
+    x,
+    y,
+    config.width,
+    config.height,
+    {
+      angle: config.angle,
+      label: "vroomvroom",
+      isStatic: config.isStatic,
+      restitution: config.restitution,
+      friction: config.friction,
+      frictionAir: config.frictionAir,
+      render: {
+        sprite: {
+          texture: config.sprite.texture,
+          xScale: config.sprite.xScale,
+          yScale: config.sprite.yScale,
+        },
+      },
+    }
+  );
+  return vroomvroom;
+}
+
 const objects = [];
 
 /**
  * Créer tous les objets
  */
 function createObjects() {
+  const p = computeSpawnPoint();
   return [
-    createTabac(),
-    createFiltre(),
-    createPamplemousse(),
-    createRondpoint(),
-    createAboutMe(),
-    createKorg(),
+    createTabac(p.x, p.y),
+    createFiltre(p.x, p.y),
+    createPamplemousse(p.x, p.y),
+    createRondpoint(p.x, p.y),
+    createAboutMe(p.x, p.y),
+    createKorg(p.x, p.y),
+    createVroomvroom(p.x, p.y),
   ];
 }
 
@@ -285,5 +328,5 @@ function createObjects() {
  * Obtenir tous les objets
  */
 function getObjects() {
-  return [tabac, filtre, pamplemousse, rondpoint, aboutme, korg];
+  return [tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom];
 }
