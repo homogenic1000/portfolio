@@ -21,7 +21,7 @@ const PROJECTS = {
     text: "Frip'O'Point was an event that took place on the 23rd of August 2025. It was a temporary thrift shop organized by Rondpoint Collectif, which we founded with my friends.\n\nAt Rondpoint, there are two graphic designers and two interactive media designers, so we're really passionate about our communication. We create things and let our ideas flow into our posters and animations. \n\nThe poster was made by Marko Illic, Sophie, and me, and I did all the animation!\n\nWe wanted a poster that would convey the craftsmanship of the event, so we used Blender to create some of the letters, Play-Doh for others, and some fabric that I sewed together to create the patchwork curtain animation.\n\n<span class=\"copyright\">All rights to the musical composition and sound recording of \"Pro: Lov: Ad\" are owned by Sweet Trip and Darla Records (℗ © 2003). This mention is made for commentary, criticism, or reference purposes under Fair Use guidelines, and no copyright infringement is intended.</span>  ",
       bg: "#ffffff",
       color: "#30C067",
-      media: { type: "video", src: "assets/video/rondpoint.webm" },
+      media: { type: "video", src: "assets/video/fripopoint.webm" },
       images: [],
       minWorld: {
         gravity: 0,
