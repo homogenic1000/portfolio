@@ -114,19 +114,12 @@ function handleResize() {
  * Fonction principale pour démarrer la physique
  */
 function startPhysics() {
-  // Initialiser le moteur
   initEngine();
-
-  // Initialiser le rendu
   initRender();
 
-  // Créer les boundaries (murs et sol)
   const boundaries = createBoundaries();
-
-  // Ajouter les boundaries au monde
   addToWorld(boundaries);
 
-  // Ajouter les objets avec délai
   const objectFunctions = [
     createTabac,
     createFiltre,
@@ -134,21 +127,21 @@ function startPhysics() {
     createRondpoint,
     createAboutMe,
     createKorg,
+    createVroomvroom,
   ];
+  // Mesure la position du bag juste avant de créer chaque objet : à ce moment
+  // l'animation du sac est finie et le layout est stable, donc le spawn suit
+  // l'emplacement réel (centre du sac) quel que soit l'écran.
   objectFunctions.forEach((createFn, index) => {
     setTimeout(() => {
-      const obj = createFn();
+      const { x, y } = computeSpawnPoint();
+      const obj = createFn(x, y);
       addToWorld([obj]);
     }, index * 500);
   });
 
-  // Démarrer la simulation
   startSimulation();
-
-  // Appliquer une première fois le redimensionnement pour que canvas et boundaries soient corrects
   handleResize();
-
-  // Gérer le redimensionnement (une seule fois)
   window.addEventListener("resize", handleResize);
 }
 

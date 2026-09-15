@@ -31,6 +31,7 @@ The core experience: user clicks a bag → frame-by-frame animation plays → Ma
 | **Typewriter Effect** | Text animation (loaded via CDN) |
 | **Vite** | Local dev server (`npx vite`) |
 | **esbuild** | CI-only minification (in GitHub Actions) |
+| **Playwright + Chromium** | Headless-browser smoke tests (`npm test`) |
 
 ### Libraries Loaded via CDN (not npm)
 - Matter.js `0.19.0` (script tag) — npm has `0.20.0` but it's not used at runtime
@@ -72,7 +73,7 @@ portfolio/
 │   ├── animation.js              # Frame-by-frame bag sprite animation
 │   ├── boundaries.js             # Matter.js invisible walls
 │   ├── handlers.js               # Click handlers for special objects
-│   ├── objects.js                # Matter.js body definitions (6 objects)
+│   ├── objects.js                # Matter.js body definitions (7 objects)
 │   ├── physics.js                # Matter.js engine init & orchestrator
 │   ├── projects.js               # PROJECTS data config dictionary
 │   ├── silhouette.js             # Sprite → silhouette polygon tracing (mini-world hitboxes)
@@ -83,6 +84,10 @@ portfolio/
 │
 ├── docs/
 │   └── dynamic-rendering.svg     # Architecture diagram
+│
+├── test/
+│   ├── screenshot.mjs            # Headless-browser smoke test (Playwright)
+│   └── screenshots/              # Generated viewport screenshots (gitignored?)
 │
 ├── .github/workflows/
 │   └── deploy-prod.yml           # CI/CD: minify + deploy to GitHub Pages
@@ -152,10 +157,12 @@ const PROJECTS = {
 **To add a new project:** Add an entry to `PROJECTS` + add a matching falling object in `objects.js`. The controller auto-handles rendering.
 
 ### `script/objects.js` — Physics Object Factory
-Defines `OBJECT_CONFIG` for 6 interactive objects (tabac, filtre, pamplemousse, rondpoint, aboutme, korg). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry.
+Defines `OBJECT_CONFIG` for 7 interactive objects (tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry. Note: `vroomvroom` currently uses the `tabac.webp` sprite as a temporary placeholder until a dedicated sprite is sourced.
+
+**Dynamic spawn point:** Objects no longer spawn at a hardcoded pixel offset. `computeSpawnPoint()` reads the bag's live `getBoundingClientRect()` and returns `{ x, y }` at the bag's horizontal center and vertical middle (where the bag opening is). In `physics.js`, `computeSpawnPoint()` is called just before each object is created (inside its 500ms `setTimeout`) and its result is passed directly into each `create*(x, y)` factory — so the spawn tracks the settled bag position on any screen size. There are no spawn-position globals; the point is computed per-creation and handed to the body factory.
 
 ### `script/physics.js` — Physics Engine Orchestrator
-Initializes Matter.js engine, creates the renderer in `#physic`, manages boundaries, spawns objects with staggered delays, handles click detection on physics bodies, and provides `pausePhysics()`/`resumePhysics()`.
+Initializes Matter.js engine, creates the renderer in `#physic`, manages boundaries, spawns objects with staggered delays, handles click detection on physics bodies, and provides `pausePhysics()`/`resumePhysics()`. Each staggered spawn calls `computeSpawnPoint()` right before creating the body so the spawn tracks the settled bag position.
 
 ### `script/silhouette.js` — Sprite → Polygon Hitbox Tracing
 Traces the exact silhouette of any sprite alpha channel. `traceSpriteVertices(src)` loads the image, samples its alpha onto a small grid (`TRACE.SAMPLE`), labels 8-connected islands, traces each island's outer contour with a Moore-neighbor boundary walk (holes are automatically filled), and simplifies with Douglas–Peucker. Resolves `{ img, islands }` — the loaded image plus one vertex set **per island** — or `null` on failure. Tuning constants live in the `TRACE` object: `SAMPLE`, `ALPHA_THRESHOLD`, `EPSILON`, `MAX_POINTS`.
@@ -163,9 +170,13 @@ Traces the exact silhouette of any sprite alpha channel. `traceSpriteVertices(sr
 ### `script/korg-script/projects-controller.js` — Central Controller
 The main routing/transition system. `enterProject(id)` reads from `PROJECTS`, hides hero, pauses physics, injects content, dispatches media (3D or video), and builds secondary panels (carousel or mini physics world).
 
+**Carousel with mixed media:** `buildCarousel(images)` now detects `.webm`/`.mp4` sources in the `images` array and renders `<video autoplay muted loop playsinline>` elements instead of `<img>` for those slides — so a project's `#show-min` can mix screenshots and looping videos.
+
 **Mini-world hitboxes (auto-shaped):** in `buildMinWorld`, every config object with a `sprite` gets an immediate rectangular placeholder, then its traced polygons arrive asynchronously and **replace** the placeholder. Traced vertices are in source-image pixels (2048), so they're scaled by the object's `o.scale` before `Bodies.fromVertices` so the physics hugging the rendered sprite stays exact. Concave decomposition is provided by the `poly-decomp` CDN global. If the trace fails, the rectangle placeholder remains as a fallback. Each trace is bound to its engine instance to avoid stale re-injection after `destroyMinWorld`/re-entry.
 
 **Single-sprite rendering:** Matter cannot draw a sprite once on a compound (multi-part) body — `Bodies.fromVertices` copies any `render.sprite` onto every convex part, drawing the full texture N times (overlapping copies). So letter bodies are created with `render: { visible: false }` (physics only) and each letter's texture is drawn exactly once via an `afterRender` overlay (`drawLetterOverlays`), anchored to the body's position/angle. Spawn points are scattered across the mini-world width with slight y/angle jitter (`minSpawn`).
+
+**Responsive mini-world letters:** Letter scale is proportional to the `#show-min` container (`Math.min(w,h) / 960 * 0.07 * r`, ~12% of container) instead of a fixed pixel size, so letters adapt to any screen. The canvas + boundary walls resize on container change via a `ResizeObserver` (mirrors the Three.js pattern), and each object gets small random initial velocity (`Matter.Body.setVelocity`, ±3) so they drift with inertia on spawn in the zero-gravity world.
 
 ### `script/korg-script/main.js` — 3D Viewer
 Lazy-initializes Three.js scene when a 3D project is opened. Loads `.glb` models via GLTFLoader, sets up OrbitControls and lighting. Exposes `window.CDViewer` with `show(modelPath)` and `hide()`.
@@ -208,8 +219,8 @@ npx vite          # Start dev server
 ```
 Or use `live-server` (also installed as dependency).
 
-### Important: No npm Scripts Defined
-`package.json` only has a placeholder `test` script. There is **no `dev`, `build`, `start`, or `lint` script**. Use `npx vite` directly.
+### Important: Only a `test` Script Defined
+`package.json` defines a `test` script (`node test/screenshot.mjs`, headless-browser smoke test). There is **no `dev`, `build`, `start`, or `lint` script**. Use `npx vite` directly to run the dev server.
 
 ### Linting / Formatting
 **None configured.** No ESLint, no Prettier, no editorconfig.
@@ -240,7 +251,31 @@ No Vercel, Netlify, Docker, or other deployment tooling.
 
 ## Testing
 
-**None.** No test framework, no test files, no test scripts.
+### Headless-Browser Smoke Test (Playwright + Chromium)
+We use **Playwright** driving a **headless Chromium** to load the real site, click the bag to trigger the physics animation, and report computed layout + console errors at multiple viewports. This is the ONLY way to verify browser-rendering behavior (stacking order, flex layout, canvas layering, responsive scaling) that static code review cannot reliably predict.
+
+**Run it:**
+```bash
+npm test                 # boots a vite dev server, tests 3 viewports, screenshots
+npm test -- --url http://localhost:5173   # test an already-running server
+npm test -- --port 5173  # pick the dev-server port (default 5173)
+```
+
+**What it does** (`test/screenshot.mjs`):
+1. Starts `npx vite` (unless `--url` is passed) and waits for it to be reachable.
+2. For each viewport (1024, 1512/14", 2560/27") opens a headless Chromium page, captures console errors and page errors, loads the site, clicks `#animation-bag`, waits for the physics canvas to spawn.
+3. Records structured JSON per viewport: bag visibility/size/position, sandwich visibility/size, title-D position, whether physics spawned, and any console errors.
+4. Writes a full-page screenshot to `test/screenshots/<name>.png`.
+5. Exits non-zero if the bag is missing, physics didn't spawn, or any console error occurred.
+
+**Why it matters for agents:** When verifying layout/responsive changes, run `npm test` and read the structured JSON output (positions/sizes) rather than relying on the screenshots — the JSON gives you exact pixel values to check centering, alignment, and scaling. Screenshots are a backup for models/teammates that can view images.
+
+**Installing the browser binary** (only needed once, already done but here for reference):
+```bash
+npx playwright install chromium
+```
+
+> Note: `test/screenshots/` output is generated at runtime and should generally stay gitignored.
 
 ---
 

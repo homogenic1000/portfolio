@@ -48,7 +48,7 @@ function enterProject(id) {
   projectTitleEl.textContent = cfg.title;
   const titleWrap = projectTitleEl.parentElement;
   if (titleWrap) titleWrap.style.color = cfg.color || "blue";
-  projectTextEl.textContent = cfg.text;
+  projectTextEl.innerHTML = cfg.text;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
 
@@ -113,10 +113,21 @@ function buildCarousel(images) {
   images.forEach((src, i) => {
     const slide = document.createElement("div");
     slide.className = "carousel-slide";
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "";
-    slide.appendChild(img);
+    const isVideo = /\.(webm|mp4)$/i.test(src);
+    if (isVideo) {
+      const video = document.createElement("video");
+      video.src = src;
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      slide.appendChild(video);
+    } else {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      slide.appendChild(img);
+    }
     track.appendChild(slide);
 
     const dot = document.createElement("button");
@@ -165,13 +176,14 @@ function destroyCarousel() {
 /* ---------------- Mini-monde Matter.js (#show-min) ---------------- */
 
 const MIN_STYLE = {
-  gravity: 0.09,
-  restitution: 0.2,
+  gravity: 0,
+  restitution: 0.85,
   friction: 0,
   frictionAir: 0,
 };
 
 let letterOverlays = [];
+let minResizeObserver = null;
 
 function minSpawn(i, width, height, total) {
   const pad = 24;
@@ -181,6 +193,7 @@ function minSpawn(i, width, height, total) {
     x: pad + ratio * (width - pad * 2) + (Math.random() * 12 - 6),
     y: 30 + Math.random() * 30,
     angle: (Math.random() - 0.5) * 0.4,
+    velocity: { x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6 },
   };
 }
 
@@ -212,6 +225,16 @@ function buildMinWorld(config) {
 
   const width = host.clientWidth || 400;
   const height = host.clientHeight || 300;
+
+  // Échelle proportionnelle au conteneur : normalise contre la résolution
+  // source (2048px) pour que les lettres s'adaptent à n'importe quel écran.
+  // Objectif ~12% de la dimension du conteneur, comme le design d'origine.
+  const containerScale = Math.min(width, height) / 960;
+  const objectScale = (o, i) => {
+    const r = 0.55 + Math.random() * 0.5;
+    return (containerScale * 0.07 * r) || 0.05;
+  };
+  const scales = (config.objects || []).map(objectScale);
 
   minEngine = Matter.Engine.create();
   minEngine.world.gravity.y = config.gravity !== undefined ? config.gravity : MIN_STYLE.gravity;
@@ -249,9 +272,10 @@ function buildMinWorld(config) {
   const allObjects = config.objects || [];
   const spawns = allObjects.map((o, i) => minSpawn(i, width, height, allObjects.length));
   const placeholders = allObjects.map((o, i) => {
+    const k = scales[i];
     const renderOpts = {};
     if (o.sprite) {
-      renderOpts.sprite = { texture: o.sprite, xScale: o.scale || 1, yScale: o.scale || 1 };
+      renderOpts.sprite = { texture: o.sprite, xScale: k, yScale: k };
     } else {
       renderOpts.fillStyle = o.color || "rgba(0,0,0,0.4)";
     }
@@ -268,8 +292,10 @@ function buildMinWorld(config) {
     if (o.type === "circle") {
       body = Matter.Bodies.circle(x, y, o.r, basis);
     } else {
-      body = Matter.Bodies.rectangle(x, y, o.w, o.h, basis);
+      const size = 2048 * k;
+      body = Matter.Bodies.rectangle(x, y, size, size, basis);
     }
+    Matter.Body.setVelocity(body, spawns[i].velocity);
     Matter.Body.setAngle(body, spawns[i].angle);
     return body;
   });
@@ -283,7 +309,7 @@ function buildMinWorld(config) {
       if (engineRef !== minEngine || !minWorldAlive()) return;
       const placeholder = placeholders[i];
       if (placeholder) Matter.Composite.remove(minEngine.world, placeholder);
-      const k = o.scale || 0.05;
+      const k = scales[i];
       const scaledSets = res.islands.map((verts) => verts.map((v) => ({ x: v.x * k, y: v.y * k })));
       const body = Matter.Bodies.fromVertices(
         spawns[i].x,
@@ -300,6 +326,7 @@ function buildMinWorld(config) {
         0.01,
         0.01
       );
+      Matter.Body.setVelocity(body, spawns[i].velocity);
       Matter.Body.setAngle(body, spawns[i].angle);
       Matter.Composite.add(minEngine.world, body);
       letterOverlays.push({ body, img: res.img, scale: k });
@@ -311,6 +338,25 @@ function buildMinWorld(config) {
   }
 
   Matter.Events.on(minRender, "afterRender", drawLetterOverlays);
+
+  // Redimensionne le canvas + murs quand le conteneur change de taille
+  if (typeof ResizeObserver !== "undefined") {
+    minResizeObserver = new ResizeObserver(() => {
+      if (!minRender || !minWorldAlive()) return;
+      const w = host.clientWidth;
+      const h = host.clientHeight;
+      if (!w || !h) return;
+      minRender.canvas.width = w;
+      minRender.canvas.height = h;
+      minRender.options.width = w;
+      minRender.options.height = h;
+      Matter.Body.setPosition(walls[0], { x: w / 2, y: h + thickness / 2 });
+      Matter.Body.setPosition(walls[1], { x: w / 2, y: -thickness / 2 });
+      Matter.Body.setPosition(walls[2], { x: -thickness / 2, y: h / 2 });
+      Matter.Body.setPosition(walls[3], { x: w + thickness / 2, y: h / 2 });
+    });
+    minResizeObserver.observe(host);
+  }
 
   // Drag (MouseConstraint sur le canvas mini) — pas de click handler
   const mouse = Matter.Mouse.create(minRender.canvas);
@@ -326,6 +372,10 @@ function buildMinWorld(config) {
  * Détruire le mini-monde Matter.js (#show-min)
  */
 function destroyMinWorld() {
+  if (minResizeObserver) {
+    minResizeObserver.disconnect();
+    minResizeObserver = null;
+  }
   if (minRender) {
     Matter.Events.off(minRender, "afterRender", drawLetterOverlays);
     Matter.Render.stop(minRender);

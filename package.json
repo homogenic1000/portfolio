@@ -4,7 +4,7 @@
   "description": "",
   "main": "script/animation.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/screenshot.mjs"
   },
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "playwright": "^1.62.1",
     "vite": "^7.3.6"
   }
 }
