@@ -89,19 +89,6 @@ const OBJECT_CONFIG = {
       yScale: 0.5,
     },
   },
-  pamplemousse: {
-    radius: 40,
-    angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
-    friction: frictionValue,
-    frictionAir: frictionValueAir,
-    isStatic: false, // Change à false pour activer la physique
-    sprite: {
-      texture: "assets/2d/pamplemousse.webp",
-      xScale: 0.2,
-      yScale: 0.2,
-    },
-  },
   rondpoint: {
     radius: 80,
     angle: (3 * Math.PI) / 180,
@@ -152,7 +139,20 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false,
     sprite: {
-      texture: "assets/2d/tabac.webp",
+      texture: "assets/2d/vroomvroom.webp",
+      xScale: 0.2,
+      yScale: 0.2,
+    },
+  },
+  premierjour: {
+    radius: 40,
+    angle: (3 * Math.PI) / 180,
+    restitution: resitutionValue,
+    friction: frictionValue,
+    frictionAir: frictionValueAir,
+    isStatic: false,
+    sprite: {
+      texture: "assets/2d/pamplemousse.webp",
       xScale: 0.2,
       yScale: 0.2,
     },
@@ -160,7 +160,7 @@ const OBJECT_CONFIG = {
 };
 
 // Variables globales pour les objets
-let tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom;
+let tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour;
 
 /**
  * Créer l'objet tabac
@@ -222,28 +222,6 @@ function createFiltre(x, y) {
   );
 
   return filtre;
-}
-
-function createPamplemousse(x, y) {
-  const config = OBJECT_CONFIG.pamplemousse;
-
-  pamplemousse = Matter.Bodies.circle(x, y, config.radius, {
-    angle: config.angle,
-    label: "pamplemousse",
-    isStatic: config.isStatic,
-    restitution: config.restitution,
-    friction: config.friction,
-    frictionAir: config.frictionAir,
-    render: {
-      sprite: {
-        texture: config.sprite.texture,
-        xScale: config.sprite.xScale,
-        yScale: config.sprite.yScale,
-      },
-    },
-  });
-
-  return pamplemousse;
 }
 
 function createRondpoint(x, y) {
@@ -348,6 +326,28 @@ function createVroomvroom(x, y) {
   return vroomvroom;
 }
 
+function createPremierjour(x, y) {
+  const config = OBJECT_CONFIG.premierjour;
+
+  premierjour = Matter.Bodies.circle(x, y, config.radius, {
+    angle: config.angle,
+    label: "premierjour",
+    isStatic: config.isStatic,
+    restitution: config.restitution,
+    friction: config.friction,
+    frictionAir: config.frictionAir,
+    render: {
+      sprite: {
+        texture: config.sprite.texture,
+        xScale: config.sprite.xScale,
+        yScale: config.sprite.yScale,
+      },
+    },
+  });
+
+  return premierjour;
+}
+
 const objects = [];
 
 /**
@@ -358,11 +358,11 @@ function createObjects() {
   return [
     createTabac(p.x, p.y),
     createFiltre(p.x, p.y),
-    createPamplemousse(p.x, p.y),
     createRondpoint(p.x, p.y),
     createAboutMe(p.x, p.y),
     createKorg(p.x, p.y),
     createVroomvroom(p.x, p.y),
+    createPremierjour(p.x, p.y),
   ];
 }
 
@@ -370,5 +370,5 @@ function createObjects() {
  * Obtenir tous les objets
  */
 function getObjects() {
-  return [tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom];
+  return [tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour];
 }

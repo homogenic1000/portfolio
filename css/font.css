@@ -1,0 +1,109 @@
+/* ==========================================================================
+   FONT.GUIDELINES — Mathéo Delessert Portfolio
+   --------------------------------------------------------------------------
+   Single source of truth for everything typographic: families, weights,
+   sizes, line-heights, and usage rules.
+
+   THE 3 FAMILIES (do not add new ones)
+   ─────────────────────────────────────────────────────────────────────────
+   1. "IBM Plex Serif"   — Google Fonts    → display / headings / identifiers
+      Always used ITALIC. Light display voice (weights 200–400).
+      → home hero greeting (#title-d), project header (#layout h1),
+        "index↗" subhead (h2), archive header ("Index/ · type · date"),
+        the <u> underlined project-title breadcrumb.
+
+   2. "JetBrains Mono"   — Google Fonts    → default body baseline
+      Variable weight 100–800. The neutral/default font of the site
+      (body element), monospace = "technical/nerdy" accent.
+
+   3. "Overused Grotesk" — local VF woff2  → project body copy / index rows
+      Upright variable font, weight axis 300–900. Reading/copy voice.
+      → project paragraphs (#layout p, weight 350), archive rows (400).
+
+   GOLDEN RULES
+   ─────────────────────────────────────────────────────────────────────────
+   • Always prefer the tokens below (var(--fs-*), var(--w-*), etc.) over new
+     hardcoded sizes.
+   • Sizes are fluid: clamp(min, vw-midpoint, max). The middle vw value is
+     the intended design size expressed against the 1512px reference
+     viewport (e.g. 17.6px @1512 → 1.165vw … which the index now bumps to
+     24.6px @1512 → 1.63vw).
+   • Em at root = 16px (browser default, no html font-size override).
+   • Serif is a display accent → keep it italic, keep it light.
+   • Overused Grotesk paragraphs read best with a tight line-height (111%).
+   • Never add font-size in JS/HTML inline — style only in CSS (font.css).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. FONT SOURCING (all three families load here, once, site-wide)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@font-face {
+    font-family: "Overused Grotesk";
+    src: url("../assets/OverusedGroteskRoman-VF.woff2") format("woff2-variations");
+    font-weight: 300 900;
+}
+
+/* --------------------------------------------------------------------------
+   1. TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+    /* Families */
+    --font-serif: "IBM Plex Serif", serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-grotesk: "Overused Grotesk", sans-serif;
+
+    /* Weights */
+    --w-serif-thin: 200;
+    --w-serif-light: 300;
+    --w-serif-regular: 400;
+    --w-grotesk-light: 350;
+    --w-grotesk-regular: 400;
+    --w-mono-regular: 400;
+
+    /* Fluid type scale — min / vw @ 1512 / max */
+    --fs-hero: clamp(1.8rem, 2vw, 3.2rem);          /* 28.8 / 30.2 / 51.2 px */
+    --fs-title: clamp(1.4rem, 2.2vw, 2.8rem);       /* 22.4 / 33.3 / 44.8 px */
+    --fs-index: clamp(1.1rem, 1.63vw, 1.55rem);     /* 17.6 / 24.6 / 24.8 px */
+    --fs-body: clamp(0.95rem, 1.15vw, 1.4rem);      /* 15.2 / 17.4 / 22.4 px */
+    --fs-caption: clamp(0.2rem, 0.8vw, 1.2rem);     /* 3.2  / 12.1 / 19.2 px */
+    --fs-ui: 18px;                                   /* fixed UI glyphs        */
+    --fs-base: 1rem;                                 /* 16px default baseline  */
+
+    /* Line-heights */
+    --lh-body: 111%;
+}
+
+/* --------------------------------------------------------------------------
+   2. ROLE → TOKEN MAP  (single reference table)
+   --------------------------------------------------------------------------
+   Role                  Selector            Family        Weight  Token
+   ───────────────────── ─────────────────── ───────────── ─────── ─────────
+   Home hero greeting    #title-d            Serif italic  200     --fs-hero
+   Project view header   #layout h1          Serif italic  200     --fs-title
+   "index↗" subhead      h2                  Serif italic  300     (browser 1.5em)
+   Project paragraph     #layout p           Grotesk       350     --fs-body
+   Index page header     .header-row         Serif italic  400     --fs-index
+   Index page rows       .row                Grotesk       400     --fs-index
+   Copyright / credits   .copyright          (inherits)    ---     --fs-caption
+   Carousel arrows       .carousel-btn       (inherits)    ---     --fs-ui
+   Default baseline      body                JetBrainsMono 400     --fs-base
+   ─────────────────────────────────────────────────────────────────────────
+
+   SCALE RELATIONSHIPS (@1512 reference)
+   • Display titles (hero/title) ≈ 1.2–1.4× the index size.
+   • Project body ≈ 0.7× the index size.
+   • Captions ≈ 0.5× the index size.
+
+   The existing stylesheets still hardcode their own values (for history);
+   they mirror the tokens above exactly. Migrate to var(--fs-*)/var(--w-*)
+   opportunistically so font.css stays authoritative.
+
+   TEXT-ROLE NOTES
+   • #project-text uses white-space: pre-line (JS injects "\n" for paragraphs).
+   • <u> project-title breadcrumbs `text-decoration-thickness: 2.5px`.
+   • body uses font-optical-sizing: auto (variable fonts must stay variable).
+   • Long identifiers (index rows) should keep white-space: nowrap.
+   ========================================================================== */

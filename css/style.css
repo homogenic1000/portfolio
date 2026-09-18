@@ -19,8 +19,16 @@ body{
   font-style: normal;
 }
 
+h2{
+    font-family: "IBM Plex Serif";
+    font-weight: 300;
+    font-style: italic;
+    text-decoration: underline;
+    color: blue;
+}
 
 a{
+    color: blue;
     text-decoration: none;
 }
 
@@ -79,6 +87,13 @@ u{
     font-style: italic;
     font-size: clamp(1.8rem, 2vw, 3.2rem);
 }
+
+#title-section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 #physic{
     position: relative;
     width: fit-content;

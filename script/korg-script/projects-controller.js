@@ -35,8 +35,10 @@ function enterProject(id) {
 
   // ② Transition : retrait des boundaries (les objets tombent dans le vide),
   // puis après 600ms on endort la physique et on cache le canvas
-  // → le texte redevient sélectionnable
-  if (typeof getBoundaries === "function") {
+  // → le texte redevient sélectionnable.
+  // Guard : en mode deep-link (?project=) la physique n'a jamais démarré,
+  // donc `engine` n'existe pas encore — on ne touche aux boundaries que s'il y a un monde.
+  if (typeof getBoundaries === "function" && typeof engine !== "undefined" && engine) {
     Matter.Composite.remove(engine.world, getBoundaries().filter(Boolean));
   }
   hideCanvasTimer = setTimeout(() => {
@@ -48,6 +50,7 @@ function enterProject(id) {
   projectTitleEl.textContent = cfg.title;
   const titleWrap = projectTitleEl.parentElement;
   if (titleWrap) titleWrap.style.color = cfg.color || "blue";
+  projectTitleEl.style.filter = cfg.filter || "none";
   projectTextEl.innerHTML = cfg.text;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
@@ -58,7 +61,7 @@ function enterProject(id) {
   // ⑤ Zone secondaire (#show-min) : mini-monde Matter.js OU carrousel
   if (cfg.minWorld) {
     buildMinWorld(cfg.minWorld);
-  } else {
+  } else if (cfg.images && cfg.images.length) {
     buildCarousel(cfg.images);
   }
 }
@@ -77,6 +80,8 @@ function applyMedia(media) {
     videoEl.style.display = "block";
     const p = videoEl.play();
     if (p && p.catch) p.catch(() => {});
+  } else if (media.type === "image") {
+    buildCarousel(media.images || [media.src], document.getElementById("show"));
   }
 }
 
@@ -93,15 +98,16 @@ function hideMedia() {
   videoEl.style.display = "none";
 }
 
-/* ---------------- Carrousel (#show-min) ---------------- */
+/* ---------------- Carrousels (#show et #show-min) ---------------- */
 
-let carouselRoot = null;
+let carouselRoots = [];
 
-function buildCarousel(images) {
-  destroyCarousel();
+function buildCarousel(images, target) {
+  const host = target || document.getElementById("show-min");
+  destroyCarousel(host);
   if (!images || !images.length) return;
 
-  carouselRoot = document.createElement("div");
+  const carouselRoot = document.createElement("div");
   carouselRoot.className = "carousel";
 
   const track = document.createElement("div");
@@ -163,14 +169,20 @@ function buildCarousel(images) {
   carouselRoot.appendChild(prev);
   carouselRoot.appendChild(next);
   carouselRoot.appendChild(dotsWrap);
-  document.getElementById("show-min").appendChild(carouselRoot);
+  host.appendChild(carouselRoot);
+  carouselRoots.push(carouselRoot);
 }
 
-function destroyCarousel() {
-  if (carouselRoot) {
-    carouselRoot.remove();
-    carouselRoot = null;
+function destroyCarousel(target) {
+  const keep = [];
+  for (const root of carouselRoots) {
+    if (!target || root.parentElement === target) {
+      root.remove();
+    } else {
+      keep.push(root);
+    }
   }
+  carouselRoots = keep;
 }
 
 /* ---------------- Mini-monde Matter.js (#show-min) ---------------- */
@@ -228,11 +240,11 @@ function buildMinWorld(config) {
 
   // Échelle proportionnelle au conteneur : normalise contre la résolution
   // source (2048px) pour que les lettres s'adaptent à n'importe quel écran.
-  // Objectif ~12% de la dimension du conteneur, comme le design d'origine.
+  // Objectif ~29% de la dimension du conteneur.
   const containerScale = Math.min(width, height) / 960;
   const objectScale = (o, i) => {
     const r = 0.55 + Math.random() * 0.5;
-    return (containerScale * 0.07 * r) || 0.05;
+    return (containerScale * 0.12 * r) || 0.05;
   };
   const scales = (config.objects || []).map(objectScale);
 
@@ -389,3 +401,17 @@ function destroyMinWorld() {
   minRender = null;
   minRunner = null;
 }
+
+/* ---------------- Deep-link (?project=<id>) ---------------- */
+
+// Depuis la page archive (archive.html), chaque projet est un lien
+// `index.html?project=<label>`. Au chargement on ouvre directement le projet.
+// On attend l'événement "load" : les modules (main.js → window.CDViewer) sont
+// exécutés avant "load", donc le viewer 3D est prêt pour les médias type "3d".
+(function initDeepLink() {
+  const id = new URLSearchParams(location.search).get("project");
+  if (!id || typeof PROJECTS === "undefined" || !PROJECTS[id]) return;
+  window.addEventListener("load", () => {
+    enterProject(id);
+  });
+})();

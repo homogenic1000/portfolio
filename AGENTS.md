@@ -52,6 +52,7 @@ The core experience: user clicks a bag → frame-by-frame animation plays → Ma
 portfolio/
 ├── index.html                    # Main single-page entry point (the only real page)
 ├── aboutme.html                  # Empty stub — not implemented
+├── archive.html                  # Projects "Index" page (archive list, deep-links into index.html)
 ├── CNAME                         # GitHub Pages custom domain: matheodelessert.ch
 ├── favico.png                    # Favicon
 ├── preview.webp                  # Preview image for README
@@ -65,14 +66,19 @@ portfolio/
 │   └── video/                    # Video assets (.webm, .mp4)
 │
 ├── css/
+│   ├── font.css                  # Typography guidelines + tokens (single source for families/weights/sizes)
 │   ├── style.css                 # Global styles, hero layout, physics canvas
 │   ├── media.css                 # Mobile gate (hides everything below 600px)
+│   ├── archive.css               # Index/archive page styles (IBM Plex Serif header + Overused Grotesk rows)
 │   └── korg.css                  # Project detail view, carousel, typography
 │
 ├── script/
 │   ├── animation.js              # Frame-by-frame bag sprite animation
+│   ├── archive.js                # Renders archive.html rows from PROJECTS (names, types, dates)
 │   ├── boundaries.js             # Matter.js invisible walls
+│   ├── cursor.js                 # Custom dot cursor → "en savoir plus" pill over project rows (archive)
 │   ├── handlers.js               # Click handlers for special objects
+│   ├── loves.js                  # Archive "things i love" Matter world (zero gravity, drag, hover card)
 │   ├── objects.js                # Matter.js body definitions (7 objects)
 │   ├── physics.js                # Matter.js engine init & orchestrator
 │   ├── projects.js               # PROJECTS data config dictionary
@@ -125,6 +131,12 @@ The app has **two states** managed by DOM manipulation:
 
 `projects-controller.js` handles transitions via `enterProject(id)` and the "index" breadcrumb does a **full page reload** to return home.
 
+### Navigation & Deep-linking
+- **`archive.html`** is a standalone "Index" page: a plain list of all projects (rows deep-link into `index.html?project=<label>`). Rows are generated at runtime by `script/archive.js` from live `PROJECTS` data (title/label, type, date); rows without a `PROJECTS` entry yet live in `archive.js`'s `EXTRA` list (clickable or `disabled`). Each clickable row's title is permanently colored by the project's `color` (e.g., Frip'O'Point green), no hover. The interactive CTA is the custom cursor (`cursor.js`): a white dot (mix-blend exclusion) that expands into a content-hugging pill labeled "en savoir plus" over clickable rows and "en cours" over `disabled` rows (IBM Plex Serif, weight 300, italic). The pill renders *under* the text (`z-index: 1` vs content `z-index: 2`). No description text exists. The page also loads Matter.js + `loves.js` for the zero-gravity "things i love" mini-world (portrait `aboutme.webp` + album + placeholders, draggable, hover cards) where the canvas spans the **full page width** beneath the links row, and `silhouette.js` for its hitboxes. It does **not** load the home physics/controller scripts.
+- **`index.html?project=<id>`** opens a project directly on load. `projects-controller.js` ends with an `initDeepLink()` IIFE that reads `?project=` and calls `enterProject(id)` on the `window "load"` event (guarantees the `main.js` module has exposed `window.CDViewer` for 3D media).
+- In deep-link mode physics never started, so `enterProject()` guards its boundary-removal with `typeof engine !== "undefined" && engine`.
+- The hero `index↗` link and the project-view `index` breadcrumb both point to `archive.html`.
+
 ### Module Note
 `main.js` is the only true ES module (uses `import` with import map for Three.js). All other scripts use global scope — functions call each other directly across files.
 
@@ -151,13 +163,22 @@ const PROJECTS = {
     images: [],
     minWorld: { gravity: 0.8, objects: [...] },  // Optional mini physics world
   },
+  premierjour: {
+    title: "Premier jour d'été",
+    text: "...",
+    bg: "#ffffff",
+    media: { type: "image", images: ["assets/2d/nature.webp", "..."] }, // Carousel in #show
+    images: ["assets/2d/img_3877.webp", "..."],  // Secondary carousel in #show-min
+  },
 };
 ```
+
+Media dispatch: `{ type: "3d" }` → Three.js viewer in `#show`; `{ type: "video" }` → `<video>` in `#show`; `{ type: "image" }` → carousel in `#show` (primary photo showcase).
 
 **To add a new project:** Add an entry to `PROJECTS` + add a matching falling object in `objects.js`. The controller auto-handles rendering.
 
 ### `script/objects.js` — Physics Object Factory
-Defines `OBJECT_CONFIG` for 7 interactive objects (tabac, filtre, pamplemousse, rondpoint, aboutme, korg, vroomvroom). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry. Note: `vroomvroom` currently uses the `tabac.webp` sprite as a temporary placeholder until a dedicated sprite is sourced.
+Defines `OBJECT_CONFIG` for 7 interactive objects (tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry. `premierjour` reuses the circle physics of the former `pamplemousse` object (radius 40, `pamplemousse.webp` sprite placeholder).
 
 **Spawn point (sandwich midpoint):** Objects spawn at the center of the `#sandwich` overlay, which sits on the bag's mouth. `initSpawnPoint()` is called once the DOM/images/fonts are ready (`window "load"` + `document.fonts.ready`): it temporarily measures the sandwich's real bounding box without a visual flash (sets `display: block` + `visibility: hidden`, reads the rect, restores everything in the same task) and caches its midpoint in the global `spawnPoint`. `computeSpawnPoint()` returns the cached `spawnPoint` (with a bag-aspect-ratio fallback before images resolve). `spawnPoint` is also re-measured on `resize`. In `physics.js`, `computeSpawnPoint()` is called just before each object is created (inside its 500ms `setTimeout`) and its result is passed directly into each `create*(x, y)` factory. Each actual creation position is pushed to `window.spawnLog` (`{ label, x, y }`) so the Playwright test can assert objects land inside the sandwich.
 
@@ -168,9 +189,9 @@ Initializes Matter.js engine, creates the renderer in `#physic`, manages boundar
 Traces the exact silhouette of any sprite alpha channel. `traceSpriteVertices(src)` loads the image, samples its alpha onto a small grid (`TRACE.SAMPLE`), labels 8-connected islands, traces each island's outer contour with a Moore-neighbor boundary walk (holes are automatically filled), and simplifies with Douglas–Peucker. Resolves `{ img, islands }` — the loaded image plus one vertex set **per island** — or `null` on failure. Tuning constants live in the `TRACE` object: `SAMPLE`, `ALPHA_THRESHOLD`, `EPSILON`, `MAX_POINTS`.
 
 ### `script/korg-script/projects-controller.js` — Central Controller
-The main routing/transition system. `enterProject(id)` reads from `PROJECTS`, hides hero, pauses physics, injects content, dispatches media (3D or video), and builds secondary panels (carousel or mini physics world).
+The main routing/transition system. `enterProject(id)` reads from `PROJECTS`, hides hero, pauses physics, injects content, dispatches media (3D, video, or image), and builds secondary panels (carousel or mini physics world).
 
-**Carousel with mixed media:** `buildCarousel(images)` now detects `.webm`/`.mp4` sources in the `images` array and renders `<video autoplay muted loop playsinline>` elements instead of `<img>` for those slides — so a project's `#show-min` can mix screenshots and looping videos.
+**Carousel with mixed media:** `buildCarousel(images, target)` renders `.webm`/`.mp4` sources in the `images` array as `<video autoplay muted loop playsinline>` elements instead of `<img>` for those slides — so a project's `#show-min` can mix screenshots and looping videos. The optional `target` defines the host element (defaults to `#show-min`); an `image` media type appends its carousel into `#show`. Multiple carousels can coexist — roots are tracked in the `carouselRoots` array and `destroyCarousel(target)` only removes carousels inside the given host (or all when no host), so the `#show` primary carousel survives the `#show-min` build.
 
 **Mini-world hitboxes (auto-shaped):** in `buildMinWorld`, every config object with a `sprite` gets an immediate rectangular placeholder, then its traced polygons arrive asynchronously and **replace** the placeholder. Traced vertices are in source-image pixels (2048), so they're scaled by the object's `o.scale` before `Bodies.fromVertices` so the physics hugging the rendered sprite stays exact. Concave decomposition is provided by the `poly-decomp` CDN global. If the trace fails, the rectangle placeholder remains as a fallback. Each trace is bound to its engine instance to avoid stale re-injection after `destroyMinWorld`/re-entry.
 
@@ -195,7 +216,8 @@ Drives a click-triggered 15-frame WebP sprite animation at 100ms intervals. On c
 
 ### Key Design Decisions
 - **No CSS framework** — all hand-written vanilla CSS
-- **No design tokens/CSS variables** — colors and spacing are hardcoded
+- **Typography centralized** — `css/font.css` is the single source: it loads all 3 families (IBM Plex Serif, JetBrains Mono, Overused Grotesk) and defines the fluid size/weight/line-height tokens (`--fs-*`, `--w-*`, `--lh-*`) with a role→selector map. Prefer these tokens over new hardcoded font values.
+- **No design tokens/CSS variables for colors & spacing** — colors and spacing are hardcoded. (Fonts are the one exception, tokenized in `font.css`.)
 - **Desktop only** — mobile is explicitly blocked with a gate at 600px
 - **Dynamic theming** — background colors are set via JS from `PROJECTS.bg`
 - **Two-column layout** for project views (left: content + secondary media, right: primary media)
@@ -261,9 +283,11 @@ npm test -- --url http://localhost:5173   # test an already-running server
 npm test -- --port 5173  # pick the dev-server port (default 5173)
 ```
 
+> **Before merging:** the only required verification is `npm test` — run it and confirm it passes (0 console errors, physics spawns, spawn points inside the sandwich). No other test step is needed before merging.
+
 **What it does** (`test/screenshot.mjs`):
 1. Starts `npx vite` (unless `--url` is passed) and waits for it to be reachable.
-2. For each viewport (1024, 1512/14", 2560/27") opens a headless Chromium page, captures console errors and page errors, loads the site, clicks `#animation-bag`, waits for the physics canvas to spawn.
+2. For each viewport (1024, 1512/14", 2560/27") opens a headless Chromium page, captures console errors and page errors, loads the site, clicks `#animation-bag`, waits for all 7 physics objects to spawn (one every 500ms).
 3. Records structured JSON per viewport: bag visibility/size/position, sandwich visibility/size, title-D position, whether physics spawned, and any console errors.
 4. Writes a full-page screenshot to `test/screenshots/<name>.png`.
 5. Exits non-zero if the bag is missing, physics didn't spawn, or any console error occurred.
