@@ -68,7 +68,11 @@ async function main() {
     let sandwichVisible = false;
     if (hasBag) {
       await page.locator("#animation-bag").click();
-      await page.waitForTimeout(2600);
+      // Objects spawn staggered (one every 500ms after physics starts), so wait
+      // for all 7 logged creation positions before verifying them.
+      await page
+        .waitForFunction(() => (window.spawnLog || []).length >= 7, null, { timeout: 12000 })
+        .catch(() => {});
       const canvasCount = await page.locator("canvas").count();
       spawned = canvasCount > 0;
       sandwichVisible = await page.locator("#sandwich").isVisible();
@@ -87,21 +91,31 @@ async function main() {
       })
       .catch(() => null);
 
-    // Report the expected spawn point (bag center / opening), matching what
-    // the app's computeSpawnPoint() returns, so agents can verify objects
-    // spawn inside the bag.
-    const spawnPos = await page
+    // Verify objects spawn inside the bag's mouth (the #sandwich overlay) by
+    // checking the cached spawnPoint / computeSpawnPoint() against the sandwich
+    // box, plus every logged body creation position against that same box.
+    const spawn = await page
       .evaluate(() => {
-        const bag = document.getElementById("animation-bag");
-        if (!bag) return null;
-        const r = bag.getBoundingClientRect();
+        const sb = document.getElementById("sandwich")?.getBoundingClientRect();
+        const box = sb
+          ? { left: sb.left, top: sb.top, right: sb.right, bottom: sb.bottom }
+          : null;
+        const p = typeof computeSpawnPoint === "function" ? computeSpawnPoint() : null;
+        const inBox = (x, y) =>
+          !!box && x >= box.left && x <= box.right && y >= box.top && y <= box.bottom;
+        const log = (window.spawnLog || []).filter((e) => e && typeof e.x === "number");
+        const cached = typeof spawnPoint === "object" && spawnPoint ? spawnPoint : null;
         return {
-          x: Math.round(r.left + r.width / 2),
-          y: Math.round(r.top + r.height * 0.5),
-          bagLeft: Math.round(r.left),
-          bagTop: Math.round(r.top),
-          bagRight: Math.round(r.right),
-          bagBottom: Math.round(r.bottom),
+          spawnPoint: cached
+            ? { x: Math.round(cached.x), y: Math.round(cached.y) }
+            : null,
+          computed: p ? { x: Math.round(p.x), y: Math.round(p.y) } : null,
+          sandwich: box
+            ? { left: Math.round(box.left), top: Math.round(box.top), right: Math.round(box.right), bottom: Math.round(box.bottom) }
+            : null,
+          spawnInSandwich: !!p && inBox(p.x, p.y),
+          logCount: log.length,
+          logAllInSandwich: log.length > 0 && log.every((e) => inBox(e.x, e.y)),
         };
       })
       .catch(() => null);
@@ -124,13 +138,20 @@ async function main() {
       sandwichVisible,
       bag: bagPos,
       sandwich: sandwichPos,
-      spawn: spawnPos,
+      spawn,
       title: { ...titlePos, vh: vp.height },
       errors,
     };
     console.log(JSON.stringify(status));
 
-    if (!hasBag || !spawned || errors.length) {
+    if (
+      !hasBag ||
+      !spawned ||
+      errors.length ||
+      !spawn ||
+      !spawn.spawnInSandwich ||
+      !spawn.logAllInSandwich
+    ) {
       failed = true;
     }
     await page.close();

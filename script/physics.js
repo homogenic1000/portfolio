@@ -129,14 +129,16 @@ function startPhysics() {
     createKorg,
     createVroomvroom,
   ];
-  // Mesure la position du bag juste avant de créer chaque objet : à ce moment
-  // l'animation du sac est finie et le layout est stable, donc le spawn suit
-  // l'emplacement réel (centre du sac) quel que soit l'écran.
+  // Spawn au centre du sandwich (l'ouverture du sac) : computeSpawnPoint()
+  // renvoie le point mis en cache par initSpawnPoint() au chargement.
+  // Log actual creation positions so tests can verify objects spawn in the bag.
+  window.spawnLog = window.spawnLog || [];
   objectFunctions.forEach((createFn, index) => {
     setTimeout(() => {
       const { x, y } = computeSpawnPoint();
       const obj = createFn(x, y);
       addToWorld([obj]);
+      window.spawnLog.push({ label: obj.label, x, y });
     }, index * 500);
   });
 

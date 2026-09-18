@@ -5,16 +5,58 @@ const frictionValueAir = 0.02;
 const frictionValue = 0.05;
 
 /**
- * Compute spawn coordinates (bag center / opening) from the bag's actual
- * rendered position. Pure function: returns { x, y } in viewport pixels.
+ * Spawn point = center of the #sandwich overlay, which sits on the bag's mouth.
+ * Measured once when the DOM/images/fonts are ready and cached in `spawnPoint`.
+ */
+let spawnPoint = null;
+
+/**
+ * Measure the sandwich real box without a visual flash: layout it, hide the
+ * paint, read the rect and restore in the same task (no repaint in between).
+ */
+function initSpawnPoint() {
+  const sandwich = document.getElementById("sandwich");
+  if (!sandwich) return;
+
+  const prevDisplay = sandwich.style.display;
+  sandwich.style.display = "block";
+  sandwich.style.visibility = "hidden";
+  const rect = sandwich.getBoundingClientRect();
+  sandwich.style.visibility = "";
+  sandwich.style.display = prevDisplay;
+
+  if (rect.width > 0 && rect.height > 0) {
+    spawnPoint = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  }
+}
+
+// "load" (not DOMContentLoaded) guarantees the bag/sandwich images' intrinsic
+// sizes are resolved, so `height: auto` produces the final layout. fonts.ready
+// avoids the hero shifting after the webfonts arrive.
+window.addEventListener("load", () => {
+  Promise.all([document.fonts.ready]).then(initSpawnPoint);
+});
+
+// Keep the cached midpoint in sync with the viewport.
+window.addEventListener("resize", () => {
+  spawnPoint = null;
+  initSpawnPoint();
+});
+
+/**
+ * Compute the spawn coordinates. Returns { x, y } in viewport pixels.
  */
 function computeSpawnPoint() {
+  if (spawnPoint) return spawnPoint;
+
+  // Fallback before images/fonts resolve: approximate the bag mouth from the
+  // bag box and the sandwich/bag aspect ratio (338 / 282).
   const bag = document.getElementById("animation-bag");
   if (!bag) return { x: 0, y: 0 };
   const rect = bag.getBoundingClientRect();
   return {
     x: rect.left + rect.width / 2,
-    y: rect.top + rect.height * 0.5,
+    y: rect.top + (rect.width * (338 / 282)) / 2,
   };
 }
 
