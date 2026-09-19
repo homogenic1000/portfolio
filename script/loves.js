@@ -40,8 +40,8 @@ const LOVES = {
 
 const LOVES_STYLE = {
   restitution: 0.6,
-  friction: 0.25,
-  frictionAir: 0.02,
+  friction: 0,
+  frictionAir: 0,
 };
 
 let lovesEngine = null;
