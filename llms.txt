@@ -1,0 +1,20 @@
+# Mathéo Delessert — Portfolio
+
+Interactive, physics-driven creative portfolio of Mathéo Delessert. Click a bag, objects fall, click a project to open it. Built with vanilla HTML/CSS/JS, Matter.js, Three.js.
+
+## Projects
+
+- [Frip'O'Point — motion design](https://matheodelessert.ch/)
+- [Vroom Vroom — web design](https://matheodelessert.ch/)
+- [Between worlds — web design](https://matheodelessert.ch/)
+- [Éracom — school project](https://matheodelessert.ch/)
+- [Premier jour d'été — photography](https://matheodelessert.ch/)
+- [The portfolio — webdesign/dev](https://matheodelessert.ch/git.html)
+- [Korg e-LIVE — 3D / web design](https://matheodelessert.ch/)
+
+## More
+
+- [Index / archive](https://matheodelessert.ch/archive.html)
+- [Git history](https://matheodelessert.ch/git.html)
+- [Lab (WIP projects)](https://matheodelessert.ch/lab.html)
+- [Source code (GitHub)](https://github.com/homogenic1000/portfolio)

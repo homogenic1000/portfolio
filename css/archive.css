@@ -77,6 +77,14 @@ body {
     border-bottom: 1px solid lightgrey;
 }
 
+/* Reserve vertical space for the JS-rendered rows so the layout can't
+   shift when archive.js injects them after first paint (end-of-body CDN
+   scripts block the parser, so Chrome paints with #archive-index empty).
+   Update when the row count in script/archive.js (ROWS) changes. */
+#archive-index {
+    min-height: 511px; /* 7 rows x (72px min-height + 1px border) */
+}
+
 .header-row {
     position: relative;
     min-height: 41px;
