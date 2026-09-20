@@ -82,10 +82,10 @@
    Role                  Selector            Family        Weight  Token
    ───────────────────── ─────────────────── ───────────── ─────── ─────────
    Home hero greeting    #title-d            Serif italic  200     --fs-hero
-   Project view header   #layout h1          Serif italic  200     --fs-title
+   Breadcrumb / header   #layout h1, .header-row, .breadcrumb
+                                             Serif italic  200     --fs-title
    "index↗" subhead      h2                  Serif italic  300     (browser 1.5em)
    Project paragraph     #layout p           Grotesk       350     --fs-body
-   Index page header     .header-row         Serif italic  400     --fs-index
    Index page rows       .row                Grotesk       400     --fs-index
    Copyright / credits   .copyright          (inherits)    ---     --fs-caption
    Carousel arrows       .carousel-btn       (inherits)    ---     --fs-ui
@@ -93,7 +93,8 @@
    ─────────────────────────────────────────────────────────────────────────
 
    SCALE RELATIONSHIPS (@1512 reference)
-   • Display titles (hero/title) ≈ 1.2–1.4× the index size.
+   • Display titles (hero) ≈ 1.45× the breadcrumb/index size.
+   • Breadcrumbs/headers (--fs-title) ≈ 1.35× the index rows size.
    • Project body ≈ 0.7× the index size.
    • Captions ≈ 0.5× the index size.
 

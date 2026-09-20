@@ -35,8 +35,8 @@ main.git {
     font-weight: 200;
     font-size: clamp(1.4rem, 2.2vw, 2.8rem);
     color: blue;
-    margin: 0;
-    padding: 14px 10px 10px;
+    margin: 0 0 10px;
+    padding: 10px 10px 0;
     flex: none;
 }
 
