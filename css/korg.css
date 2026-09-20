@@ -61,11 +61,15 @@ u{
     justify-content: center;
     padding: 12px;
     box-sizing: border-box;
+    position: relative;
 }
 
 #show-min .carousel-slide img{
-    max-width: 90%;
-    max-height: 85%;
+    position: absolute;
+    inset: 12px;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    object-fit: contain;
     border-color: black;
     border-width: 1px;
     border-style: solid;
@@ -107,15 +111,28 @@ u{
 }
 
 .carousel-dot{
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border: none;
+    padding: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    background: transparent;
+}
+.carousel-dot::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: none;
-    padding: 0;
     background: lightgrey;
-    cursor: pointer;
 }
-.carousel-dot.active{
+.carousel-dot.active::after{
     background: black;
 }
 
@@ -164,6 +181,14 @@ u{
     min-width: 0;
     overflow: hidden;
     
+}
+
+#project-video{
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 #container-cd{

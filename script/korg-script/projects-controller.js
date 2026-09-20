@@ -41,10 +41,17 @@ function enterProject(id) {
   if (typeof getBoundaries === "function" && typeof engine !== "undefined" && engine) {
     Matter.Composite.remove(engine.world, getBoundaries().filter(Boolean));
   }
-  hideCanvasTimer = setTimeout(() => {
+  if (typeof engine !== "undefined" && engine) {
+    // Mode interactif : on laisse les objets tomber 600ms avant de cacher le hero
+    hideCanvasTimer = setTimeout(() => {
+      heroSection.style.display = "none";
+      if (typeof pausePhysics === "function") pausePhysics();
+    }, 600);
+  } else {
+    // Deep-link : pas d'animation à attendre, on cache le hero tout de suite
+    // pour éviter un layout shift au chargement (le #layout n'a pas de place réservée).
     heroSection.style.display = "none";
-    if (typeof pausePhysics === "function") pausePhysics();
-  }, 600);
+  }
 
   // ③ Injection du contenu depuis la config
   projectTitleEl.textContent = cfg.title;
@@ -141,6 +148,8 @@ function buildCarousel(images, target) {
 
     const dot = document.createElement("button");
     dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+    dot.type = "button";
+    dot.setAttribute("aria-label", "Aller à l'image " + (i + 1) + " sur " + images.length);
     dot.addEventListener("click", () => {
       track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
     });
@@ -153,11 +162,15 @@ function buildCarousel(images, target) {
 
   const prev = document.createElement("button");
   prev.className = "carousel-btn carousel-prev";
+  prev.type = "button";
+  prev.setAttribute("aria-label", "Image précédente");
   prev.textContent = "‹";
   prev.addEventListener("click", () => step(-1));
 
   const next = document.createElement("button");
   next.className = "carousel-btn carousel-next";
+  next.type = "button";
+  next.setAttribute("aria-label", "Image suivante");
   next.textContent = "›";
   next.addEventListener("click", () => step(1));
 
