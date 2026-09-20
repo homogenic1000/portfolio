@@ -167,8 +167,8 @@ const OBJECT_CONFIG = {
     isStatic: false,
     sprite: {
       texture: "assets/2d/betweenworlds.webp",
-      xScale: 1.5,
-      yScale: 1.5,
+      xScale: 0.125,
+      yScale: 0.125,
     },
   }
 };
