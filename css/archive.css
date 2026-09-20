@@ -79,11 +79,12 @@ body {
 
 .header-row {
     position: relative;
-    min-height: 40px;
+    min-height: 64px;
     padding-top: 4px;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 200;
+    font-size: var(--fs-title);
     color: #0008ff;
     border-bottom-color: lightgrey;
 }
@@ -97,7 +98,8 @@ body {
     text-decoration: none;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 200;
+    font-size: var(--fs-title);
 }
 
 .header-lab:hover {
@@ -168,7 +170,7 @@ body {
 .about-links a.link-instagram { grid-column: 2; }
 .about-links a.link-github { grid-column: 3; }
 .about-links a.link-soundcloud { grid-column: 4; }
-.about-links a.link-git { grid-column: 5; grid-column-start: 5; }
+.about-links a.link-lab { grid-column: 5; grid-column-start: 5; }
 
 .about-links a {
     color: inherit;
@@ -180,6 +182,7 @@ body {
 .about-links a.link-repo:hover { color: #0969da; }
 .about-links a.link-instagram:hover { color: #9d00ff; }
 .about-links a.link-soundcloud:hover { color: #ff5500; }
+.about-links a.link-lab:hover { color: #0008ff; }
 
 /* ------------------------------------------------------------------
    "things i love" Matter.js container — full width of the page
