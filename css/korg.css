@@ -1,13 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@font-face  {
-    font-family: "Overused Grotesk";
-    src: url("../assets/OverusedGroteskRoman-VF.woff2") format("woff2-variations");
-    font-weight: 300 900;
-}
-
-
-
-
 #layout h1{
     font-family: "IBM Plex Serif";
     color: blue;
@@ -148,7 +138,7 @@ u{
     flex-direction: column;
     flex: 0 0 auto;
     gap: 10px;
-    padding: 12px;
+    padding: 10px;
 }
 
 #show-min img{
@@ -183,8 +173,8 @@ u{
 }
 
 #show img{
-    max-width: 65%;
-    max-height: 55%;
+    max-width: 70%;
+    max-height: 85%;
 }
 
 
@@ -205,6 +195,30 @@ u{
 .box{
     outline-offset: -0.5px;
     outline: 1px solid lightgrey;
+}
+
+/* Layout empilé (entre worlds) : texte en haut, vidéo en bas en pleine largeur */
+#layout[data-layout="stack"]{
+    flex-direction: column;
+}
+
+#layout[data-layout="stack"] .column{
+    flex: 0 1 auto;
+    min-height: 0;
+}
+
+#layout[data-layout="stack"] #show-min.box{
+    display: none;
+}
+
+#layout[data-layout="stack"] #show{
+    width: 100%;
+    flex: 1 1 0;
+}
+
+#layout[data-layout="stack"] #show video{
+    max-width: 100%;
+    max-height: 100%;
 }
 
 

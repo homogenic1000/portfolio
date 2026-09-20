@@ -1,0 +1,247 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+    overflow-x: hidden;
+}
+
+#media-query {
+    position: relative;
+    z-index: 2;
+}
+
+#media-query,
+#media-query a,
+#media-query .row {
+    cursor: none;
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ffffff;
+    mix-blend-mode: exclusion;
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#custom-cursor.is-sprite {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    mix-blend-mode: normal;
+}
+
+#cursor-sprite {
+    display: none;
+    width: clamp(44px, 5vw, 76px);
+    height: auto;
+    object-fit: contain;
+}
+
+#custom-cursor.is-sprite #cursor-sprite {
+    display: block;
+}
+
+.archive {
+    padding: 10px;
+    font-size: clamp(1.1rem, 1.63vw, 1.55rem);
+    line-height: normal;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.archive a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header-row,
+.row {
+    display: grid;
+    grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: center;
+    min-height: 72px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.header-row {
+    position: relative;
+    min-height: 41px;
+    padding: 0;
+    margin-bottom: 10px;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: var(--fs-title);
+    color: #0008ff;
+    border-bottom-color: lightgrey;
+}
+
+.header-lab {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0008ff;
+    text-decoration: none;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: var(--fs-title);
+}
+
+.header-lab:hover {
+    text-decoration: underline;
+}
+
+.row {
+    font-family: "Overused Grotesk", sans-serif;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.row-name {
+    grid-column: 2;
+}
+
+.row .row-name {
+    color: var(--project-color, black);
+}
+
+.row.disabled .row-name {
+    color: #c5c5c5;
+}
+
+.row-type {
+    grid-column: 3;
+}
+
+.row-date {
+    grid-column: 4;
+}
+
+.row.disabled {
+    color: #c5c5c5;
+    cursor: default;
+}
+
+/* ------------------------------------------------------------------
+   About section (portrait + bio + links) — aligns with index columns
+   ------------------------------------------------------------------ */
+.about {
+    flex: 1;
+    display: grid;
+    grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    column-gap: 28px;
+    min-height: 0;
+    border-top: 1px solid lightgrey;
+}
+
+.about-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr) auto;
+    column-gap: 28px;
+    align-items: center;
+    padding: 0.5em 0 0.5em 0;
+    border-top: 1px solid lightgrey;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.5vw, 1.45rem);
+    color: black;
+}
+
+.about-links a.link-repo { grid-column: 1; }
+.about-links a.link-instagram { grid-column: 2; }
+.about-links a.link-github { grid-column: 3; }
+.about-links a.link-soundcloud { grid-column: 4; }
+.about-links a.link-lab { grid-column: 5; grid-column-start: 5; }
+
+.about-links a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.about-links a.link-github:hover { color: #0969da; }
+.about-links a.link-repo:hover { color: #0969da; }
+.about-links a.link-instagram:hover { color: #9d00ff; }
+.about-links a.link-soundcloud:hover { color: #ff5500; }
+.about-links a.link-lab:hover { color: #0008ff; }
+
+/* ------------------------------------------------------------------
+   "things i love" Matter.js container — full width of the page
+   ------------------------------------------------------------------ */
+.loves {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    padding-top: clamp(8px, 2vh, 32px);
+}
+
+#loves-world {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: clamp(260px, 40vh, 500px);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#loves-world canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    cursor: none !important;
+}
+
+#loves-card {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 300px;
+    padding: 12px 16px;
+    background: #ffffff;
+    pointer-events: none;
+}
+
+#loves-card[hidden] {
+    display: none;
+}
+
+.loves-card-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--fs-title);
+    color: black;
+}
+
+.loves-card-desc {
+    font-family: var(--font-grotesk);
+    font-weight: var(--w-grotesk-regular);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: black;
+}

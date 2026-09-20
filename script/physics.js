@@ -122,12 +122,13 @@ function startPhysics() {
 
   const objectFunctions = [
     createTabac,
-    createFiltre,
-    createPamplemousse,
+    createEracom,
     createRondpoint,
     createAboutMe,
     createKorg,
     createVroomvroom,
+    createPremierjour,
+    createBetweenworlds,
   ];
   // Spawn au centre du sandwich (l'ouverture du sac) : computeSpawnPoint()
   // renvoie le point mis en cache par initSpawnPoint() au chargement.
@@ -235,9 +236,6 @@ function handleObjectClick(body) {
   switch(body.label) {
     case 'aboutme':
       onAboutMeClick(body);
-      break;
-    case 'pamplemousse':
-      onPamplemousseClick(body);
       break;
     default:
       console.log('Objet cliqué:', body.label);

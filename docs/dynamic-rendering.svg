@@ -32,7 +32,7 @@
   <text x="795" y="148" fill="#cbd5e1" font-size="12">initRender(): canvas fixed · 100vw×100vh · z-index 3 · pointer-events:auto</text>
   <text x="795" y="168" fill="#cbd5e1" font-size="12">window.matterCanvas saved · boundaries added · bodies spawn ×500ms</text>
   <text x="795" y="188" fill="#fbbf24" font-size="12">⚠ this invisible full-screen canvas intercepts ALL clicks/text-selection</text>
-  <text x="795" y="210" fill="#64748b" font-size="11">labels: tabac · filtre · pamplemousse · rondpoint · aboutme · korg</text>
+  <text x="795" y="210" fill="#64748b" font-size="11">labels: tabac · eracom · premierjour · rondpoint · aboutme · korg · vroomvroom</text>
 
   <!-- PHASE 2 -->
   <text x="30" y="262" fill="#38bdf8" font-size="15">PHASE 2 · CLICK A FALLING OBJECT</text>

@@ -69,9 +69,9 @@ async function main() {
     if (hasBag) {
       await page.locator("#animation-bag").click();
       // Objects spawn staggered (one every 500ms after physics starts), so wait
-      // for all 7 logged creation positions before verifying them.
+      // for all 8 logged creation positions before verifying them.
       await page
-        .waitForFunction(() => (window.spawnLog || []).length >= 7, null, { timeout: 12000 })
+        .waitForFunction(() => (window.spawnLog || []).length >= 8, null, { timeout: 12000 })
         .catch(() => {});
       const canvasCount = await page.locator("canvas").count();
       spawned = canvasCount > 0;
@@ -152,6 +152,67 @@ async function main() {
       !spawn.spawnInSandwich ||
       !spawn.logAllInSandwich
     ) {
+      failed = true;
+    }
+    await page.close();
+  }
+
+  // ---- lab.html pass: floating WIP world + fullscreen click -----------------
+  // Separate loop: navs to /lab.html and verifies the world spawned bodies and
+  // that clicking a piece opens the fullscreen overlay, with no console errors.
+  for (const vp of VIEWPORTS) {
+    const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
+    const errors = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (e) => errors.push("PAGEERROR: " + e.message));
+
+    await page.goto(url + "/lab.html", { waitUntil: "load" });
+    await page.waitForSelector("#lab-world canvas", { timeout: 15000 });
+    await page.waitForTimeout(600);
+
+    const world = await page.evaluate(() => {
+      const bodies = window.labEngine
+        ? labEngine.world.bodies.filter((b) => window.labInfo && labInfo.has(b))
+        : [];
+      return { spawned: bodies.length, pieces: (window.labInfo || {}).size || 0 };
+    });
+
+    const clickable = await page.evaluate(() => {
+      const canvas = document.querySelector("#lab-world canvas");
+      if (!canvas || !window.labEngine) return false;
+      const rect = canvas.getBoundingClientRect();
+      const b = labEngine.world.bodies.find((x) => window.labInfo.has(x));
+      if (!b) return false;
+      const x = rect.left + b.position.x;
+      const y = rect.top + b.position.y;
+      canvas.dispatchEvent(new MouseEvent("mousedown", { clientX: x, clientY: y, bubbles: true }));
+      canvas.dispatchEvent(new MouseEvent("mouseup", { clientX: x, clientY: y, bubbles: true }));
+      return true;
+    });
+    await page.waitForTimeout(150);
+    const fs = await page
+      .evaluate(() => ({
+        visible: !document.getElementById("lab-fullscreen").hidden,
+        hasMedia: document.getElementById("lab-fs-media").children.length > 0,
+      }))
+      .catch(() => ({ visible: false, hasMedia: false }));
+
+    const shot = `test/screenshots/lab-${vp.name}.png`;
+    await page.screenshot({ path: shot, fullPage: true });
+
+    const status = {
+      viewport: `lab ${vp.width}x${vp.height}`,
+      worldSpawned: world.spawned,
+      pieces: world.pieces,
+      clickDispatched: clickable,
+      fullscreen: fs,
+      errors,
+    };
+    console.log(JSON.stringify(status));
+
+    if (errors.length || world.spawned < 1 || !clickable || !fs.visible || !fs.hasMedia) {
       failed = true;
     }
     await page.close();

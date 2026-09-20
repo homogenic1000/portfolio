@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>lab — Mathéo Delessert</title>
+  <link rel="stylesheet" href="css/font.css" />
+  <link rel="stylesheet" href="css/archive.css" />
+  <link rel="stylesheet" href="css/lab.css" />
+  <link rel="stylesheet" href="css/media.css" />
+  <link rel="icon" type="image/x-icon" href="/favico.png" />
+</head>
+
+<body>
+
+  <div id="no-mobile">
+    <img style="margin-top: 12em ;" width="450" src="assets/2d/mobile.webp" alt="">
+    <h3>
+      an responsive version of the portfolio will be devlopped in the future, for now im focussing at building the basics <br />
+    </h3>
+  </div>
+
+  <div id="media-query" class="lab-page">
+    <header class="lab-header">
+      <span class="lab-title">lab/</span>
+      <nav class="lab-nav">
+        <a href="archive.html">index/</a>
+        <a href="index.html">home↗</a>
+      </nav>
+    </header>
+
+    <div id="lab-world">
+      <div id="loves-card" hidden></div>
+    </div>
+  </div>
+
+  <div id="lab-fullscreen" hidden>
+    <button id="lab-fs-close" aria-label="close">close</button>
+    <div id="lab-fs-media"></div>
+    <div class="lab-fs-meta">
+      <span id="lab-fs-title"></span>
+      <span id="lab-fs-desc"></span>
+    </div>
+  </div>
+
+  <div id="custom-cursor">
+    <img id="cursor-sprite" alt="" />
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/poly-decomp@0.3.0/build/decomp.min.js"></script>
+  <script src="script/silhouette.js"></script>
+  <script src="script/lab.js"></script>
+  <script src="script/cursor.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+# robots.txt — matheodelessert.ch
+# Crawlers may read and index the text pages freely, but must NOT fetch
+# the copyrighted media (images, videos, 3D models) served on this site.
+
+User-agent: *
+Allow: /
+
+# all media lives under /assets/ on this site
+Disallow: /assets/
+
+# belt-and-suspenders: block any stray media file anywhere on the domain
+Disallow: /*.webp$
+Disallow: /*.png$
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.gif$
+Disallow: /*.mp4$
+Disallow: /*.webm$
+Disallow: /*.glb$
