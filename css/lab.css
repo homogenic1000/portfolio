@@ -1,0 +1,159 @@
+/* ==========================================================================
+   LAB PAGE — css/lab.css
+   The "lab/" page: unfinished projects floating in a zero-gravity world.
+   Fills the viewport under a slim header; media opens fullscreen on click.
+   Reuses archive.css (body reset, #loves-card hover card) + font.css tokens.
+   ========================================================================== */
+
+#media-query.lab-page {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+.lab-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 8px 14px;
+    border-bottom: 1px solid lightgrey;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 1.63vw, 1.55rem);
+}
+
+.lab-title {
+    color: #0008ff;
+}
+
+.lab-nav {
+    display: flex;
+    gap: 24px;
+    font-weight: 300;
+}
+
+.lab-nav a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.lab-nav a:hover {
+    color: #0008ff;
+}
+
+/* zero-gravity world — fills everything under the header */
+#lab-world {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#lab-world canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    cursor: none !important;
+}
+
+/* ------------------------------------------------------------------
+   Fullscreen media overlay (dark)
+   ------------------------------------------------------------------ */
+#lab-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 48px;
+    background: rgba(0, 0, 0, 0.92);
+    color: #ffffff;
+}
+
+#lab-fullscreen[hidden] {
+    display: none;
+}
+
+#lab-fs-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 1.3vw, 1.4rem);
+    transition: color 0.3s ease;
+}
+
+#lab-fs-close:hover {
+    color: #0008ff;
+}
+
+#lab-fs-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+#lab-fs-media img,
+#lab-fs-media video {
+    max-width: 90vw;
+    max-height: 70vh;
+    object-fit: contain;
+    background: #000000;
+}
+
+.lab-fs-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 64ch;
+    text-align: center;
+}
+
+#lab-fs-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: var(--fs-title);
+    color: #ffffff;
+}
+
+#lab-fs-desc {
+    font-family: var(--font-grotesk);
+    font-weight: var(--w-grotesk-regular);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    #lab-fullscreen {
+        display: none !important;
+    }
+}
+
+/* Custom cursor (cursor.js) replaces the native pointer across the page,
+   including the fullscreen overlay (sibling of #media-query). */
+#lab-fullscreen,
+#lab-fullscreen a,
+#lab-fullscreen button {
+    cursor: none;
+}

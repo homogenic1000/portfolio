@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Mathéo Delessert</title>
+  <link rel="stylesheet" href="css/font.css" />
+  <link rel="stylesheet" href="css/git.css" />
+  <link rel="stylesheet" href="css/media.css" />
+  <link rel="icon" type="image/x-icon" href="/favico.png" />
+</head>
+
+<body>
+
+  <div id="no-mobile">
+    <img style="margin-top: 12em ;" width="450" src="assets/2d/mobile.webp" alt="">
+    <h3>
+      an responsive version of the portfolio will be devlopped in the future, for now im focussing at building the basics <br />
+    </h3>
+  </div>
+
+  <div id="media-query">
+    <main class="git">
+      <h1 class="breadcrumb">
+        <a href="archive.html"><span>index</span></a>/<u><span>portfolio</span></u>
+      </h1>
+
+      <div id="git-main">
+        <section class="box" id="graph-area">
+          <div id="graph-meta"></div>
+          <div id="graph-scroll">
+            <div id="graph-error" hidden>
+              <p id="graph-error-detail"></p>
+            </div>
+            <div id="git-graph">
+              <div id="lanes"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="box" id="readme">
+          <div class="readme-header">readme.md</div>
+          <div id="readme-content"></div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <div id="custom-cursor">
+    <img id="cursor-sprite" alt="" />
+  </div>
+
+  <script src="script/gitgraph.js"></script>
+  <script src="script/cursor.js"></script>
+
+</body>
+
+</html>

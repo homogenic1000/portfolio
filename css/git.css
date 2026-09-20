@@ -1,0 +1,352 @@
+/* git.css — git.html : full network commit graph + readme.md sidebar.
+   Mirrors archive.css tokens (white bg, lightgrey rules, Mono/Serif). */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+    overflow-x: hidden;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+}
+
+#media-query {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.git {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------------------------------------------
+   Breadcrumb — index/git graph
+------------------------------------------------------------------ */
+.breadcrumb {
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: clamp(1.4rem, 2.2vw, 2.8rem);
+    color: blue;
+    margin: 0;
+    padding: 14px 10px 10px;
+    flex: none;
+}
+
+.breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.breadcrumb u {
+    text-decoration-thickness: 2.5px;
+    color: #000000;
+}
+
+/* ------------------------------------------------------------------
+   Main grid — graph | readme sidebar
+------------------------------------------------------------------ */
+#git-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 26vw, 420px);
+    grid-template-rows: minmax(0, 1fr);
+    min-height: 0;
+    flex: 1 1 0;
+    padding: 0 10px;
+    gap: 0;
+}
+
+.box {
+    outline-offset: -0.5px;
+    outline: 1px solid lightgrey;
+}
+
+#graph-area {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+}
+
+#graph-meta {
+    padding: 10px 14px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    border-bottom: 1px solid lightgrey;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#graph-meta span {
+    margin-right: 22px;
+    white-space: nowrap;
+}
+
+#graph-meta b {
+    font-weight: 700;
+}
+
+#graph-meta span:last-child {
+    margin-right: 0;
+}
+
+#graph-scroll {
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Grid: lanes | messages | dates — row height == graph ROW (24px).
+   Width is fixed (100%), never max-content, so long commit subjects
+   ellipsize in the middle column instead of stretching the grid. */
+#git-graph {
+    position: relative;
+    display: grid;
+    /* lanes + minmax + 190px set by JS; auto-rows 24px too */
+    grid-auto-rows: 24px;
+    width: 100%;
+    min-width: 100%;
+}
+
+#lanes {
+    grid-column: 1;
+    grid-row: 1 / -1;
+}
+
+#lanes #lanes-svg {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: none;
+    background: transparent;
+}
+
+/* Table rows — Zed-style: graph is its own column, every piece of info
+   gets its own column. One 24px row per commit; vertical separators
+   between columns, subtle row highlight on hover. */
+.gc {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.gc:hover {
+    background: #f7f7f7;
+}
+
+.gc-subject {
+    grid-column: 2;
+    min-width: 0;
+    gap: 10px;
+    padding: 0 12px;
+    border-left: 1px solid #f2f2f2;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    font-weight: 400;
+}
+
+.gc-subject .subject {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gc-author {
+    grid-column: 3;
+    padding: 0 12px;
+    border-left: 1px solid #f2f2f2;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: #444;
+}
+
+.gc-date {
+    grid-column: 4;
+    padding: 0 12px;
+    border-left: 1px solid #f2f2f2;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: #6a6a6a;
+}
+
+.gc-hash {
+    grid-column: 5;
+    justify-content: flex-end;
+    padding: 0 12px 0 12px;
+    border-left: 1px solid #f2f2f2;
+}
+
+.gc-hash a {
+    color: #0000ff;
+    text-decoration: none;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 700;
+    font-size: 12.5px;
+}
+
+.gc-hash a:hover {
+    text-decoration: underline;
+}
+
+.ref-tag {
+    flex: none;
+    font-size: 10px;
+    color: #ffffff;
+    background: #000;
+    border-radius: 3px;
+    padding: 1px 5px;
+    letter-spacing: 0.4px;
+    font-family: "JetBrains Mono", monospace;
+}
+
+.ref-more {
+    background: #999;
+}
+
+#graph-error {
+    padding: 40px 20px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: #b30000;
+}
+
+/* ------------------------------------------------------------------
+   README sidebar
+------------------------------------------------------------------ */
+#readme {
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fbfbfb;
+}
+
+.readme-header {
+    flex: none;
+    padding: 10px 14px;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    color: #0008ff;
+    border-bottom: 1px solid lightgrey;
+}
+
+#readme-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    font-family: "Overused Grotesk", sans-serif;
+    font-weight: 350;
+    font-size: clamp(0.9rem, 1vw, 1.1rem);
+    line-height: 1.35;
+    cursor: text;
+}
+
+#readme-content h1 {
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: clamp(1.3rem, 1.9vw, 1.9rem);
+    margin: 10px 0 14px;
+    color: #000;
+}
+
+#readme-content h2 {
+    font-family: "IBM Plex Serif", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    margin: 18px 0 8px;
+    color: #000;
+}
+
+#readme-content p {
+    margin: 0 0 12px;
+}
+
+#readme-content li {
+    margin: 4px 0 4px 18px;
+    list-style: "— ";
+}
+
+#readme-content blockquote {
+    margin: 0 0 12px;
+    padding-left: 14px;
+    border-left: 2px solid #0008ff;
+    color: #333;
+}
+
+#readme-content .md-img {
+    max-width: 100%;
+    height: auto;
+    margin: 8px 0;
+    border: 1px solid lightgrey;
+    display: block;
+}
+
+#readme-content .md-link {
+    color: blue;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
+
+#readme-content .muted {
+    color: #999;
+}
+
+/* ------------------------------------------------------------------
+   Custom cursor (mirrors archive.css on git.html, which doesn't load
+   archive.css itself). The dot uses mix-blend exclusion so it reads
+   black on the white page and inverts over any content.
+------------------------------------------------------------------ */
+#media-query,
+#media-query * {
+    cursor: none;
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ffffff;
+    mix-blend-mode: exclusion;
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#custom-cursor.is-sprite {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    mix-blend-mode: normal;
+}
+
+#cursor-sprite {
+    display: none;
+    width: clamp(44px, 5vw, 76px);
+    height: auto;
+    object-fit: contain;
+}
+
+#custom-cursor.is-sprite #cursor-sprite {
+    display: block;
+}

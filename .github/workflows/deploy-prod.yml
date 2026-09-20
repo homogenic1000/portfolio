@@ -23,6 +23,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Export git history snapshot
+        run: node tools/export-git.js
+
       - name: Minify CSS and JS
         run: |
           npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=script script/*.js
@@ -30,8 +33,8 @@ jobs:
 
       - name: Remove non-site files
         run: |
-          rm -rf node_modules .git .github .DS_Store \
-                 package.json package-lock.json jsconfig.json opencode.json README.md .gitignore
+          rm -rf node_modules .git .github .DS_Store tools \
+                 package.json package-lock.json jsconfig.json opencode.json .gitignore
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

@@ -77,6 +77,7 @@ function applyMedia(media) {
     if (window.CDViewer) window.CDViewer.show(media.modelPath);
   } else if (media.type === "video") {
     videoEl.src = media.src;
+    videoEl.poster = media.poster || "";
     videoEl.style.display = "block";
     const p = videoEl.play();
     if (p && p.catch) p.catch(() => {});
@@ -94,6 +95,7 @@ function hideMedia() {
   destroyCarousel();
   videoEl.pause();
   videoEl.removeAttribute("src");
+  videoEl.removeAttribute("poster");
   videoEl.load();
   videoEl.style.display = "none";
 }

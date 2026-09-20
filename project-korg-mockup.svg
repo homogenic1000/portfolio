@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1512" height="840" viewBox="0 0 1512 840">
+  <!--
+    Project detail page — SVG design mockup (1512px reference viewport)
+    Shows the Korg project (media.type = "3d") as built by
+    projects-controller.js enterProject("korg"):
+      left column  = #content (h1 "index/<title>" + #project-text) over #show-min carousel
+      right column = #show (Three.js CD viewer, renderer alpha:true)
+    Edit this SVG in Figma / Illustrator to experiment with the design.
+
+    #layout is flex, each column flex:1 1 0, .box outline 1px solid lightgrey.
+  -->
+  <defs>
+    <radialGradient id="viewer-bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#f4f4f6"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1512" height="840" fill="#ffffff"/>
+
+  <!-- ===================== LEFT COLUMN ===================== -->
+
+  <!-- #content -->
+  <g id="content">
+    <rect x="0.5" y="0.5" width="755" height="268" fill="none" stroke="lightgrey" stroke-width="1"/>
+
+    <!-- h1 — index/<title> (IBM Plex Serif italic, weight 200, ~33.3px) -->
+    <text id="index-link" x="13" y="38" font-family="IBM Plex Serif, serif" font-style="italic" font-weight="200" font-size="33.3" fill="#0000ff">index/</text>
+    <text id="project-title" x="109" y="38" font-family="IBM Plex Serif, serif" font-style="italic" font-weight="200" font-size="33.3" fill="#7a5f33">Korg e-LIVEsEx jewel case</text>
+    <rect id="project-title-underline" x="109" y="40.5" width="416" height="2.5" fill="#7a5f33"/>
+
+    <!-- #project-text (Overused Grotesk, weight 350, 17.4px, line-height 111% = 19.3) -->
+    <g id="project-text" font-family="Overused Grotesk, sans-serif" font-weight="350" font-size="17.4" fill="#000000" xml:space="preserve">
+      <text x="13" y="76.4">This is projet is an hommage for Nelson Weber, a great friend of</text>
+      <text x="13" y="95.7">mine and also a great compositor. It's a cd book and jewel case</text>
+      <text x="13" y="115">i've designed, the track name is Korg e-LIVEsEx it's mechanical,</text>
+      <text x="13" y="134.3">metallic, mysterious.</text>
+      <text x="13" y="172.9">The inside of the cd book i've used the JetBrains Mono font face, it</text>
+      <text x="13" y="192.2">represent exactly the genre of the track ; nerdy, electronic, complex.</text>
+      <text x="13" y="211.5">It's also a great open-source type that i personally love. The clustered</text>
+      <text x="13" y="230.8">line is a photo of the EMX-1 that i vectorized it's a reference to how</text>
+      <text x="13" y="250.1">this track was made</text>
+    </g>
+  </g>
+
+  <!-- #show-min — carousel (4 images, dots + arrows) -->
+  <g id="show-min">
+    <rect x="0.5" y="268.5" width="755" height="571" fill="none" stroke="lightgrey" stroke-width="1"/>
+
+    <!-- slide 1 — korg1.webp (1385x1385), 486px shown (max-width 90% / max-height 85%) -->
+    <image id="slide-img" href="assets/2d/korg1.webp" x="135" y="311" width="486" height="486" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="135" y="311" width="486" height="486" fill="none" stroke="black" stroke-width="1"/>
+
+    <!-- prev / next buttons -->
+    <circle class="carousel-btn" cx="27" cy="554" r="17" fill="rgba(255,255,255,0.8)" stroke="black" stroke-width="1"/>
+    <text x="27" y="560" text-anchor="middle" font-size="18" fill="#000000">‹</text>
+    <circle class="carousel-btn" cx="729" cy="554" r="17" fill="rgba(255,255,255,0.8)" stroke="black" stroke-width="1"/>
+    <text x="729" y="560" text-anchor="middle" font-size="18" fill="#000000">›</text>
+
+    <!-- dots — 1 active of 4 -->
+    <circle class="carousel-dot active" cx="357" cy="828" r="4" fill="#000000"/>
+    <circle class="carousel-dot" cx="371" cy="828" r="4" fill="lightgrey"/>
+    <circle class="carousel-dot" cx="385" cy="828" r="4" fill="lightgrey"/>
+    <circle class="carousel-dot" cx="399" cy="828" r="4" fill="lightgrey"/>
+  </g>
+
+  <!-- ===================== RIGHT COLUMN #show — Three.js CD viewer ===================== -->
+  <g id="show">
+    <rect x="756.5" y="0.5" width="755" height="839" fill="none" stroke="lightgrey" stroke-width="1"/>
+    <!-- Three.js canvas (renderer alpha:true → transparent over page bg) -->
+    <rect x="757" y="1" width="754" height="838" fill="url(#viewer-bg)"/>
+
+    <!-- cd.glb jewel case (represents 3D model, OrbitControls) -->
+    <ellipse cx="1134" cy="596" rx="176" ry="26" fill="rgba(0,0,0,0.08)"/>
+    <g id="cd-model" transform="translate(1134 420)">
+      <rect x="-150" y="-132.75" width="300" height="265.5" fill="none" stroke="#dddddd" stroke-width="1"/>
+      <image href="assets/2d/korg-cd.webp" x="-150" y="-132.75" width="300" height="265.5" preserveAspectRatio="xMidYMid meet"/>
+    </g>
+  </g>
+
+  <!-- ===================== GUIDES (delete when done) ===================== -->
+  <g id="guides" stroke="#b6b6c4" stroke-width="1" stroke-dasharray="4 5" stroke-opacity="0.55">
+    <!-- column split (flex 1:1) -->
+    <line x1="756" y1="0" x2="756" y2="840"/>
+    <!-- #content / #show-min split -->
+    <line x1="0" y1="268.5" x2="756" y2="268.5"/>
+  </g>
+  <g id="guides-label" font-family="JetBrains Mono, monospace" font-size="11" fill="#9a9aa8">
+    <text x="766" y="18">Three.js viewer — assets/model/cd.glb (OrbitControls)</text>
+    <text x="766" y="33">renderer alpha:true → model floats on page bg</text>
+  </g>
+</svg>

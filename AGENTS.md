@@ -53,7 +53,11 @@ portfolio/
 ├── index.html                    # Main single-page entry point (the only real page)
 ├── aboutme.html                  # Empty stub — not implemented
 ├── archive.html                  # Projects "Index" page (archive list, deep-links into index.html)
+├── lab.html                      # "lab/" page: unfinished/WIP projects floating in a zero-gravity world
+├── git.html                      # Full git network graph + readme.md sidebar (from assets/git/commits.json)
 ├── CNAME                         # GitHub Pages custom domain: matheodelessert.ch
+├── LICENSE                       # GPL-3.0 (code only); creative content = All Rights Reserved
+├── robots.txt                    # Crawlers may read text; all media (/assets/ + extensions) disallowed
 ├── favico.png                    # Favicon
 ├── preview.webp                  # Preview image for README
 │
@@ -61,6 +65,7 @@ portfolio/
 │   ├── OverusedGroteskRoman-VF.woff2   # Custom variable font
 │   ├── 2d/                       # 2D sprites & project images (.webp, .png)
 │   ├── animation/                # 15 frame-by-frame bag animation .webp files
+│   ├── git/                      # commits.json — git history snapshot for git.html (CI-generated)
 │   ├── model/
 │   │   └── cd.glb                # 3D GLTF model (Korg CD jewel case)
 │   └── video/                    # Video assets (.webm, .mp4)
@@ -70,6 +75,8 @@ portfolio/
 │   ├── style.css                 # Global styles, hero layout, physics canvas
 │   ├── media.css                 # Mobile gate (hides everything below 600px)
 │   ├── archive.css               # Index/archive page styles (IBM Plex Serif header + Overused Grotesk rows)
+│   ├── lab.css                   # "lab/" page (floating WIP world + fullscreen overlay)
+│   ├── git.css                   # git.html network graph + readme.md sidebar
 │   └── korg.css                  # Project detail view, carousel, typography
 │
 ├── script/
@@ -77,8 +84,10 @@ portfolio/
 │   ├── archive.js                # Renders archive.html rows from PROJECTS (names, types, dates)
 │   ├── boundaries.js             # Matter.js invisible walls
 │   ├── cursor.js                 # Custom dot cursor → "en savoir plus" pill over project rows (archive)
+│   ├── gitgraph.js               # git.html: lane layout, SVG render, refresh polling, README renderer
 │   ├── handlers.js               # Click handlers for special objects
 │   ├── loves.js                  # Archive "things i love" Matter world (zero gravity, drag, hover card)
+│   ├── lab.js                    # "lab/" page: LAB config + floating image/video world + fullscreen view
 │   ├── objects.js                # Matter.js body definitions (7 objects)
 │   ├── physics.js                # Matter.js engine init & orchestrator
 │   ├── projects.js               # PROJECTS data config dictionary
@@ -87,6 +96,9 @@ portfolio/
 │   └── korg-script/
 │       ├── main.js               # Three.js lazy-init 3D viewer (ES module)
 │       └── projects-controller.js # State machine: enter/exit projects
+│
+├── tools/
+│   └── export-git.js             # CI-only Node script → writes assets/git/commits.json (not deployed)
 │
 ├── docs/
 │   └── dynamic-rendering.svg     # Architecture diagram
@@ -132,7 +144,9 @@ The app has **two states** managed by DOM manipulation:
 `projects-controller.js` handles transitions via `enterProject(id)` and the "index" breadcrumb does a **full page reload** to return home.
 
 ### Navigation & Deep-linking
-- **`archive.html`** is a standalone "Index" page: a plain list of all projects (rows deep-link into `index.html?project=<label>`). Rows are generated at runtime by `script/archive.js` from live `PROJECTS` data (title/label, type, date); rows without a `PROJECTS` entry yet live in `archive.js`'s `EXTRA` list (clickable or `disabled`). Each clickable row's title is permanently colored by the project's `color` (e.g., Frip'O'Point green), no hover. The interactive CTA is the custom cursor (`cursor.js`): a white dot (mix-blend exclusion) that expands into a content-hugging pill labeled "en savoir plus" over clickable rows and "en cours" over `disabled` rows (IBM Plex Serif, weight 300, italic). The pill renders *under* the text (`z-index: 1` vs content `z-index: 2`). No description text exists. The page also loads Matter.js + `loves.js` for the zero-gravity "things i love" mini-world (portrait `aboutme.webp` + album + placeholders, draggable, hover cards) where the canvas spans the **full page width** beneath the links row, and `silhouette.js` for its hitboxes. It does **not** load the home physics/controller scripts.
+- **`archive.html`** is a standalone "Index" page: a plain list of all projects (rows deep-link into `index.html?project=<label>`). Rows are generated at runtime by `script/archive.js` from live `PROJECTS` data (title/label, type, date); rows without a `PROJECTS` entry yet live in `archive.js`'s `EXTRA` list (clickable or `disabled`). The "the portfolio" extra row (webdesign/dev, 2025 → 2026, GitHub-blue) links to `git.html`. Each clickable row's title is permanently colored by the project's `color` (e.g., Frip'O'Point green), no hover. The interactive CTA is the custom cursor (`cursor.js`): a white dot (mix-blend exclusion) that expands into a content-hugging pill labeled "en savoir plus" over clickable rows and "en cours" over `disabled` rows (IBM Plex Serif, weight 300, italic). The pill renders *under* the text (`z-index: 1` vs content `z-index: 2`). No description text exists. The page also loads Matter.js + `loves.js` for the zero-gravity "things i love" mini-world (portrait `aboutme.webp` + album + placeholders, draggable, hover cards) where the canvas spans the **full page width** beneath the links row, and `silhouette.js` for its hitboxes. It does **not** load the home physics/controller scripts. The header row also links to the "lab/" page via an absolutely-positioned `.header-lab` anchor. The bottom `.about-links` row (Serif italic: repo · instagram · github · soundcloud) gained a 5th `git` link (→ `git.html`) via an extra 5th auto column in `.about-links`' grid (`git.css` edits live in `archive.css`).
+- **`git.html`** is the "git/" page: a **full network graph** of the repo's commit history + a `readme.md` sidebar. Data comes from `assets/git/commits.json`, generated at deploy time by the CI-only Node script `tools/export-git.js` (runs `git log --all --date-order` + `git for-each-ref`, writes `{ exported_at, count, newest, commits[{sha, parents, subject, author, date, refs}], refs }`). `script/gitgraph.js` lays out fork/merge **lanes** with a free-lane-reuse ("railroad") algorithm (rows = commits newest→oldest, 24px; columns = parallel branch arms, 26px, **reused** so the graph stays compact — `refs.main` is pinned to column 0; a commit takes the leftmost waiting lane, other waiting lanes converge/free their columns, the first parent continues the node's column, merge parents claim the leftmost free column) and renders Zed-style: a single grid table where the **graph is its own column** (SVG `#lanes-svg`: blue main-branch lane/dots, black dots, grey bars + horizontal orthogonal `data-kind="run"` connectors drawn at the exact fork/merge rows — short, since lanes are reused) and every piece of info gets **its own column** — `subject` (with black ref badges inline, +N overflow), `author`, `date`, `short sha` link — with 1px lightgrey column separators and a `#f7f7f7` row hover. Rows are 24px, one per commit; dots/rows are vertically pixel-aligned, and subjects ellipsize (`minmax(0,1fr)` column, `width:100%` grid — never `max-content`, so long messages can't blow out the width). The layout is pure-function (`layout(commits, mainTip)` → `{ bySha, colOf, bars, runs, maxCol, commits }`) so the current repo (161 commits, ≈5 concurrent branches) fits in ~4 columns instead of one-per-branch. It also polls `GET api.github.com/repos/.../commits?per_page=1` every 60s (paused when tab hidden) and **auto-reloads once per new tip** when GitHub reports a commit newer than the snapshot (guard: reload sha stored in `sessionStorage["git-auto-reload-sha"]` so it never loops while the deployed snapshot lags a push — there is no "new commits" chip). The sidebar fetches `README.md` (kept in the deploy artifact) and renders it with a tiny built-in markdown parser (`mdToHtml`). The CI workflow runs `node tools/export-git.js` after checkout, keeps `README.md`, and removes `tools/` from the artifact. Top of the page is just the `index/portfolio` breadcrumb (no header row; the page displays as "portfolio", though the file stays `git.html`); the graph/columns scroll together as one unit (lanes are **not** sticky).
+- **`lab.html`** is the "lab/" page: a **full-page** zero-gravity Matter.js world (pattern mirror of `loves.js`) where unfinished/WIP projects float as images and **live videos** (muted, looping). Hovering a piece shows a small description card (reuses `#loves-card`); clicking opens the dark **fullscreen overlay** (`#lab-fullscreen`) with the large media + title/desc (dismiss: `close` button, `Escape`, or backdrop click). Images and video posters get silhouette hitboxes via `silhouette.js`; videos with no `poster` stay rectangular. Loads Matter.js, poly-decomp, `silhouette.js`, `lab.js`, and `cursor.js` is **not** loaded (the world manages its own grab cursor). It is linked from the archive header (`lab/↗`).
 - **`index.html?project=<id>`** opens a project directly on load. `projects-controller.js` ends with an `initDeepLink()` IIFE that reads `?project=` and calls `enterProject(id)` on the `window "load"` event (guarantees the `main.js` module has exposed `window.CDViewer` for 3D media).
 - In deep-link mode physics never started, so `enterProject()` guards its boundary-removal with `typeof engine !== "undefined" && engine`.
 - The hero `index↗` link and the project-view `index` breadcrumb both point to `archive.html`.
@@ -178,7 +192,7 @@ Media dispatch: `{ type: "3d" }` → Three.js viewer in `#show`; `{ type: "video
 **To add a new project:** Add an entry to `PROJECTS` + add a matching falling object in `objects.js`. The controller auto-handles rendering.
 
 ### `script/objects.js` — Physics Object Factory
-Defines `OBJECT_CONFIG` for 7 interactive objects (tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry. `premierjour` reuses the circle physics of the former `pamplemousse` object (radius 40, `pamplemousse.webp` sprite placeholder).
+Defines `OBJECT_CONFIG` for 7 interactive objects (tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour). Each has Matter.js body properties (size, restitution, friction, sprite texture). The object `label` links to a `PROJECTS` entry. `premierjour` reuses the circle physics of the former `pamplemousse` object (radius 40, `pamplemousse.webp` sprite placeholder).
 
 **Spawn point (sandwich midpoint):** Objects spawn at the center of the `#sandwich` overlay, which sits on the bag's mouth. `initSpawnPoint()` is called once the DOM/images/fonts are ready (`window "load"` + `document.fonts.ready`): it temporarily measures the sandwich's real bounding box without a visual flash (sets `display: block` + `visibility: hidden`, reads the rect, restores everything in the same task) and caches its midpoint in the global `spawnPoint`. `computeSpawnPoint()` returns the cached `spawnPoint` (with a bag-aspect-ratio fallback before images resolve). `spawnPoint` is also re-measured on `resize`. In `physics.js`, `computeSpawnPoint()` is called just before each object is created (inside its 500ms `setTimeout`) and its result is passed directly into each `create*(x, y)` factory. Each actual creation position is pushed to `window.spawnLog` (`{ label, x, y }`) so the Playwright test can assert objects land inside the sandwich.
 
@@ -255,9 +269,10 @@ Or use `live-server` (also installed as dependency).
 - **Workflow:** `.github/workflows/deploy-prod.yml`
 - **Trigger:** Push to `main` branch or manual dispatch
 - **Process:**
-  1. Minify all `script/*.js` and `css/*.css` with esbuild
-  2. Strip non-site files (node_modules, configs, docs, etc.)
-  3. Deploy to GitHub Pages
+  1. Run `node tools/export-git.js` (write `assets/git/commits.json` for `git.html`)
+  2. Minify all `script/*.js` and `css/*.css` with esbuild
+  3. Strip non-site files (node_modules, configs, docs, tools, etc.) — **`README.md` is kept** (serves `git.html`'s sidebar)
+  4. Deploy to GitHub Pages
 - **Custom domain:** `matheodelessert.ch` (via CNAME)
 
 ### No Other Deployment Configs
@@ -314,7 +329,7 @@ npx playwright install chromium
 
 ## SEO & Metadata
 
-**Minimal.** Only a `<title>` tag and favicon. No meta description, no Open Graph tags, no Twitter Cards, no structured data, no sitemap, no robots.txt.
+**Minimal.** Only a `<title>` tag and favicon, plus a `robots.txt` (crawl text freely; `/assets/` + media extensions disallowed — the artwork/video is All Rights Reserved). No meta description, no Open Graph tags, no Twitter Cards, no structured data, no sitemap.
 
 ---
 
@@ -338,6 +353,10 @@ npx playwright install chromium
 3. Add sprite image to `assets/2d/`
 4. Add media assets to appropriate `assets/` subfolder
 5. The controller (`projects-controller.js`) will automatically handle rendering, media dispatch, and transitions
+
+## Quick Reference: Adding a WIP Piece to lab/
+
+Add one entry to `LAB.objects` in `script/lab.js` (title, desc, `media: { type: "image"|"video", src }`, optional `trace` image for the silhouette hitbox, optional `poster` for a video, `color` for the placeholder tile, `size` for relative scale). No other file needs to change — the world, hover card, and fullscreen view pick it up automatically.
 
 ---
 

@@ -78,6 +78,7 @@ body {
 }
 
 .header-row {
+    position: relative;
     min-height: 40px;
     padding-top: 4px;
     font-family: "IBM Plex Serif", serif;
@@ -85,6 +86,22 @@ body {
     font-weight: 400;
     color: #0008ff;
     border-bottom-color: lightgrey;
+}
+
+.header-lab {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0008ff;
+    text-decoration: none;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.header-lab:hover {
+    text-decoration: underline;
 }
 
 .row {
@@ -135,10 +152,10 @@ body {
     grid-column: 1 / -1;
     grid-row: 2;
     display: grid;
-    grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr);
+    grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr) auto;
     column-gap: 28px;
     align-items: center;
-    padding: 10px 10px 0px;
+    padding: 0.5em 0 0.5em 0;
     border-top: 1px solid lightgrey;
     font-family: var(--font-serif);
     font-style: italic;
@@ -151,6 +168,7 @@ body {
 .about-links a.link-instagram { grid-column: 2; }
 .about-links a.link-github { grid-column: 3; }
 .about-links a.link-soundcloud { grid-column: 4; }
+.about-links a.link-git { grid-column: 5; grid-column-start: 5; }
 
 .about-links a {
     color: inherit;

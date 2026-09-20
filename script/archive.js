@@ -14,6 +14,7 @@
   const ROWS = [
     { id: "rondpoint" },
     { id: "vroomvroom" },
+    { id: "eracom" },
     {
       id: "premierjour",
       type: "photographie",
@@ -23,7 +24,8 @@
       name: "the portfolio ",
       type: "webdesign/dev",
       date: "2025 → 2026",
-      disabled: true,
+      href: "git.html",
+      color: "#0969da",
     },
     { id: "korg" },
   ];

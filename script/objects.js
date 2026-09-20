@@ -75,7 +75,7 @@ const OBJECT_CONFIG = {
       yScale: 0.5,
     },
   },
-  filtre: {
+  eracom: {
     width: 160,
     height: 93,
     angle: (3 * Math.PI) / 180,
@@ -84,9 +84,9 @@ const OBJECT_CONFIG = {
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
     sprite: {
-      texture: "assets/2d/filtre.webp",
-      xScale: 0.5,
-      yScale: 0.5,
+      texture: "assets/2d/eracom-projects/poster.jpg",
+      xScale: 0.11,
+      yScale: 0.113,
     },
   },
   rondpoint: {
@@ -160,7 +160,7 @@ const OBJECT_CONFIG = {
 };
 
 // Variables globales pour les objets
-let tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour;
+let tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour;
 
 /**
  * Créer l'objet tabac
@@ -194,19 +194,19 @@ function createTabac(x, y) {
 }
 
 /**
- * Créer l'objet filtre
+ * Créer l'objet eracom
  */
-function createFiltre(x, y) {
-  const config = OBJECT_CONFIG.filtre;
+function createEracom(x, y) {
+  const config = OBJECT_CONFIG.eracom;
 
-  filtre = Matter.Bodies.rectangle(
+  eracom = Matter.Bodies.rectangle(
     x,
     y,
     config.width,
     config.height,
     {
       angle: config.angle,
-      label: "filtre",
+      label: "eracom",
       isStatic: config.isStatic,
       restitution: config.restitution,
       friction: config.friction,
@@ -221,7 +221,7 @@ function createFiltre(x, y) {
     }
   );
 
-  return filtre;
+  return eracom;
 }
 
 function createRondpoint(x, y) {
@@ -357,7 +357,7 @@ function createObjects() {
   const p = computeSpawnPoint();
   return [
     createTabac(p.x, p.y),
-    createFiltre(p.x, p.y),
+    createEracom(p.x, p.y),
     createRondpoint(p.x, p.y),
     createAboutMe(p.x, p.y),
     createKorg(p.x, p.y),
@@ -370,5 +370,5 @@ function createObjects() {
  * Obtenir tous les objets
  */
 function getObjects() {
-  return [tabac, filtre, rondpoint, aboutme, korg, vroomvroom, premierjour];
+  return [tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour];
 }

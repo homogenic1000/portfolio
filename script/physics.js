@@ -122,7 +122,7 @@ function startPhysics() {
 
   const objectFunctions = [
     createTabac,
-    createFiltre,
+    createEracom,
     createRondpoint,
     createAboutMe,
     createKorg,
