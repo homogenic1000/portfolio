@@ -1,0 +1,6 @@
+[
+  { "name": "new_page", "arguments": { "url": "http://localhost:5173/index.html?project=rondpoint" } },
+  { "name": "navigate_page", "arguments": { "pageId": "$PAGEID", "type": "reload", "initScript": "window.__shifts = []; window.__obs = new PerformanceObserver(l => { for (const e of l.getEntries()) { if (!e.hadRecentInput) { const c = (e.sources || []).map(s => s.node ? (s.node.className || s.node.nodeName || s.node.id) : '?'); window.__shifts.push({ t: Math.round(e.startTime), v: Math.round(e.value*1000)/1000, c }); } } }); window.__obs.observe({ type: 'layout-shift', buffered: true });" } },
+  { "name": "evaluate_script", "arguments": { "pageId": "$PAGEID", "waitForStableDom": true, "function": "() => { const vid = document.getElementById('project-video'); const v = vid ? { w: vid.getBoundingClientRect().width, h: vid.getBoundingClientRect().height, ready: vid.readyState } : null; return JSON.stringify({ shifts: window.__shifts, video: v, heroVisible: document.getElementById('hero-section').getBoundingClientRect().height > 0 }); }" }
+}
+]

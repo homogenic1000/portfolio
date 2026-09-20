@@ -1,0 +1,6 @@
+[
+  { "name": "new_page", "arguments": { "url": "http://localhost:5173/archive.html" } },
+  { "name": "navigate_page", "arguments": { "pageId": "$PAGEID", "type": "reload", "initScript": "window.__shifts = []; window.__obs = new PerformanceObserver(l => { for (const e of l.getEntries()) { if (!e.hadRecentInput) { const c = (e.sources || []).map(s => s.node ? (s.node.className || s.node.nodeName || s.node.id) : '?'); window.__shifts.push({ t: Math.round(e.startTime), v: Math.round(e.value*1000)/1000, c }); } } }); window.__obs.observe({ type: 'layout-shift', buffered: true });" } },
+  { "name": "evaluate_script", "arguments": { "pageId": "$PAGEID", "waitForStableDom": false, "function": "() => { const idx = document.getElementById('archive-index'); const about = document.querySelector('.about'); const b = el => { const r = el.getBoundingClientRect(); return Math.round(r.top) + ',' + Math.round(r.height); }; return JSON.stringify({ shifts: window.__shifts, about: b(about), index: b(idx), rows: document.querySelectorAll('#archive-index .row').length, fontStatus: document.fonts.status }); }" }
+}
+]
