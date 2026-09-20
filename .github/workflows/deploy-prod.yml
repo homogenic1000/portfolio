@@ -22,13 +22,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Export git history snapshot
         run: node tools/export-git.js
 
       - name: Minify CSS and JS
         run: |
-          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=script script/*.js
+          npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=script script/*.js script/korg-script/*.js
           npx -y esbuild@0.25.11 --minify --allow-overwrite --outdir=css css/*.css
 
       - name: Remove non-site files
