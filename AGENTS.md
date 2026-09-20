@@ -98,7 +98,10 @@ portfolio/
 │       └── projects-controller.js # State machine: enter/exit projects
 │
 ├── tools/
-│   └── export-git.js             # CI-only Node script → writes assets/git/commits.json (not deployed)
+│   ├── export-git.js             # CI-only Node script → writes assets/git/commits.json (not deployed)
+│   ├── mcp-run.mjs               # Generic Chrome DevTools MCP step driver (stdio, local dev)
+│   ├── lighthouse-audit.mjs      # Run Lighthouse over one or more URLs / --all (stdio MCP)
+│   └── mcp-steps/                # Step files for mcp-run.mjs (example, cls-observer, cls-provider)
 │
 ├── docs/
 │   └── dynamic-rendering.svg     # Architecture diagram
@@ -315,6 +318,31 @@ npx playwright install chromium
 ```
 
 > Note: `test/screenshots/` output is generated at runtime and should generally stay gitignored.
+
+### Lighthouse Audits via Chrome DevTools MCP (`tools/`)
+These tools drive the **Chrome DevTools MCP** server over stdio to run Lighthouse (and arbitrary CDP/page JS) against the live dev server. They generalize the manual MCP session used for the audit-fixes work (CLS, color-contrast, landmarks, carousel a11y). The browser binary default is Helium (`/Applications/Helium.app/Contents/MacOS/Helium`) — override with `CHROME_EXEC`.
+
+```bash
+# Start vite first (npx vite), then:
+node tools/lighthouse-audit.mjs --all                  # every page + project state
+node tools/lighthouse-audit.mjs http://localhost:5173/archive.html
+node tools/lighthouse-audit.mjs "http://localhost:5173/index.html?project=korg"
+node tools/lighthouse-audit.mjs --all --device mobile  # (not fully supported — site is desktop-only)
+```
+
+Prints a table of category scores (a11y / best-practices / seo / agentic-browsing), CLS, and failing audit titles; reports land in `/tmp/lh-out/<label>/`. The audit targets live in the `PAGES` map at the top of `tools/lighthouse-audit.mjs` — add a new project state there when adding a project.
+
+**Generic MCP step driver** (`tools/mcp-run.mjs`): runs an ordered list of MCP tool calls from a JSON file (`tools/mcp-steps/*.json`). Useful for one-off page JS / traces that aren't Lighthouse:
+
+```bash
+node tools/mcp-run.mjs tools/mcp-steps/example.json    # new_page + evaluate_script
+node tools/mcp-run.mjs tools/mcp-steps/cls-observer.json      # layout-shift observer on archive.html
+node tools/mcp-run.mjs tools/mcp-steps/cls-provider.json      # layout-shift observer on ?project=rondpoint
+```
+
+Step files use the `$PAGEID` placeholder (auto-filled from the previous `new_page` call), so they never hardcode browser page ids. Every run launches a fresh browser instance; the driver only works when a *different* process spawns it (the current opencode session does not have `chrome-devtools_*` tools injected, so this stdio route is the reliable path).
+
+> **Whitelist note:** a "controlled by automated software" banner + known-good Helium: these tools are dev-only and not part of `npm test`/CI.
 
 ---
 

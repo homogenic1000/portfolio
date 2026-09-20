@@ -1,0 +1,5 @@
+[
+  { "name": "new_page", "arguments": { "url": "http://localhost:5173/archive.html" } },
+  { "name": "evaluate_script", "arguments": { "pageId": "$PAGEID", "waitForStableDom": false, "function": "() => { const idx = document.getElementById('archive-index'); return JSON.stringify({ rows: document.querySelectorAll('#archive-index .row').length, fontStatus: document.fonts.status }); }" }
+}
+]
