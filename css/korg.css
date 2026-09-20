@@ -197,5 +197,29 @@ u{
     outline: 1px solid lightgrey;
 }
 
+/* Layout empilé (entre worlds) : texte en haut, vidéo en bas en pleine largeur */
+#layout[data-layout="stack"]{
+    flex-direction: column;
+}
+
+#layout[data-layout="stack"] .column{
+    flex: 0 1 auto;
+    min-height: 0;
+}
+
+#layout[data-layout="stack"] #show-min.box{
+    display: none;
+}
+
+#layout[data-layout="stack"] #show{
+    width: 100%;
+    flex: 1 1 0;
+}
+
+#layout[data-layout="stack"] #show video{
+    max-width: 100%;
+    max-height: 100%;
+}
+
 
 

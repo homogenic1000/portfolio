@@ -52,6 +52,7 @@ function enterProject(id) {
   if (titleWrap) titleWrap.style.color = cfg.color || "blue";
   projectTitleEl.style.filter = cfg.filter || "none";
   projectTextEl.innerHTML = cfg.text;
+  layoutEl.dataset.layout = cfg.layout || "";
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
 

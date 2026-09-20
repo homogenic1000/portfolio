@@ -14,6 +14,7 @@
   const ROWS = [
     { id: "rondpoint" },
     { id: "vroomvroom" },
+    { id: "betweenworlds" },
     { id: "eracom" },
     {
       id: "premierjour",
@@ -26,6 +27,7 @@
       date: "2025 → 2026",
       href: "git.html",
       color: "#0969da",
+      sprite: "assets/2d/portfolio.webp",
     },
     { id: "korg" },
   ];

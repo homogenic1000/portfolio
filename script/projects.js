@@ -62,6 +62,20 @@ const PROJECTS = {
     images: ["assets/video/vroomvroom/ANIM_1.webm", "assets/video/vroomvroom/NOISE DOT.webm", "assets/video/vroomvroom/RANDOM TEXT.webm"],
   },
 
+  betweenworlds: {
+    label: "Between Worlds",
+    title: "Between Worlds",
+    type: "datamoshing",
+    date: "2026",
+    text: "Between Worlds is an experimental video piece exploring the corruption between the moving image and its data. Using datamoshing, the flow of frames is torn apart and reassembled — pixels bleed into one another, carrying traces of what came before.\n\nBlob tracking draws floating shapes through the glitch, tracing paths between worlds as they drift across the screen, weightless and out of sync with reality.",
+    bg: "#ffffff",
+    color: "#6e645f",
+    sprite: "assets/2d/betweenworlds.webp",
+    media: { type: "video", src: "assets/video/timeline1.webm", poster: "assets/2d/betweenworlds.webp" },
+    images: [],
+    layout: "stack",
+  },
+
   premierjour: {
     title: "Premier jour d'été",
     text: "A collection of nature photography capturing the first day of summer.\n\nThese images evoke the warmth and renewal that comes with the season's arrival.",

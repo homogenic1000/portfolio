@@ -156,11 +156,25 @@ const OBJECT_CONFIG = {
       xScale: 0.2,
       yScale: 0.2,
     },
+  },
+  betweenworlds: {
+    width: 160,
+    height: 90,
+    angle: (3 * Math.PI) / 180,
+    restitution: resitutionValue,
+    friction: frictionValue,
+    frictionAir: frictionValueAir,
+    isStatic: false,
+    sprite: {
+      texture: "assets/2d/betweenworlds.webp",
+      xScale: 1.5,
+      yScale: 1.5,
+    },
   }
 };
 
 // Variables globales pour les objets
-let tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour;
+let tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour, betweenworlds;
 
 /**
  * Créer l'objet tabac
@@ -348,6 +362,34 @@ function createPremierjour(x, y) {
   return premierjour;
 }
 
+function createBetweenworlds(x, y) {
+  const config = OBJECT_CONFIG.betweenworlds;
+
+  betweenworlds = Matter.Bodies.rectangle(
+    x,
+    y,
+    config.width,
+    config.height,
+    {
+      angle: config.angle,
+      label: "betweenworlds",
+      isStatic: config.isStatic,
+      restitution: config.restitution,
+      friction: config.friction,
+      frictionAir: config.frictionAir,
+      render: {
+        sprite: {
+          texture: config.sprite.texture,
+          xScale: config.sprite.xScale,
+          yScale: config.sprite.yScale,
+        },
+      },
+    }
+  );
+
+  return betweenworlds;
+}
+
 const objects = [];
 
 /**
@@ -363,6 +405,7 @@ function createObjects() {
     createKorg(p.x, p.y),
     createVroomvroom(p.x, p.y),
     createPremierjour(p.x, p.y),
+    createBetweenworlds(p.x, p.y),
   ];
 }
 
@@ -370,5 +413,5 @@ function createObjects() {
  * Obtenir tous les objets
  */
 function getObjects() {
-  return [tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour];
+  return [tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour, betweenworlds];
 }

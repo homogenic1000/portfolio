@@ -128,6 +128,7 @@ function startPhysics() {
     createKorg,
     createVroomvroom,
     createPremierjour,
+    createBetweenworlds,
   ];
   // Spawn au centre du sandwich (l'ouverture du sac) : computeSpawnPoint()
   // renvoie le point mis en cache par initSpawnPoint() au chargement.
