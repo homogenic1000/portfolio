@@ -84,7 +84,6 @@
    Home hero greeting    #title-d            Serif italic  200     --fs-hero
    Breadcrumb / header   #layout h1, .header-row, .breadcrumb
                                              Serif italic  200     --fs-title
-   "index↗" subhead      h2                  Serif italic  300     (browser 1.5em)
    Project paragraph     #layout p           Grotesk       350     --fs-body
    Index page rows       .row                Grotesk       400     --fs-index
    Copyright / credits   .copyright          (inherits)    ---     --fs-caption

@@ -19,43 +19,6 @@ body{
   font-style: normal;
 }
 
-h2{
-    font-family: "IBM Plex Serif";
-    font-weight: 300;
-    font-style: italic;
-    text-decoration: underline;
-    color: blue;
-    position: fixed;      /* new */
-      bottom: 1.4em;        /* new */
-      right: 1.4em;         /* new */
-      z-index: 4;           /* new */
-}
-
-/* index↗ hover note — warns the user this link skips the bag intro animation */
-#title-section h2 a{
-    position: relative;
-}
-
-#title-section h2 a::after{
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 6px);
-    right: 0;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.72rem;
-    color: #000;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    pointer-events: none;
-}
-
-#title-section h2 a:hover::after{
-    opacity: 1;
-    transform: translateY(0);
-}
-
 a{
     color: blue;
     text-decoration: none;
@@ -209,9 +172,10 @@ canvas{
 }
 
 .disclaimer-text{
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-family: "Overused Grotesk", sans-serif;
+    font-weight: 350;
+    font-size: 1rem;
+    line-height: 1.45;
 }
 
 .disclaimer-actions{

@@ -152,7 +152,7 @@ The app has **two states** managed by DOM manipulation:
 - **`lab.html`** is the "lab/" page: a **full-page** zero-gravity Matter.js world (pattern mirror of `loves.js`) where unfinished/WIP projects float as images and **live videos** (muted, looping). Hovering a piece shows a small description card (reuses `#loves-card`); clicking opens the dark **fullscreen overlay** (`#lab-fullscreen`) with the large media + title/desc (dismiss: `close` button, `Escape`, or backdrop click). Images and video posters get silhouette hitboxes via `silhouette.js`; videos with no `poster` stay rectangular. Loads Matter.js, poly-decomp, `silhouette.js`, `lab.js`, and `cursor.js` is **not** loaded (the world manages its own grab cursor). It is linked from the archive header (`lab/↗`).
 - **`index.html?project=<id>`** opens a project directly on load. `projects-controller.js` ends with an `initDeepLink()` IIFE that reads `?project=` and calls `enterProject(id)` on the `window "load"` event (guarantees the `main.js` module has exposed `window.CDViewer` for 3D media).
 - In deep-link mode physics never started, so `enterProject()` guards its boundary-removal with `typeof engine !== "undefined" && engine`.
-- The hero `index↗` link and the project-view `index` breadcrumb both point to `archive.html`.
+- The project-view `index` breadcrumb points to `archive.html`. The hero has **no** index shortcut — the `index↗` link (and its `h2`/tooltip CSS) was removed; the intro disclaimer's skip link is the bypass.
 
 ### Module Note
 `main.js` is the only true ES module (uses `import` with import map for Three.js). All other scripts use global scope — functions call each other directly across files.
