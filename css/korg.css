@@ -233,6 +233,8 @@ u{
 #layout[data-layout="stack"] #show{
     width: 100%;
     flex: 1 1 0;
+    padding: 10px 0;
+    box-sizing: border-box;
 }
 
 #layout[data-layout="stack"] #show video{

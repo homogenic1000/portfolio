@@ -97,10 +97,7 @@ eracom: {
     color: "#004AAD",
     sprite: "assets/2d/eracom-projects/poster.jpg",
     media: { type: "video", src: "assets/video/jingle.webm", poster: "assets/2d/eracom-projects/poster.jpg", aspect: "16 / 9" },
-    images: [
-      "assets/2d/eracom-projects/eracom-01.jpg",
-      "assets/2d/eracom-projects/eracom-10.jpg",
-      "assets/2d/eracom-projects/eracom-11.jpg",
-    ],
+    images: [],
+    layout: "stack",
   },
 }
