@@ -4,6 +4,10 @@
     height: min-content;
   }
 
+  .skip-link {
+    display: none;
+  }
+
 
 
   #no-mobile {

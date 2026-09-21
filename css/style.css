@@ -165,3 +165,47 @@ canvas{
     font-size: clamp(0.2rem, 0.8vw, 1.2rem);
 }
 
+/* ------------------------------------------------------------------
+   Skip link — the interactive intro is mouse-only and loud, so the
+   first focusable element in <body> offers a bypass straight to the
+   index (WCAG 2.4.1). It is visible on load, then collapses to the
+   classic focus-only pattern once the intro starts (body.intro-started,
+   set by animation.js and projects-controller.js).
+   ------------------------------------------------------------------ */
+.skip-link{
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 9999;
+    padding: 0.45em 0.9em;
+    background-color: #0008ff;
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    line-height: 1.1;
+    text-decoration: none;
+    border-radius: 2px;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+body.intro-started .skip-link{
+    opacity: 0;
+    transform: translateY(-150%);
+    pointer-events: none;
+}
+
+body.intro-started .skip-link:focus{
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* The bag is a real button for keyboard/AT users (role=button in the HTML) */
+#animation-bag:focus-visible{
+    outline: 2px solid blue;
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+

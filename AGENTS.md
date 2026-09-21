@@ -157,6 +157,11 @@ The app has **two states** managed by DOM manipulation:
 ### Module Note
 `main.js` is the only true ES module (uses `import` with import map for Three.js). All other scripts use global scope — functions call each other directly across files.
 
+### Accessibility
+- **Skip link:** `index.html` starts with `<a class="skip-link" href="archive.html">Skip the intro — go to the index</a>` — the first focusable element in `<body>`, so keyboard/screen-reader users can bypass the loud, mouse-only bag intro (WCAG 2.4.1). It is **visible on load**, then collapses to the classic focus-only pattern once `body.intro-started` is set (by `animation.js` when the intro starts, and by `projects-controller.js` on `enterProject`, which also covers deep-links). Hidden on the < 600px mobile gate.
+- **Bag keyboard parity:** `#animation-bag` is `role="button" tabindex="0"` with an `aria-label`; `animation.js` listens for Enter/Space and triggers the same `animate()` path as a click.
+- **`prefers-reduced-motion: reduce`:** `animation.js` skips the 15-frame sequence entirely on activation — it jumps to the final frame and calls `startPhysics()` straight away (guarded so a re-click can't re-spawn the engine).
+
 ---
 
 ## Key Files & Responsibilities
