@@ -146,8 +146,10 @@ canvas{
     color: #000;
 }
 
-/* Hidden for ?project= deep-links (class set in <head>, before first paint) */
+/* Hidden for ?project= deep-links and for returning visitors who already made
+   a choice (classes set in <head>, before first paint) */
 .deep-link #intro-disclaimer,
+.intro-dismissed #intro-disclaimer,
 #intro-disclaimer.is-hidden{
     display: none;
 }

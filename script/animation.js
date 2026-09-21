@@ -88,7 +88,11 @@ function resetAnimation() {
 }
 
 /* Full-page intro disclaimer — offers a bypass to the index (a11y) or lets
-   the visitor enter the site. Dismissed with "Start the intro" or Escape. */
+   the visitor enter the site. Dismissed with "Start the intro" or Escape.
+   The choice (start or skip) is remembered in localStorage so returning
+   visitors are not shown the disclaimer again (see the <head> script). */
+const INTRO_SEEN_KEY = "intro-seen-v1";
+
 window.addEventListener("DOMContentLoaded", () => {
   const disclaimer = document.getElementById("intro-disclaimer");
   if (!disclaimer || getComputedStyle(disclaimer).display === "none") return;
@@ -100,7 +104,16 @@ window.addEventListener("DOMContentLoaded", () => {
   if (mediaQuery) mediaQuery.setAttribute("inert", "");
   disclaimer.focus();
 
+  const rememberChoice = () => {
+    try {
+      localStorage.setItem(INTRO_SEEN_KEY, "1");
+    } catch (e) {
+      /* storage unavailable (e.g. Safari private mode) — show it again next time */
+    }
+  };
+
   const dismiss = () => {
+    rememberChoice();
     disclaimer.classList.add("is-hidden");
     if (mediaQuery) mediaQuery.removeAttribute("inert");
     if (bag) bag.focus();
@@ -108,6 +121,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const enter = disclaimer.querySelector(".disclaimer-enter");
   if (enter) enter.addEventListener("click", dismiss);
+
+  // "Skip the intro" leaves for archive.html, but the choice should stick too.
+  const skip = disclaimer.querySelector(".disclaimer-skip");
+  if (skip) skip.addEventListener("click", rememberChoice);
+
   disclaimer.addEventListener("keydown", (event) => {
     if (event.key === "Escape") dismiss();
   });

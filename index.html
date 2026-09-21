@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mathéo Delessert</title>
   <meta name="description" content="Portfolio de Mathéo Delessert — design et développement interactif (web design, motion design, modélisation 3D, photographie)." />
-  <script>if (location.search.indexOf("project=") !== -1) document.documentElement.classList.add("deep-link");</script>
+  <script>
+    if (location.search.indexOf("project=") !== -1) document.documentElement.classList.add("deep-link");
+    try { if (localStorage.getItem("intro-seen-v1") === "1") document.documentElement.classList.add("intro-dismissed"); } catch (e) {}
+  </script>
   <link rel="stylesheet" href="css/font.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/media.css"/>
