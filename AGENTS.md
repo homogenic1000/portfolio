@@ -152,10 +152,15 @@ The app has **two states** managed by DOM manipulation:
 - **`lab.html`** is the "lab/" page: a **full-page** zero-gravity Matter.js world (pattern mirror of `loves.js`) where unfinished/WIP projects float as images and **live videos** (muted, looping). Hovering a piece shows a small description card (reuses `#loves-card`); clicking opens the dark **fullscreen overlay** (`#lab-fullscreen`) with the large media + title/desc (dismiss: `close` button, `Escape`, or backdrop click). Images and video posters get silhouette hitboxes via `silhouette.js`; videos with no `poster` stay rectangular. Loads Matter.js, poly-decomp, `silhouette.js`, `lab.js`, and `cursor.js` is **not** loaded (the world manages its own grab cursor). It is linked from the archive header (`lab/↗`).
 - **`index.html?project=<id>`** opens a project directly on load. `projects-controller.js` ends with an `initDeepLink()` IIFE that reads `?project=` and calls `enterProject(id)` on the `window "load"` event (guarantees the `main.js` module has exposed `window.CDViewer` for 3D media).
 - In deep-link mode physics never started, so `enterProject()` guards its boundary-removal with `typeof engine !== "undefined" && engine`.
-- The hero `index↗` link and the project-view `index` breadcrumb both point to `archive.html`.
+- The project-view `index` breadcrumb points to `archive.html`. The hero has **no** index shortcut — the `index↗` link (and its `h2`/tooltip CSS) was removed; the intro disclaimer's skip link is the bypass.
 
 ### Module Note
 `main.js` is the only true ES module (uses `import` with import map for Three.js). All other scripts use global scope — functions call each other directly across files.
+
+### Accessibility
+- **Full-page intro disclaimer:** `index.html` opens with `#intro-disclaimer`, a full-viewport `role="dialog"` (`aria-modal`, `tabindex="-1"`, labelled/described) that offers the choice up front: **Skip the intro — go to the index** (`<a href="archive.html">`, the accessibility bypass for the loud, mouse-only bag intro, WCAG 2.4.1) or **Start the intro** (button). It also dismisses on Escape. While open, `#media-query` is `inert` so the animated hero stays out of the tab/AT order; on dismiss focus moves to `#animation-bag`. The choice (**either** button) is remembered in `localStorage["intro-seen-v1"] = "1"` (`animation.js`, guarded by `try/catch` for Safari private mode) so returning visitors never see it again; the `<head>` script reads it *before first paint* and adds `.intro-dismissed` to `<html>` (no flash, and the `inert` is never applied since the block bails out early). It is also hidden on `?project=` deep-links (the same `<head>` script adds `.deep-link`) and on the < 600px mobile gate. There is no reset UI — clear the key in devtools to see it again.
+- **Bag keyboard parity:** `#animation-bag` is `role="button" tabindex="0"` with an `aria-label`; `animation.js` listens for Enter/Space and triggers the same `animate()` path as a click.
+- **`prefers-reduced-motion: reduce`:** `animation.js` skips the 15-frame sequence entirely on activation — it jumps to the final frame and calls `startPhysics()` straight away (guarded so a re-click can't re-spawn the engine).
 
 ---
 
@@ -305,10 +310,10 @@ npm test -- --port 5173  # pick the dev-server port (default 5173)
 
 **What it does** (`test/screenshot.mjs`):
 1. Starts `npx vite` (unless `--url` is passed) and waits for it to be reachable.
-2. For each viewport (1024, 1512/14", 2560/27") opens a headless Chromium page, captures console errors and page errors, loads the site, clicks `#animation-bag`, waits for all 8 physics objects to spawn (one every 500ms).
+2. For each viewport (1024, 1512/14", 2560/27") opens a headless Chromium page, captures console errors and page errors, loads the site, records the intro disclaimer (visible + its `archive.html` skip link) and dismisses it via **Start the intro**, clicks `#animation-bag`, waits for all 8 physics objects to spawn (one every 500ms).
 3. Records structured JSON per viewport: bag visibility/size/position, sandwich visibility/size, title-D position, whether physics spawned, and any console errors.
 4. Writes a full-page screenshot to `test/screenshots/<name>.png`.
-5. Exits non-zero if the bag is missing, physics didn't spawn, or any console error occurred.
+5. Exits non-zero if the disclaimer isn't shown, the bag is missing, physics didn't spawn, or any console error occurred.
 
 **Why it matters for agents:** When verifying layout/responsive changes, run `npm test` and read the structured JSON output (positions/sizes) rather than relying on the screenshots — the JSON gives you exact pixel values to check centering, alignment, and scaling. Screenshots are a backup for models/teammates that can view images.
 

@@ -19,43 +19,6 @@ body{
   font-style: normal;
 }
 
-h2{
-    font-family: "IBM Plex Serif";
-    font-weight: 300;
-    font-style: italic;
-    text-decoration: underline;
-    color: blue;
-    position: fixed;      /* new */
-      bottom: 1.4em;        /* new */
-      right: 1.4em;         /* new */
-      z-index: 4;           /* new */
-}
-
-/* index↗ hover note — warns the user this link skips the bag intro animation */
-#title-section h2 a{
-    position: relative;
-}
-
-#title-section h2 a::after{
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 6px);
-    right: 0;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.72rem;
-    color: #000;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    pointer-events: none;
-}
-
-#title-section h2 a:hover::after{
-    opacity: 1;
-    transform: translateY(0);
-}
-
 a{
     color: blue;
     text-decoration: none;
@@ -163,5 +126,95 @@ canvas{
 .copyright{
     color: #6a6a6a;
     font-size: clamp(0.2rem, 0.8vw, 1.2rem);
+}
+
+/* ------------------------------------------------------------------
+   Full-page intro disclaimer — the intro is mouse-only and visually
+   intense, so visitors get a clear choice before entering (WCAG 2.4.1).
+   "Skip the intro" links straight to the index; "Start the intro" or
+   Escape dismisses it (animation.js) and moves focus to the bag.
+   ------------------------------------------------------------------ */
+#intro-disclaimer{
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    background-color: #fff;
+    color: #000;
+}
+
+/* Hidden for ?project= deep-links and for returning visitors who already made
+   a choice (classes set in <head>, before first paint) */
+.deep-link #intro-disclaimer,
+.intro-dismissed #intro-disclaimer,
+#intro-disclaimer.is-hidden{
+    display: none;
+}
+
+#intro-disclaimer:focus{
+    outline: none;
+}
+
+.disclaimer-inner{
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+    max-width: 36em;
+}
+
+.disclaimer-title{
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+    color: blue;
+}
+
+.disclaimer-text{
+    font-family: "Overused Grotesk", sans-serif;
+    font-weight: 350;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.disclaimer-actions{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 1em 2.5em;
+}
+
+.disclaimer-skip{
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    text-decoration: underline;
+    color: blue;
+}
+
+.disclaimer-enter{
+    padding: 0.5em 1.1em;
+    border: 1px solid blue;
+    background-color: transparent;
+    color: blue;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.disclaimer-enter:hover,
+.disclaimer-enter:focus-visible{
+    background-color: blue;
+    color: #fff;
+}
+
+/* The bag is a real button for keyboard/AT users (role=button in the HTML) */
+#animation-bag:focus-visible{
+    outline: 2px solid blue;
+    outline-offset: 6px;
+    border-radius: 4px;
 }
 

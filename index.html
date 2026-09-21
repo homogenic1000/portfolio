@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mathéo Delessert</title>
   <meta name="description" content="Portfolio de Mathéo Delessert — design et développement interactif (web design, motion design, modélisation 3D, photographie)." />
+  <script>
+    if (location.search.indexOf("project=") !== -1) document.documentElement.classList.add("deep-link");
+    try { if (localStorage.getItem("intro-seen-v1") === "1") document.documentElement.classList.add("intro-dismissed"); } catch (e) {}
+  </script>
   <link rel="stylesheet" href="css/font.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/media.css"/>
@@ -33,6 +37,26 @@
 </head>
 
 <body>
+
+  <!-- Full-page disclaimer: the intro is mouse-only and visually intense, so
+       visitors get a clear choice up front — skip straight to the index, or
+       enter the experience. Dismissed by "Start the intro" or Escape. -->
+  <div id="intro-disclaimer" role="dialog" aria-modal="true" tabindex="-1"
+       aria-labelledby="disclaimer-title" aria-describedby="disclaimer-text">
+    <div class="disclaimer-inner">
+      <p class="disclaimer-title" id="disclaimer-title">Before you enter</p>
+      <p class="disclaimer-text" id="disclaimer-text">
+        This portfolio opens with an animated intro and a physics playground —
+        moving images and falling objects. It can be visually intense, and the
+        bag only responds to a click. If that is not for you, skip it and go
+        straight to the index.
+      </p>
+      <div class="disclaimer-actions">
+        <a class="disclaimer-skip" href="archive.html">Skip the intro — go to the index</a>
+        <button class="disclaimer-enter" type="button">Start the intro</button>
+      </div>
+    </div>
+  </div>
 
   <div id="no-mobile">
           <img style="margin-top: 12em ;" width="450" height="253" src="assets/2d/mobile.webp" alt="">
@@ -68,7 +92,7 @@
     <!-- Contenu -->
     <main id="hero-section">
       <div id="physic">
-        <img id="animation-bag" src="assets/animation/frame1.webp" alt="Animation" />
+        <img id="animation-bag" src="assets/animation/frame1.webp" alt="" role="button" tabindex="0" aria-label="Open the bag — start the intro animation" />
         <img id="sandwich" src="assets/animation/frame-sandwich.webp" alt="" />
       </div>
       <section id="title-section">
@@ -76,7 +100,6 @@
           Hello, my name is Mathéo Delessert <br />Welcome to my portfolio, all
           my work is in my bag!
         </h1>
-        <h2><a href="archive.html" data-tip="skips the intro animation">index↗</a></h2>
       </section>
     </main>
 

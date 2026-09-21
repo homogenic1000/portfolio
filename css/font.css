@@ -83,6 +83,8 @@
    Role                  Selector            Family        Weight  Token
    ───────────────────── ─────────────────── ───────────── ─────── ─────────
    Home hero greeting    #title-d            Serif italic  200     --fs-hero
+   Breadcrumb / header   #layout h1, .header-row, .breadcrumb
+                                             Serif italic  200     --fs-title
    Header row            #layout h1, .header-row, .lab-header
                                              Serif italic  400     --fs-index
    Breadcrumb (git)      .breadcrumb         Serif italic  200     --fs-title

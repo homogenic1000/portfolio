@@ -34,6 +34,28 @@ async function settle(page) {
   await page.waitForSelector("#animation-bag", { timeout: 15000 });
 }
 
+// The full-page intro disclaimer covers the hero on first load. Record it (it
+// is the accessibility bypass to the index) then dismiss it to reach the bag.
+async function dismissDisclaimer(page) {
+  const enter = page.locator(".disclaimer-enter");
+  if ((await enter.count()) === 0) return { visible: false, skipHref: null };
+
+  const info = await page.evaluate(() => {
+    const d = document.getElementById("intro-disclaimer");
+    const skip = d && d.querySelector(".disclaimer-skip");
+    return {
+      visible: !!d && getComputedStyle(d).display !== "none",
+      skipHref: skip ? skip.getAttribute("href") : null,
+    };
+  });
+
+  await enter.click();
+  await page
+    .waitForSelector("#intro-disclaimer.is-hidden", { timeout: 3000 })
+    .catch(() => {});
+  return info;
+}
+
 async function main() {
   if (!url) {
     vite = spawn("npx", ["vite", "--port", port], {
@@ -59,6 +81,7 @@ async function main() {
 
     await page.goto(url, { waitUntil: "networkidle" });
     await settle(page);
+    const disclaimer = await dismissDisclaimer(page);
 
     const bag = await page.locator("#animation-bag").boundingBox();
     const hasBag = !!bag;
@@ -133,6 +156,7 @@ async function main() {
 
     const status = {
       viewport: `${vp.width}x${vp.height}`,
+      disclaimer,
       bagVisible: hasBag,
       physicsCanvasPresent: spawned,
       sandwichVisible,
@@ -145,6 +169,7 @@ async function main() {
     console.log(JSON.stringify(status));
 
     if (
+      !disclaimer.visible ||
       !hasBag ||
       !spawned ||
       errors.length ||
