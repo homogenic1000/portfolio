@@ -33,9 +33,6 @@ function enterProject(id) {
   animationBag.style.display = "none";
   layoutEl.style.display = "flex";
 
-  // Hide the hero skip affordance once inside a project (deep-link included)
-  bodyEl.classList.add("intro-started");
-
   // ② Transition : retrait des boundaries (les objets tombent dans le vide),
   // puis après 600ms on endort la physique et on cache le canvas
   // → le texte redevient sélectionnable.

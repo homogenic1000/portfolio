@@ -12,7 +12,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Used for prefers-reduced-motion; the engine guard keeps a re-click from
   // re-spawning the whole world.
   function revealBag() {
-    document.body.classList.add("intro-started");
     img.src = "assets/animation/frame15.webp";
     if (sandwich) sandwich.style.display = "block";
     if (typeof engine === "undefined" || !engine) startPhysics();
@@ -20,9 +19,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function animate() {
     if (intervalId) return;
-
-    // Collapse the skip link to focus-only as soon as the intro is under way.
-    document.body.classList.add("intro-started");
 
     if (prefersReducedMotion.matches) {
       revealBag();
@@ -90,4 +86,30 @@ function resetAnimation() {
     intervalId = null;
   }
 }
+
+/* Full-page intro disclaimer — offers a bypass to the index (a11y) or lets
+   the visitor enter the site. Dismissed with "Start the intro" or Escape. */
+window.addEventListener("DOMContentLoaded", () => {
+  const disclaimer = document.getElementById("intro-disclaimer");
+  if (!disclaimer || getComputedStyle(disclaimer).display === "none") return;
+
+  const mediaQuery = document.getElementById("media-query");
+  const bag = document.getElementById("animation-bag");
+
+  // Keep the mouse-only, animated hero out of the tab/AT order while open.
+  if (mediaQuery) mediaQuery.setAttribute("inert", "");
+  disclaimer.focus();
+
+  const dismiss = () => {
+    disclaimer.classList.add("is-hidden");
+    if (mediaQuery) mediaQuery.removeAttribute("inert");
+    if (bag) bag.focus();
+  };
+
+  const enter = disclaimer.querySelector(".disclaimer-enter");
+  if (enter) enter.addEventListener("click", dismiss);
+  disclaimer.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") dismiss();
+  });
+});
 

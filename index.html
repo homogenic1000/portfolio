@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mathéo Delessert</title>
   <meta name="description" content="Portfolio de Mathéo Delessert — design et développement interactif (web design, motion design, modélisation 3D, photographie)." />
+  <script>if (location.search.indexOf("project=") !== -1) document.documentElement.classList.add("deep-link");</script>
   <link rel="stylesheet" href="css/font.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/media.css"/>
@@ -34,7 +35,25 @@
 
 <body>
 
-  <a class="skip-link" href="archive.html">Skip the intro — go to the index</a>
+  <!-- Full-page disclaimer: the intro is mouse-only and visually intense, so
+       visitors get a clear choice up front — skip straight to the index, or
+       enter the experience. Dismissed by "Start the intro" or Escape. -->
+  <div id="intro-disclaimer" role="dialog" aria-modal="true" tabindex="-1"
+       aria-labelledby="disclaimer-title" aria-describedby="disclaimer-text">
+    <div class="disclaimer-inner">
+      <p class="disclaimer-title" id="disclaimer-title">Before you enter</p>
+      <p class="disclaimer-text" id="disclaimer-text">
+        This portfolio opens with an animated intro and a physics playground —
+        moving images and falling objects. It can be visually intense, and the
+        bag only responds to a click. If that is not for you, skip it and go
+        straight to the index.
+      </p>
+      <div class="disclaimer-actions">
+        <a class="disclaimer-skip" href="archive.html">Skip the intro — go to the index</a>
+        <button class="disclaimer-enter" type="button">Start the intro</button>
+      </div>
+    </div>
+  </div>
 
   <div id="no-mobile">
           <img style="margin-top: 12em ;" width="450" height="253" src="assets/2d/mobile.webp" alt="">
