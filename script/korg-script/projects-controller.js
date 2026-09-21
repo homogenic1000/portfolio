@@ -114,14 +114,18 @@ function hideMedia() {
 /* ---------------- Carrousels (#show et #show-min) ---------------- */
 
 let carouselRoots = [];
-let carouselToken = 0;
+// Token par hôte : chaque zone (#show, #show-min) a son propre compteur, donc
+// deux carrousels lancés en parallèle ne s'annulent pas mutuellement. Le token
+// ne sert qu'à abandonner un build async devenu obsolète pour le MÊME hôte.
+const carouselTokens = new WeakMap();
 
 async function buildCarousel(images, target) {
   const host = target || document.getElementById("show-min");
   destroyCarousel(host);
   if (!images || !images.length) return;
 
-  const token = ++carouselToken;
+  const token = (carouselTokens.get(host) || 0) + 1;
+  carouselTokens.set(host, token);
 
   // Pré-charger les dimensions naturelles des images AVANT l'insertion,
   // pour réserver exactement la bonne proportion (aspect-ratio) et éviter
@@ -136,7 +140,7 @@ async function buildCarousel(images, target) {
       probe.src = src;
     }
   })));
-  if (token !== carouselToken) return;
+  if (token !== carouselTokens.get(host)) return;
 
   const carouselRoot = document.createElement("div");
   carouselRoot.className = "carousel";
