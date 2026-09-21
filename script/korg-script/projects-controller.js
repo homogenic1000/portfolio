@@ -60,6 +60,7 @@ function enterProject(id) {
   projectTitleEl.style.filter = cfg.filter || "none";
   projectTextEl.innerHTML = cfg.text;
   layoutEl.dataset.layout = cfg.layout || "";
+  layoutEl.dataset.project = id;
   layoutEl.style.backgroundColor = cfg.bg || "#ffffff";
   bodyEl.style.backgroundColor = cfg.bg || "#ffffff";
 
@@ -86,6 +87,7 @@ function applyMedia(media) {
   } else if (media.type === "video") {
     videoEl.src = media.src;
     videoEl.poster = media.poster || "";
+    videoEl.style.aspectRatio = media.aspect || "auto";
     videoEl.style.display = "block";
     const p = videoEl.play();
     if (p && p.catch) p.catch(() => {});
@@ -104,6 +106,7 @@ function hideMedia() {
   videoEl.pause();
   videoEl.removeAttribute("src");
   videoEl.removeAttribute("poster");
+  videoEl.style.aspectRatio = "auto";
   videoEl.load();
   videoEl.style.display = "none";
 }
@@ -111,11 +114,29 @@ function hideMedia() {
 /* ---------------- Carrousels (#show et #show-min) ---------------- */
 
 let carouselRoots = [];
+let carouselToken = 0;
 
-function buildCarousel(images, target) {
+async function buildCarousel(images, target) {
   const host = target || document.getElementById("show-min");
   destroyCarousel(host);
   if (!images || !images.length) return;
+
+  const token = ++carouselToken;
+
+  // Pré-charger les dimensions naturelles des images AVANT l'insertion,
+  // pour réserver exactement la bonne proportion (aspect-ratio) et éviter
+  // tout layout shift quand elles se chargent.
+  const dims = await Promise.all(images.map((src) => new Promise((resolve) => {
+    if (/\.(webm|mp4)$/i.test(src)) {
+      resolve(null);
+    } else {
+      const probe = new Image();
+      probe.onload = () => resolve({ w: probe.naturalWidth, h: probe.naturalHeight });
+      probe.onerror = () => resolve(null);
+      probe.src = src;
+    }
+  })));
+  if (token !== carouselToken) return;
 
   const carouselRoot = document.createElement("div");
   carouselRoot.className = "carousel";
@@ -137,9 +158,16 @@ function buildCarousel(images, target) {
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
+      video.addEventListener("loadedmetadata", () => {
+        if (video.videoWidth && video.videoHeight) {
+          video.style.aspectRatio = video.videoWidth + " / " + video.videoHeight;
+        }
+      });
       slide.appendChild(video);
     } else {
+      const d = dims[i];
       const img = document.createElement("img");
+      if (d && d.w && d.h) img.style.aspectRatio = d.w + " / " + d.h;
       img.src = src;
       img.alt = "";
       slide.appendChild(img);

@@ -29,7 +29,7 @@ const PROJECTS = {
     bg: "#ffffff",
     color: "#148137",
     sprite: "assets/2d/rondpoint-projects/rondpoint.webp",
-    media: { type: "video", src: "assets/video/fripopoint.webm" },
+    media: { type: "video", src: "assets/video/fripopoint.webm", aspect: "842 / 1190" },
     images: [],
     minWorld: {
       gravity: 0,
@@ -58,7 +58,7 @@ const PROJECTS = {
     color: "#575973",
     sprite: "assets/2d/vroomvroom.webp",
     filter: "url(#displacementFilterLow)",
-    media: { type: "video", src: "assets/video/vroomvroom/vroomvroom.webm" },
+    media: { type: "video", src: "assets/video/vroomvroom/vroomvroom.webm", aspect: "720 / 1280" },
     images: ["assets/video/vroomvroom/ANIM_1.webm", "assets/video/vroomvroom/NOISE DOT.webm", "assets/video/vroomvroom/RANDOM TEXT.webm"],
   },
 
@@ -71,7 +71,7 @@ const PROJECTS = {
     bg: "#ffffff",
     color: "#6e645f",
     sprite: "assets/2d/betweenworlds.webp",
-    media: { type: "video", src: "assets/video/timeline1.webm", poster: "assets/2d/betweenworlds.webp" },
+    media: { type: "video", src: "assets/video/timeline1.webm", poster: "assets/2d/betweenworlds.webp", aspect: "16 / 9" },
     images: [],
     layout: "stack",
   },
@@ -96,7 +96,7 @@ eracom: {
     bg: "#ffffff",
     color: "#004AAD",
     sprite: "assets/2d/eracom-projects/poster.jpg",
-    media: { type: "video", src: "assets/video/jingle.webm", poster: "assets/2d/eracom-projects/poster.jpg" },
+    media: { type: "video", src: "assets/video/jingle.webm", poster: "assets/2d/eracom-projects/poster.jpg", aspect: "16 / 9" },
     images: [
       "assets/2d/eracom-projects/eracom-01.jpg",
       "assets/2d/eracom-projects/eracom-10.jpg",
