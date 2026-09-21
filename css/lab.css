@@ -24,7 +24,7 @@
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(1.1rem, 1.63vw, 1.55rem);
+    font-size: var(--fs-index);
 }
 
 .lab-title {
@@ -34,7 +34,7 @@
 .lab-nav {
     display: flex;
     gap: 24px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .lab-nav a {

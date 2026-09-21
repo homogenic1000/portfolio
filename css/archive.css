@@ -3,7 +3,7 @@ body {
     padding: 0;
     background-color: white;
     color: black;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 #media-query {
@@ -53,10 +53,11 @@ body {
 }
 
 .archive {
-    padding: 10px;
+    padding: 0 10px 0 10px;
     font-size: clamp(1.1rem, 1.63vw, 1.55rem);
     line-height: normal;
-    min-height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -73,7 +74,7 @@ body {
     grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr);
     column-gap: 28px;
     align-items: center;
-    min-height: 72px;
+    min-height: 56px;
     border-bottom: 1px solid lightgrey;
 }
 
@@ -82,17 +83,17 @@ body {
    scripts block the parser, so Chrome paints with #archive-index empty).
    Update when the row count in script/archive.js (ROWS) changes. */
 #archive-index {
-    min-height: 511px; /* 7 rows x (72px min-height + 1px border) */
+    min-height: 399px; /* 7 rows x (56px min-height + 1px border) */
 }
 
 .header-row {
     position: relative;
-    min-height: 41px;
-    padding: 0 0 10px;
+    min-height: 0;
+    padding: 0 0 4px;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
-    font-weight: 200;
-    font-size: var(--fs-title);
+    font-weight: 400;
+    font-size: var(--fs-index);
     color: #0008ff;
     border-bottom-color: lightgrey;
 }
@@ -106,8 +107,8 @@ body {
     text-decoration: none;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
-    font-weight: 200;
-    font-size: var(--fs-title);
+    font-weight: 400;
+    font-size: var(--fs-index);
 }
 
 .header-lab:hover {
@@ -117,6 +118,7 @@ body {
 .row {
     font-family: "Overused Grotesk", sans-serif;
     font-weight: 400;
+    font-size: 0.92em;
     white-space: nowrap;
 }
 
@@ -209,7 +211,7 @@ body {
     flex: 1;
     width: 100%;
     height: 100%;
-    min-height: clamp(260px, 40vh, 500px);
+    min-height: 0;
     overflow: hidden;
     box-sizing: border-box;
 }

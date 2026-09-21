@@ -29,7 +29,8 @@
      viewport (e.g. 17.6px @1512 → 1.165vw … which the index now bumps to
      24.6px @1512 → 1.63vw).
    • Em at root = 16px (browser default, no html font-size override).
-   • Serif is a display accent → keep it italic, keep it light.
+   • Serif is a display accent → keep it italic; hero stays light (200),
+     page header rows use regular (400) at the index-row size.
    • Overused Grotesk paragraphs read best with a tight line-height (111%).
    • Never add font-size in JS/HTML inline — style only in CSS (font.css).
    ========================================================================== */
@@ -82,8 +83,9 @@
    Role                  Selector            Family        Weight  Token
    ───────────────────── ─────────────────── ───────────── ─────── ─────────
    Home hero greeting    #title-d            Serif italic  200     --fs-hero
-   Breadcrumb / header   #layout h1, .header-row, .breadcrumb
-                                             Serif italic  200     --fs-title
+   Header row            #layout h1, .header-row, .lab-header
+                                             Serif italic  400     --fs-index
+   Breadcrumb (git)      .breadcrumb         Serif italic  200     --fs-title
    "index↗" subhead      h2                  Serif italic  300     (browser 1.5em)
    Project paragraph     #layout p           Grotesk       350     --fs-body
    Index page rows       .row                Grotesk       400     --fs-index
@@ -97,6 +99,8 @@
    • Breadcrumbs/headers (--fs-title) ≈ 1.35× the index rows size.
    • Project body ≈ 0.7× the index size.
    • Captions ≈ 0.5× the index size.
+   • Page header rows (project/archive/lab) now sit at the index-row size
+     (--fs-index) and weight 400, for a smaller, calmer top line.
 
    The existing stylesheets still hardcode their own values (for history);
    they mirror the tokens above exactly. Migrate to var(--fs-*)/var(--w-*)
