@@ -82,8 +82,12 @@ u{
 
 .carousel-btn{
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    /* Aligne les boutons de tous les carrousels (#show et #show-min) sur la même
+       ligne : les deux panneaux partagent le bas de page (100dvh), donc un offset
+       depuis le bas place les flèches au centre du panneau #show.
+       17px = demi-hauteur du bouton (34px). */
+    top: auto;
+    bottom: calc(50dvh - 17px);
     z-index: 2;
     width: 34px;
     height: 34px;
