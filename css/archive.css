@@ -74,7 +74,7 @@ body {
     grid-template-columns: clamp(70px, 6vw, 100px) clamp(220px, 23vw, 360px) clamp(250px, 27vw, 430px) minmax(0, 1fr);
     column-gap: 28px;
     align-items: center;
-    min-height: 72px;
+    min-height: 56px;
     border-bottom: 1px solid lightgrey;
 }
 
@@ -83,7 +83,7 @@ body {
    scripts block the parser, so Chrome paints with #archive-index empty).
    Update when the row count in script/archive.js (ROWS) changes. */
 #archive-index {
-    min-height: 511px; /* 7 rows x (72px min-height + 1px border) */
+    min-height: 399px; /* 7 rows x (56px min-height + 1px border) */
 }
 
 .header-row {
