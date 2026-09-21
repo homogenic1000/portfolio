@@ -2,8 +2,8 @@
     font-family: "IBM Plex Serif";
     color: blue;
     font-style: italic;
-    font-weight: 200;
-    font-size: clamp(1.4rem, 2.2vw, 2.8rem);
+    font-weight: 400;
+    font-size: var(--fs-index);
     margin: 0;
 }
 
