@@ -1,17 +1,19 @@
-// test/screenshot.mjs
-// Headless-browser saut test for the portfolio.
+// test/smoke.mjs
+// Headless-browser smoke test for the portfolio. JSON assertions only: it
+// prints computed layout (positions/sizes), physics spawn state and console
+// errors per viewport, and exits non-zero on failure. No screenshots are
+// written — visual checks are done by hand through the Chrome DevTools MCP
+// (tools/mcp-run.mjs, tools/lighthouse-audit.mjs).
 // Usage:
 //   npm test                       # runs the default viewport suite
 //   npm test -- --url http://...   # use a custom URL (otherwise vite dev server)
 //   npm test -- --port 5173
 //
-// Defaults to testing 3 viewports and capturing: a full-page screenshot, the
-// console errors, and whether the hero/bag is present. Screenshots are written
-// to test/screenshots/<name>.png. On failure it exits non-zero.
+// Defaults to testing 3 viewports and reporting: the hero/bag presence, the
+// physics spawn state and any console errors. On failure it exits non-zero.
 
 import { chromium } from "playwright";
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
 
 const args = process.argv.slice(2);
 const port = argValue(args, "--port") || "5173";
@@ -67,7 +69,6 @@ async function main() {
     await waitForUrl(url);
   }
 
-  mkdirSync("test/screenshots", { recursive: true });
   const browser = await chromium.launch();
   let failed = false;
 
@@ -142,9 +143,6 @@ async function main() {
         };
       })
       .catch(() => null);
-
-    const shot = `test/screenshots/${vp.name}.png`;
-    await page.screenshot({ path: shot, fullPage: true });
 
     const titlePos = await page
       .locator("#title-d")
@@ -223,9 +221,6 @@ async function main() {
         hasMedia: document.getElementById("lab-fs-media").children.length > 0,
       }))
       .catch(() => ({ visible: false, hasMedia: false }));
-
-    const shot = `test/screenshots/lab-${vp.name}.png`;
-    await page.screenshot({ path: shot, fullPage: true });
 
     const status = {
       viewport: `lab ${vp.width}x${vp.height}`,

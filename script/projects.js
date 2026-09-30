@@ -53,7 +53,7 @@ const PROJECTS = {
     title: "vroomVROOM motion design",
     type: "motion design",
     date: "2026",
-    text: "vroomVROOM is a show that takes place at Transition Radio, a web-based radio in Fribourg. We signed up with my collective, Rondpoint. The goal is to showcase new and emerging artists. It was an EDM & free-party themed show, so we wanted something trashy for the visuals, with dithering and texture.\n\n<span class=\"copyright\">Music: \"krunsh bedr00m : impro 2bl3ton livvv\" by Jimmy. All rights to the composition and recording belong to their respective owners. This mention is made for reference purposes under Fair Use guidelines, and no copyright infringement is intended.</span>",
+    text: "vroomVROOM is a show that takes place at Transition Radio, a web-based radio in Fribourg. We signed up with my collective, Rondpoint. The goal is to showcase new and emerging artists. It was an EDM & free-party themed show, so we wanted something trashy for the visuals, with dithering and texture.\n\n<span class=\"copyright\">Music: \"Jimmy krunsh bedr00m : impro 2bl3ton livvv\" by Jimmy. All rights to the composition and recording belong to their respective owners. This mention is made for reference purposes under Fair Use guidelines, and no copyright infringement is intended.</span>",
     bg: "#ffffff",
     color: "#575973",
     sprite: "assets/2d/vroomvroom.webp",
