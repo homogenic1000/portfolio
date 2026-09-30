@@ -14,8 +14,8 @@ const LAB = {
 
     {
       label: "bjork",
-      title: "Opening bjork — unfinished",
-      desc: "A half-finished opening sequence for an imaginary opening for a documentary on Björk. I did it during my first year and my first motion design classes so i'm kind of ashamed of this work but i still think it deserved a little show time.",
+      title: "Opening Björk — unfinished",
+      desc: "A half-finished opening sequence for an imaginary documentary about Björk. I made it during my first year, in my first motion design classes, so I'm kind of ashamed of this work, but I still think it deserves a little showing.",
       media: { type: "video", src: "assets/video/bjork.webm" },
       trace: "assets/2d/inside.webp",
       color: "#FFB500",

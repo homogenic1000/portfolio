@@ -83,26 +83,40 @@
    Role                  Selector            Family        Weight  Token
    ───────────────────── ─────────────────── ───────────── ─────── ─────────
    Home hero greeting    #title-d            Serif italic  200     --fs-hero
-   Breadcrumb / header   #layout h1, .header-row, .breadcrumb
-                                             Serif italic  200     --fs-title
-   Header row            #layout h1, .header-row, .lab-header
-                                             Serif italic  400     --fs-index
-   Breadcrumb (git)      .breadcrumb         Serif italic  200     --fs-title
+   Page header row       #layout h1, .header-row, .header-lab,
+                         .lab-header, .breadcrumb
+                                              Serif italic  400     --fs-index
+   Page header (index)   .header-row, .header-lab, .breadcrumb
+                                              Serif italic  400     0.92em of --fs-index
    "index↗" subhead      h2                  Serif italic  300     (browser 1.5em)
    Project paragraph     #layout p           Grotesk       350     --fs-body
-   Index page rows       .row                Grotesk       400     --fs-index
+   Index page rows       .row                Grotesk       400     0.92em of --fs-index
    Copyright / credits   .copyright          (inherits)    ---     --fs-caption
    Carousel arrows       .carousel-btn       (inherits)    ---     --fs-ui
    Default baseline      body                JetBrainsMono 400     --fs-base
    ─────────────────────────────────────────────────────────────────────────
+
+   EVERY page header (project view, index, lab, git) is the same: IBM Plex
+   Serif italic 400 at the index-row optical size — 0.92em of --fs-index,
+   i.e. 22.55px @1512. On the index page that means the header, the project
+   rows and the links row all share ONE size: only typeface and colour
+   change between them, never the size.
+
+    The index page (archive.html) keeps ALL of its chrome at ONE optical
+    size — 0.92em of the index scale, i.e. 22.55px @1512: the serif italic
+    header row, the grotesk project rows and the serif italic links row.
+    Only the typeface/colour changes between them; never the size.
+
 
    SCALE RELATIONSHIPS (@1512 reference)
    • Display titles (hero) ≈ 1.45× the breadcrumb/index size.
    • Breadcrumbs/headers (--fs-title) ≈ 1.35× the index rows size.
    • Project body ≈ 0.7× the index size.
    • Captions ≈ 0.5× the index size.
-   • Page header rows (project/archive/lab) now sit at the index-row size
-     (--fs-index) and weight 400, for a smaller, calmer top line.
+   • Page header rows (project/archive/lab/git) all sit at the index-row
+     optical size (0.92em of --fs-index) and weight 400, for a smaller,
+     calmer top line that matches from one page to the next (see the note
+     under the role table).
 
    The existing stylesheets still hardcode their own values (for history);
    they mirror the tokens above exactly. Migrate to var(--fs-*)/var(--w-*)
@@ -114,3 +128,17 @@
    • body uses font-optical-sizing: auto (variable fonts must stay variable).
    • Long identifiers (index rows) should keep white-space: nowrap.
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   3. ROLE STYLES (typography added here so font.css stays the single source)
+   -------------------------------------------------------------------------- */
+/* Copyright / credits — the "little text" under a project's description:
+   small grey grotesk caption with a tight line-height, so legal/metadata
+   notes read as a quiet aside. */
+.copyright{
+    font-family: var(--font-grotesk);
+    font-weight: var(--w-grotesk-regular);
+    font-size: var(--fs-caption);
+    line-height: var(--lh-body);
+    letter-spacing: 0.03em;
+}

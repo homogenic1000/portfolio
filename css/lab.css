@@ -24,7 +24,7 @@
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
-    font-size: var(--fs-index);
+    font-size: calc(var(--fs-index) * 0.92); /* same optical size as every page header */
 }
 
 .lab-title {

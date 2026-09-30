@@ -8,7 +8,7 @@ const LOVES = {
 {
       label: "aboutme",
       title: "Mathéo Delessert",
-      desc: "Hello, so you already know my name, but I'm gonna tell a little bit more about me. I'm in my 3rd year of Interactive media design at eracom. I love webdesign and development, branding and motion design. I grew up on the internet when I could borrow my mom's computer, and since then the internet was always my second home.",
+      desc: "Hello, so you already know my name, but I'm gonna tell a little bit more about me. I'm in my 3rd year of interactive media design at eracom. I love web design and development, branding and motion design. I grew up on the internet when I could borrow my mom's computer, and since then the internet has always been my second home.",
       sprite: "/assets/2d/matheo.webp",
       color: "#000000",
       size: 0.45,
@@ -16,24 +16,34 @@ const LOVES = {
     {
       label: "homogenic",
       title: "Homogenic",
-      desc: "My album and my favourite artisit of all time. Homogenic and Björk vision really transformed the way i see the world and produced art. ",
+      desc: "My album and my favorite artist of all time. Homogenic and Björk's vision really transformed the way I see the world and make art. It's also the reason I was first introduced to electronic music and started to make some myself :)",
       sprite: "/assets/2d/loves/homogenic.webp",
       color: "#8a3b2f",
-      size: 0.32,
+      size: 0.52,
     },
     {
-      label: "todo1",
-      title: "…",
-      desc: "drop a thing you love here (and add it to LOVES in script/loves.js)",
+      label: "Zed",
+      title: "Zed",
+      desc: "Zed is a beautiful piece of software that I use every day. It's an open-source editor I've used to make this portfolio. It really changed the way I work in an editor.",
+      sprite: "assets/2d/loves/zed.webp",
       color: "#1a1a1a",
-      size: 0.18,
+      size: 0.48,
     },
     {
-      label: "todo2",
-      title: "…",
-      desc: "drop a thing you love here (and add it to LOVES in script/loves.js)",
+      label: "cordon bleu",
+      title: "cordon bleu",
+      desc: "Cordon bleu is my favorite food of all time.",
+      sprite: "assets/2d/loves/cbleu.webp",
       color: "#6e6e6e",
-      size: 0.2,
+      size: 0.80,
+    },
+    {
+      label: "tms4",
+      title: "Free party",
+      desc: "In my early teens I discovered rave and the free party scene; that's where I fell in love with electronic music and started making music of my own :) It's also where I met Nelson, who made the Korg project possible :))",
+      sprite: "assets/2d/loves/tms4.webp",
+      color: "",
+      size: 0.40,
     },
   ],
 };
@@ -147,7 +157,7 @@ function initLovesWorld() {
       Matter.Composite.add(lovesEngine.world, body);
       if (lovesInfo.has(placeholders[i])) lovesInfo.delete(placeholders[i]);
       lovesInfo.set(body, o);
-      lovesOverlays.push({ body, img: res.img, scale: k });
+      lovesOverlays.push({ body, img: res.img, scale: k, box: traceBox(res.islands) });
     });
   });
 
@@ -228,18 +238,38 @@ function lovesSpawn(i, width, height, total) {
   };
 }
 
+function traceBox(sets) {
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const verts of sets) {
+    for (const v of verts) {
+      if (v.x < minX) minX = v.x;
+      if (v.x > maxX) maxX = v.x;
+      if (v.y < minY) minY = v.y;
+      if (v.y > maxY) maxY = v.y;
+    }
+  }
+  return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+}
+
 function drawLovesOverlays() {
   const ctx = lovesRender && lovesRender.context;
   if (!ctx) return;
   for (const ent of lovesOverlays) {
-    const { body, img, scale } = ent;
+    const { body, img, scale: k, box } = ent;
     if (!img) continue;
-    const w = img.width * scale;
-    const h = img.height * scale;
+    // Crop to the traced silhouette: sprites ship with transparent padding, and
+    // Bodies.fromVertices sits on the silhouette centroid, so drawing the whole
+    // canvas would overshoot the body (and its bounds) on every axis.
+    const w = box ? box.w * k : img.width * k;
+    const h = box ? box.h * k : img.height * k;
     ctx.save();
     ctx.translate(body.position.x, body.position.y);
     ctx.rotate(body.angle);
-    ctx.drawImage(img, -w / 2, -h / 2, w, h);
+    if (box) ctx.drawImage(img, box.x, box.y, box.w, box.h, -w / 2, -h / 2, w, h);
+    else ctx.drawImage(img, -w / 2, -h / 2, w, h);
     ctx.restore();
   }
   if (lovesHovered) {

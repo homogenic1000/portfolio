@@ -4,7 +4,7 @@
   "description": "",
   "main": "script/animation.js",
   "scripts": {
-    "test": "node test/screenshot.mjs"
+    "test": "node test/smoke.mjs"
   },
   "private": true,
   "dependencies": {

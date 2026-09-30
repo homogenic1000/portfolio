@@ -93,7 +93,7 @@ body {
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
-    font-size: var(--fs-index);
+    font-size: 0.92em; /* matches .row / .about-links — same optical size, serif voice */
     color: #0008ff;
     border-bottom-color: lightgrey;
 }
@@ -108,7 +108,9 @@ body {
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
-    font-size: var(--fs-index);
+    /* absolute: this anchor's parent is .header-row (already 0.92em), so an
+       em here would compound down to 0.85em of the index scale */
+    font-size: calc(var(--fs-index) * 0.92);
 }
 
 .header-lab:hover {

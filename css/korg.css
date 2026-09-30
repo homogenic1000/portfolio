@@ -3,7 +3,7 @@
     color: blue;
     font-style: italic;
     font-weight: 400;
-    font-size: var(--fs-index);
+    font-size: calc(var(--fs-index) * 0.92); /* same optical size as every page header */
     margin: 0;
 }
 
@@ -224,10 +224,32 @@ u{
 #layout[data-layout="stack"] .column{
     flex: 0 1 auto;
     min-height: 0;
+    /* Le layout empilé a deux sections (texte, puis média) donc UNE seule
+       ligne de séparation entre les deux : le filet pleine largeur. */
+    border-bottom: 1px solid lightgrey;
 }
 
 #layout[data-layout="stack"] #show-min.box{
     display: none;
+}
+
+#layout[data-layout="stack"] #content{
+    /* Limite de lecture : sans ça le texte s'étale sur toute la largeur de la
+       page. fit-content le fait épouser la mesure (au lieu du stretch par
+       défaut des enfants flex) et le cale donc à gauche. */
+    width: fit-content;
+    max-width: 100%;
+    /* Ni le texte ni le média ne sont encadrés : c'est le filet de .column
+       qui sépare les deux sections. */
+    outline: none;
+}
+
+#layout[data-layout="stack"] #project-text{
+    /* 30em du paragraphe lui-même ≈ 68 caractères par ligne (la mesure
+       recommandée est 45–75). Placé sur le <p> et non sur #content pour que la
+       limite suive la taille fluide du texte (clamp vw) : le nombre de
+       caractères par ligne reste le même du 1024 au 2560. */
+    max-width: 30em;
 }
 
 #layout[data-layout="stack"] #show{
@@ -235,6 +257,7 @@ u{
     flex: 1 1 0;
     padding: 10px 0;
     box-sizing: border-box;
+    outline: none; /* idem #content : pas de cadre autour du média */
 }
 
 #layout[data-layout="stack"] #show video{

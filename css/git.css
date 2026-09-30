@@ -27,13 +27,17 @@ main.git {
 }
 
 /* ------------------------------------------------------------------
-   Breadcrumb — index/git graph
------------------------------------------------------------------- */
+   Page header — index/portfolio. Same treatment as every other page
+   header (project view, index, lab): IBM Plex Serif italic 400 at the
+   index-row optical size. 0.92em of --fs-index == the .row size on
+   archive.html; it is written as calc() because body's font-size here
+   is 14px, so a bare em would be relative to that.
+   ------------------------------------------------------------------ */
 .breadcrumb {
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
-    font-weight: 200;
-    font-size: clamp(1.4rem, 2.2vw, 2.8rem);
+    font-weight: 400;
+    font-size: calc(var(--fs-index) * 0.92);
     color: blue;
     margin: 0 0 10px;
     padding: 10px 10px 0;
@@ -76,11 +80,26 @@ main.git {
     height: 100%;
 }
 
+/* ------------------------------------------------------------------
+   Section headers — one box model for both columns, so the divider rule
+   and the content below start on exactly the same line. Only the
+   typeface changes between them (Mono meta | Serif italic "readme.md").
+   The height is derived from the readme header's fluid font-size, so
+   the two stay matched at every viewport instead of drifting apart.
+   ------------------------------------------------------------------ */
+#graph-meta,
+.readme-header {
+    flex: none;
+    display: flex;
+    align-items: center;
+    height: calc(clamp(1rem, 1.3vw, 1.3rem) * 1.33 + 20px);
+    padding: 0 14px;
+    border-bottom: 1px solid lightgrey;
+}
+
 #graph-meta {
-    padding: 10px 14px;
     font-family: "JetBrains Mono", monospace;
     font-size: 12px;
-    border-bottom: 1px solid lightgrey;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -233,14 +252,11 @@ main.git {
 }
 
 .readme-header {
-    flex: none;
-    padding: 10px 14px;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1rem, 1.3vw, 1.3rem);
     color: #0008ff;
-    border-bottom: 1px solid lightgrey;
 }
 
 #readme-content {

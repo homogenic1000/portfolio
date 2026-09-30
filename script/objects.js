@@ -1,6 +1,6 @@
 // objects.js - Gestion des objets qui tombent
 
-const resitutionValue = 0.9;
+const restitutionValue = 0.9;
 const frictionValueAir = 0.02;
 const frictionValue = 0.05;
 
@@ -65,7 +65,7 @@ const OBJECT_CONFIG = {
     width: 160,
     height: 93,
     angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
@@ -79,7 +79,7 @@ const OBJECT_CONFIG = {
     width: 160,
     height: 93,
     angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
@@ -92,7 +92,7 @@ const OBJECT_CONFIG = {
   rondpoint: {
     radius: 80,
     angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false, // Change à false pour activer la physique
@@ -103,24 +103,24 @@ const OBJECT_CONFIG = {
     },
   },
   aboutme: {
-    width: 140,
-    height:100,
-    angle: 2,
-    restitution: resitutionValue,
+    width: 100,
+    height: 100,
+    angle: (3 * Math.PI) / 180,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
-    isStatic: false,
+    isStatic: false, // Change à false pour activer la physique
     sprite: {
       texture: "assets/2d/aboutme.webp",
-      xScale: 0.2,
-      yScale: 0.2,
+      xScale: 0.675,
+      yScale: 0.675,
     },
   },
-  korg:{
+  korg: {
     width: 100,
-    height:100,
+    height: 100,
     angle: 2,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false,
@@ -134,7 +134,7 @@ const OBJECT_CONFIG = {
     width: 100,
     height: 100,
     angle: 2,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false,
@@ -147,7 +147,7 @@ const OBJECT_CONFIG = {
   premierjour: {
     radius: 40,
     angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false,
@@ -161,16 +161,16 @@ const OBJECT_CONFIG = {
     width: 160,
     height: 90,
     angle: (3 * Math.PI) / 180,
-    restitution: resitutionValue,
+    restitution: restitutionValue,
     friction: frictionValue,
     frictionAir: frictionValueAir,
     isStatic: false,
     sprite: {
-      texture: "assets/2d/betweenworlds.webp",
-      xScale: 0.125,
-      yScale: 0.125,
+      texture: "assets/2d/flic.webp",
+      xScale: 0.425,
+      yScale: 0.425,
     },
-  }
+  },
 };
 
 // Variables globales pour les objets
