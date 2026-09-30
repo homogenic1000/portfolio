@@ -93,9 +93,9 @@ async function main() {
     if (hasBag) {
       await page.locator("#animation-bag").click();
       // Objects spawn staggered (one every 500ms after physics starts), so wait
-      // for all 8 logged creation positions before verifying them.
+      // for all 6 logged creation positions before verifying them.
       await page
-        .waitForFunction(() => (window.spawnLog || []).length >= 8, null, { timeout: 12000 })
+        .waitForFunction(() => (window.spawnLog || []).length >= 6, null, { timeout: 12000 })
         .catch(() => {});
       const canvasCount = await page.locator("canvas").count();
       spawned = canvasCount > 0;

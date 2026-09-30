@@ -63,7 +63,9 @@ main.git {
     grid-template-rows: minmax(0, 1fr);
     min-height: 0;
     flex: 1 1 0;
-    padding: 0 10px;
+    /* 10px gutters on the sides AND the bottom, so the two .box outlines are
+       never clipped flush against the viewport edge */
+    padding: 0 10px 10px;
     gap: 0;
 }
 

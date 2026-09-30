@@ -1,9 +1,8 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-// Visionneuse 3D paresseuse : three.js ne démarre que lorsqu'un projet
-// de type "3d" est ouvert (via window.CDViewer.show), pas au chargement.
+// Visionneuse 3D paresseuse : three.js n'est téléchargé que lorsqu'un projet de
+// type "3d" est ouvert (via window.CDViewer.show), pas au chargement de la page.
+// Les imports sont dynamiques — des imports statiques en haut de module
+// downloaded ~1.8 Mo de Three.js sur TOUTES les pages, y compris celles qui
+// n'affichent que de la vidéo ou des images.
 
 let container;
 let renderer, scene, camera, controls, modelRoot;
@@ -11,14 +10,38 @@ let initialized = false;
 let currentModelPath = null;
 let resizeRef = null;
 
-const loader = new GLTFLoader();
+// Remplis à la première ouverture d'un projet 3D (voir ensureThree).
+let THREE, OrbitControls, GLTFLoader;
+
 const modelCache = new Map();
+let loader = null;
+let threePromise = null;
+
+/**
+ * Charger three.js + ses deux addons une seule fois, à la demande.
+ * Le module est mis en cache par le navigateur, donc les appels suivants
+ * résolvent immédiatement.
+ */
+function ensureThree() {
+  if (threePromise) return threePromise;
+  threePromise = Promise.all([
+    import('three'),
+    import('three/addons/controls/OrbitControls.js'),
+    import('three/addons/loaders/GLTFLoader.js'),
+  ]).then(([three, orbit, gltf]) => {
+    THREE = three;
+    OrbitControls = orbit.OrbitControls;
+    GLTFLoader = gltf.GLTFLoader;
+    loader = new GLTFLoader();
+  });
+  return threePromise;
+}
 
 // Vue par défaut : trois-quarts, presque isométrique. Le boîtier CD est un
 // objet plat posé sur le plan XZ (2.11 x 0.16 x 2.32), donc une caméra sur
 // l'axe Z ne le verrait que par la tranche : cette direction la surélève et
 // la décale pour regarder le dessus et la tranche du même coup.
-const DEFAULT_DIRECTION = new THREE.Vector3(1, 0.85, 1).normalize();
+const DEFAULT_DIRECTION = [1, 0.85, 1];
 const FRAME_MARGIN = 1.12;
 
 function init() {
@@ -29,6 +52,13 @@ function init() {
 
   renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
+  // Un <canvas> sans nom accessible est invisible pour un lecteur d'écran :
+  // on le déclare comme une image et on décrit l'interaction disponible.
+  renderer.domElement.setAttribute('role', 'img');
+  renderer.domElement.setAttribute(
+    'aria-label',
+    'Interactive 3D model — drag to orbit, scroll to zoom'
+  );
   container.appendChild(renderer.domElement);
 
   controls = new OrbitControls(camera, renderer.domElement);
@@ -64,7 +94,7 @@ function frameModel(object) {
   if (box.isEmpty()) return;
 
   const center = box.getCenter(new THREE.Vector3());
-  const dir = DEFAULT_DIRECTION.clone();
+  const dir = new THREE.Vector3(...DEFAULT_DIRECTION).normalize();
   const forward = dir.clone().negate();
   const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
   const up = new THREE.Vector3().crossVectors(forward, right).normalize();
@@ -108,29 +138,32 @@ function show(modelPath) {
   container = document.getElementById('container-cd');
   if (!container) return;
 
-  if (!initialized) init();
+  // three.js n'est chargé qu'ici, une fois qu'un projet 3D est réellement ouvert.
+  return ensureThree().then(() => {
+    if (!initialized) init();
 
-  container.style.display = 'block';
-  if (resizeRef) resizeRef();
-  renderer.setAnimationLoop(tick);
+    container.style.display = 'block';
+    if (resizeRef) resizeRef();
+    renderer.setAnimationLoop(tick);
 
-  if (modelPath !== currentModelPath) {
-    currentModelPath = modelPath;
-    modelRoot.clear();
-    const cached = modelCache.get(modelPath);
-    if (cached) {
-      modelRoot.add(cached);
-      frameModel(cached);
-    } else {
-      loader.load(modelPath, (gltf) => {
-        modelCache.set(modelPath, gltf.scene);
-        if (currentModelPath === modelPath) {
-          modelRoot.add(gltf.scene);
-          frameModel(gltf.scene);
-        }
-      });
+    if (modelPath !== currentModelPath) {
+      currentModelPath = modelPath;
+      modelRoot.clear();
+      const cached = modelCache.get(modelPath);
+      if (cached) {
+        modelRoot.add(cached);
+        frameModel(cached);
+      } else {
+        loader.load(modelPath, (gltf) => {
+          modelCache.set(modelPath, gltf.scene);
+          if (currentModelPath === modelPath) {
+            modelRoot.add(gltf.scene);
+            frameModel(gltf.scene);
+          }
+        });
+      }
     }
-  }
+  });
 }
 
 function hide() {

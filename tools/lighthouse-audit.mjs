@@ -17,7 +17,7 @@
 // Env: CHROME_EXEC (browser binary), default = Helium.
 
 import { spawn } from "node:child_process";
-import { mkdirSync, readFileSync, rmSync } from "node:fs";
+import { mkdirSync, readFileSync, realpathSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 
 const execPath =
@@ -71,11 +71,17 @@ function url(u) {
 if (!argv.includes("--keep")) rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
+// macOS: /tmp is a symlink to /private/tmp. The MCP server checks outputDirPath
+// against its --filesystem-root AFTER canonicalising both, so passing a
+// non-canonical "/tmp/..." alongside a root of "/tmp/..." silently produced no
+// report. Canonicalise once and use the same absolute path for both.
+const outRoot = realpathSync(outDir);
+
 // --- MCP driver (same protocol as mcp-run.mjs) -----------------------------
 
 const mcp = spawn(
   "npx",
-  ["-y", "chrome-devtools-mcp@latest", `--executable-path=${execPath}`, `--filesystem-root=${outDir}`],
+  ["-y", "chrome-devtools-mcp@latest", `--executable-path=${execPath}`, `--filesystem-root=${outRoot}`, "--isolated"],
   { stdio: ["pipe", "pipe", "inherit"] }
 );
 
@@ -127,7 +133,7 @@ for (const [label, targetUrl] of targets) {
   const ids = [...pageText.matchAll(/^\s*(\d+):/gm)].map((m) => Number(m[1]));
   pageId = ids.length ? Math.max(...ids) : pageId + 1;
 
-  const dir = `${outDir}/${label}`;
+  const dir = `${outRoot}/${label}`;
   const audit = await send("tools/call", {
     name: "lighthouse_audit",
     arguments: {
@@ -159,15 +165,25 @@ console.log("\n" + headers.map((h, i) => pad(h, widths[i])).join("|"));
 console.log(["-".repeat(12), "-".repeat(7), "-".repeat(7), "-".repeat(7), "-".repeat(9), "-".repeat(16)].join("+"));
 
 for (const r of results) {
-  const cats = r.report?.categories ?? {};
+  // Pas de report.json = l'audit n'a PAS réussi. Ne jamais afficher "OK" ici :
+  // c'est ce qui faisait passer --all au vert alors qu'aucun audit n'avait
+  // produit de rapport (faux négatif silencieux).
+  if (!r.report) {
+    console.log(
+      [pad(r.label, widths[0]), pad("-", widths[1]), pad("-", widths[2]), pad("-", widths[3]), pad("-", widths[4]), pad("NO REPORT — audit failed", widths[5])].join(" | ")
+    );
+    const err = (r.auditText || "").trim();
+    if (err) console.log("    " + err.split("\n")[0].slice(0, 140));
+    process.exitCode = 1;
+    continue;
+  }
+  const cats = r.report.categories ?? {};
   const score = (k) =>
     cats[k] ? String(Math.round(cats[k].score * 100)) + "%" : "-";
-  const failed = r.report
-    ? Object.values(r.report.audits).filter(
-        (a) => a.score !== null && a.score < 1 && a.scoreDisplayMode !== "notApplicable" && a.scoreDisplayMode !== "manual" && a.scoreDisplayMode !== "informative"
-      )
-    : [];
-  const cls = r.report?.audits?.["cumulative-layout-shift"];
+  const failed = Object.values(r.report.audits).filter(
+    (a) => a.score !== null && a.score < 1 && a.scoreDisplayMode !== "notApplicable" && a.scoreDisplayMode !== "manual" && a.scoreDisplayMode !== "informative"
+  );
+  const cls = r.report.audits?.["cumulative-layout-shift"];
   const failStr = failed.length
     ? failed.map((f) => f.title).join("; ").slice(0, 60)
     : "OK";
@@ -176,6 +192,6 @@ for (const r of results) {
   );
 }
 
-console.log("\nReports in " + outDir + "/");
+console.log("\nReports in " + outRoot + "/");
 mcp.kill();
-process.exit(0);
+process.exit(process.exitCode || 0);

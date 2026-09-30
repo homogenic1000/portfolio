@@ -27,7 +27,11 @@ const LAB = {
 const LAB_STYLE = {
   restitution: 0.6,
   friction: 0,
-  frictionAir: 0,
+  // Pas de gravité : sans amortissement, la vitesse initiale (±4) ne retombe
+  // jamais et chaque pièce dérive jusqu'à se coincer dans un coin après
+  // quelques minutes. Un léger frictionAir garde le mouvement \"flottant\"
+  // tout en freinant la dérive (même valeur que la physique principale).
+  frictionAir: 0.02,
 };
 
 let labEngine = null;

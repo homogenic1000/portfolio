@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -17,8 +17,6 @@
   <link rel="icon" type="image/x-icon" href="/favico.png"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/poly-decomp@0.3.0/build/decomp.min.js"></script>
-  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-  <script src="script/handlers.js"></script>
   <script src="script/boundaries.js"></script>
   <script src="script/objects.js"></script>
   <script src="script/projects.js"></script>
@@ -59,9 +57,9 @@
   </div>
 
   <div id="no-mobile">
-          <img style="margin-top: 12em ;" width="450" height="253" src="assets/2d/mobile.webp" alt="">
+          <img style="margin-top: 12em ;" width="450" height="253" src="assets/2d/mobile.webp" alt="" loading="lazy">
     <h3>
-      an responsive version of the portfolio will be devlopped in the future, for now im focussing at building the basics <br />
+      A responsive version of the portfolio will be developed in the future, for now I'm focusing on building the basics. <br />
     </h3>
 
   </div>
@@ -92,7 +90,9 @@
     <!-- Contenu -->
     <main id="hero-section">
       <div id="physic">
-        <img id="animation-bag" src="assets/animation/frame1.webp" alt="" role="button" tabindex="0" aria-label="Open the bag — start the intro animation" />
+        <!-- No alt="" here: an empty alt implies role=presentation, which conflicts with
+             role="button" (Lighthouse presentation-role-conflict). aria-label names it. -->
+        <img id="animation-bag" src="assets/animation/frame1.webp" role="button" tabindex="0" aria-label="Open the bag — start the intro animation" />
         <img id="sandwich" src="assets/animation/frame-sandwich.webp" alt="" />
       </div>
       <section id="title-section">

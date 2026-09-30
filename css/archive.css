@@ -98,25 +98,6 @@ body {
     border-bottom-color: lightgrey;
 }
 
-.header-lab {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #0008ff;
-    text-decoration: none;
-    font-family: "IBM Plex Serif", serif;
-    font-style: italic;
-    font-weight: 400;
-    /* absolute: this anchor's parent is .header-row (already 0.92em), so an
-       em here would compound down to 0.85em of the index scale */
-    font-size: calc(var(--fs-index) * 0.92);
-}
-
-.header-lab:hover {
-    text-decoration: underline;
-}
-
 .row {
     font-family: "Overused Grotesk", sans-serif;
     font-weight: 400;
@@ -178,11 +159,13 @@ body {
     color: black;
 }
 
-.about-links a.link-repo { grid-column: 1; }
-.about-links a.link-instagram { grid-column: 2; }
-.about-links a.link-github { grid-column: 3; }
-.about-links a.link-soundcloud { grid-column: 4; }
-.about-links a.link-lab { grid-column: 5; grid-column-start: 5; }
+/* Ordre de la rangée : home · repo · lab · instagram · soundcloud
+   (colonnes alignées sur le DOM, donc l'ordre visuel = ordre du HTML). */
+.about-links a.link-home { grid-column: 1; }
+.about-links a.link-repo { grid-column: 2; }
+.about-links a.link-lab { grid-column: 3; }
+.about-links a.link-instagram { grid-column: 4; }
+.about-links a.link-soundcloud { grid-column: 5; }
 
 .about-links a {
     color: inherit;
@@ -190,7 +173,7 @@ body {
     transition: color 0.3s ease;
 }
 
-.about-links a.link-github:hover { color: #0969da; }
+.about-links a.link-home:hover { color: #0969da; }
 .about-links a.link-repo:hover { color: #0969da; }
 .about-links a.link-instagram:hover { color: #9d00ff; }
 .about-links a.link-soundcloud:hover { color: #ff5500; }

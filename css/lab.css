@@ -19,7 +19,9 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 20px;
-    padding: 8px 14px;
+    /* 10px comme les autres pages (archive/git) : le monde reste full-bleed
+       sous le header, mais le texte du header s'aligne sur la même gouttière. */
+    padding: 8px 10px;
     border-bottom: 1px solid lightgrey;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;

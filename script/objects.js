@@ -61,20 +61,6 @@ function computeSpawnPoint() {
 }
 
 const OBJECT_CONFIG = {
-  tabac: {
-    width: 160,
-    height: 93,
-    angle: (3 * Math.PI) / 180,
-    restitution: restitutionValue,
-    friction: frictionValue,
-    frictionAir: frictionValueAir,
-    isStatic: false, // Change à false pour activer la physique
-    sprite: {
-      texture: "assets/2d/tabac.webp",
-      xScale: 0.5,
-      yScale: 0.5,
-    },
-  },
   eracom: {
     width: 160,
     height: 93,
@@ -100,20 +86,6 @@ const OBJECT_CONFIG = {
       texture: "assets/2d/rondpoint-projects/rondpoint.webp",
       xScale: 0.1,
       yScale: 0.1,
-    },
-  },
-  aboutme: {
-    width: 100,
-    height: 100,
-    angle: (3 * Math.PI) / 180,
-    restitution: restitutionValue,
-    friction: frictionValue,
-    frictionAir: frictionValueAir,
-    isStatic: false, // Change à false pour activer la physique
-    sprite: {
-      texture: "assets/2d/aboutme.webp",
-      xScale: 0.675,
-      yScale: 0.675,
     },
   },
   korg: {
@@ -174,38 +146,7 @@ const OBJECT_CONFIG = {
 };
 
 // Variables globales pour les objets
-let tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour, betweenworlds;
-
-/**
- * Créer l'objet tabac
- */
-function createTabac(x, y) {
-  const config = OBJECT_CONFIG.tabac;
-
-  tabac = Matter.Bodies.rectangle(
-    x,
-    y,
-    config.width,
-    config.height,
-    {
-      angle: config.angle,
-      label: "tabac",
-      isStatic: config.isStatic,
-      restitution: config.restitution,
-      friction: config.friction,
-      frictionAir: config.frictionAir,
-      render: {
-        sprite: {
-          texture: config.sprite.texture,
-          xScale: config.sprite.xScale,
-          yScale: config.sprite.yScale,
-        },
-      },
-    }
-  );
-
-  return tabac;
-}
+let eracom, rondpoint, korg, vroomvroom, premierjour, betweenworlds;
 
 /**
  * Créer l'objet eracom
@@ -257,33 +198,6 @@ function createRondpoint(x, y) {
   });
 
   return rondpoint;
-}
-
-function createAboutMe(x, y) {
-  const config = OBJECT_CONFIG.aboutme;
-
-  aboutme = Matter.Bodies.rectangle(
-    x,
-    y,
-    config.width,
-    config.height,
-    {
-      angle: config.angle,
-      label: "aboutme",
-      isStatic: config.isStatic,
-      restitution: config.restitution,
-      friction: config.friction,
-      frictionAir: config.frictionAir,
-      render: {
-        sprite: {
-          texture: config.sprite.texture,
-          xScale: config.sprite.xScale,
-          yScale: config.sprite.yScale,
-        },
-      },
-    }
-  );
-  return aboutme;
 }
 
 function createKorg(x, y) {
@@ -398,10 +312,8 @@ const objects = [];
 function createObjects() {
   const p = computeSpawnPoint();
   return [
-    createTabac(p.x, p.y),
     createEracom(p.x, p.y),
     createRondpoint(p.x, p.y),
-    createAboutMe(p.x, p.y),
     createKorg(p.x, p.y),
     createVroomvroom(p.x, p.y),
     createPremierjour(p.x, p.y),
@@ -413,5 +325,5 @@ function createObjects() {
  * Obtenir tous les objets
  */
 function getObjects() {
-  return [tabac, eracom, rondpoint, aboutme, korg, vroomvroom, premierjour, betweenworlds];
+  return [eracom, rondpoint, korg, vroomvroom, premierjour, betweenworlds];
 }

@@ -121,10 +121,8 @@ function startPhysics() {
   addToWorld(boundaries);
 
   const objectFunctions = [
-    createTabac,
     createEracom,
     createRondpoint,
-    createAboutMe,
     createKorg,
     createVroomvroom,
     createPremierjour,
@@ -233,11 +231,5 @@ function handleObjectClick(body) {
     return;
   }
 
-  switch(body.label) {
-    case 'aboutme':
-      onAboutMeClick(body);
-      break;
-    default:
-      console.log('Objet cliqué:', body.label);
-  }
+  console.log('Objet cliqué:', body.label);
 }

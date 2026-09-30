@@ -38,7 +38,7 @@ const steps = JSON.parse(readFileSync(stepsArg, "utf8"));
 
 const mcp = spawn(
   "npx",
-  ["-y", "chrome-devtools-mcp@latest", `--executable-path=${execPath}`, "--filesystem-root=/tmp"],
+  ["-y", "chrome-devtools-mcp@latest", `--executable-path=${execPath}`, "--filesystem-root=/tmp", "--isolated"],
   { stdio: ["pipe", "pipe", "inherit"] }
 );
 

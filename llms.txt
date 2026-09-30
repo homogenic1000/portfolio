@@ -4,13 +4,13 @@ Interactive, physics-driven creative portfolio of Mathéo Delessert. Click a bag
 
 ## Projects
 
-- [Frip'O'Point — motion design](https://matheodelessert.ch/)
-- [Vroom Vroom — web design](https://matheodelessert.ch/)
-- [Between worlds — web design](https://matheodelessert.ch/)
-- [Éracom — school project](https://matheodelessert.ch/)
-- [Premier jour d'été — photography](https://matheodelessert.ch/)
+- [Korg e-LIVEsEx jewel case — graphic design](https://matheodelessert.ch/index.html?project=korg)
+- [Frip'O'Point — motion design](https://matheodelessert.ch/index.html?project=rondpoint)
+- [vroomVROOM — motion design](https://matheodelessert.ch/index.html?project=vroomvroom)
+- [Between Worlds — datamoshing](https://matheodelessert.ch/index.html?project=betweenworlds)
+- [Jingle eracom — motion design](https://matheodelessert.ch/index.html?project=eracom)
+- [Premier jour d'été — photographie](https://matheodelessert.ch/index.html?project=premierjour)
 - [The portfolio — webdesign/dev](https://matheodelessert.ch/git.html)
-- [Korg e-LIVE — 3D / web design](https://matheodelessert.ch/)
 
 ## More
 

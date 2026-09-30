@@ -40,7 +40,7 @@ const LOVES = {
     {
       label: "tms4",
       title: "Free party",
-      desc: "In my early teens I discovered rave and the free party scene; that's where I fell in love with electronic music and started making music of my own :) It's also where I met Nelson, who made the Korg project possible :))",
+      desc: "In my early teens I discovered rave and the free party scene; that's where I fell in love with electronic music. It's also where I met Nelson, who made the Korg project possible!!",
       sprite: "assets/2d/loves/tms4.webp",
       color: "",
       size: 0.40,
@@ -51,7 +51,8 @@ const LOVES = {
 const LOVES_STYLE = {
   restitution: 0.6,
   friction: 0,
-  frictionAir: 0,
+  // Voir LAB_STYLE : gravité nulle + frictionAir nulle = dérive éternelle.
+  frictionAir: 0.02,
 };
 
 let lovesEngine = null;
