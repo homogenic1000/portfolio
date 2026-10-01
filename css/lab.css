@@ -33,19 +33,13 @@
     color: #0008ff;
 }
 
-.lab-nav {
-    display: flex;
-    gap: 24px;
-    font-weight: 400;
-}
-
-.lab-nav a {
+.lab-back {
     color: black;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.lab-nav a:hover {
+.lab-back:hover {
     color: #0008ff;
 }
 
