@@ -161,7 +161,7 @@ u{
     flex-direction: column;
     flex: 0 0 auto;
     gap: 10px;
-    padding: 10px;
+    padding: 0 10px 4px 10px;
 }
 
 #show-min img{
@@ -262,7 +262,7 @@ u{
     flex: 1 1 0;
     /* Mêmes gouttières que #content (10px) : le média ne doit pas toucher
        les bords de la page. */
-    padding: 10px;
+    padding: 0 10px 4px 10px;
     box-sizing: border-box;
     outline: none; /* idem #content : pas de cadre autour du média */
 }

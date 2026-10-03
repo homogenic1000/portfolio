@@ -52,7 +52,7 @@ const LOVES_STYLE = {
   restitution: 0.6,
   friction: 0,
   // Voir LAB_STYLE : gravité nulle + frictionAir nulle = dérive éternelle.
-  frictionAir: 0.02,
+  frictionAir: 0.01,
 };
 
 let lovesEngine = null;
