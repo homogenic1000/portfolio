@@ -89,7 +89,7 @@ body {
 .header-row {
     position: relative;
     min-height: 0;
-    padding: 0 0 4px;
+    padding: 4px 0 4px;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
     font-weight: 400;
