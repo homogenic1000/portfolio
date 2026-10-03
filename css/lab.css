@@ -19,9 +19,10 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 20px;
-    /* 10px comme les autres pages (archive/git) : le monde reste full-bleed
-       sous le header, mais le texte du header s'aligne sur la même gouttière. */
-    padding: 8px 10px;
+    /* Même traitement que .header-row sur archive.html : le texte est collé
+       au haut de la page (0 en haut, comme le wrapper .archive qui fournit
+       les 10px de gouttière), puis 4px avant la règle. */
+    padding: 0 10px 4px;
     border-bottom: 1px solid lightgrey;
     font-family: "IBM Plex Serif", serif;
     font-style: italic;
